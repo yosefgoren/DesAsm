@@ -1,0 +1,4 @@
+flexBison/
+*.tab.*
+makefile
+lex.yy.c

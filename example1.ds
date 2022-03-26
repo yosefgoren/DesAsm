@@ -1,0 +1,21 @@
+curve Circle~pair(r~real):
+	r*(cos(2*pi t), sin(2*pi t))
+
+curve Connect(p, q):
+	p*t + q*(1-t)
+
+Center~pair:
+	(0,0)
+
+Mid~real:
+	0.5
+
+curve Triple~pair:
+	from 0 to Mid:
+		for i in range(10):
+			Circle(2*i)+(i,0)
+	from Mid to 1:
+		for i in range(5):
+			Connect(Center, Circle[i/5](10))
+
+display Triples

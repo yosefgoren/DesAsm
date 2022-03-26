@@ -1,0 +1,37 @@
+%{
+	#include "utility.h"
+
+	int yylex();
+	void yyerror(const char* s);
+	extern int yylineno;
+%}
+
+%union{
+//lexer fields:
+	char* text;
+	Binop binop;
+
+//semantic properties:
+
+};
+
+%token CURVE DISPLAY
+%token INT REAL PAIR
+%token IS_A
+%token COLON
+%token GlobalId LocalId
+%token T
+%token BINOP
+%token PI NUMBER
+%token LPAREN RPAREN LBRACE RBRACE
+
+%%
+
+Program: ;
+
+%%
+
+int main(){
+	yyparse();
+	return 0;
+}
