@@ -1,0 +1,331 @@
+make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 3.81
+# Copyright (C) 2006  Free Software Foundation, Inc.
+# This is free software; see the source for copying conditions.
+# There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+# This program built for i386-pc-mingw32
+ 
+
+# Make data base, printed on Fri Apr 01 22:30:09 2022
+
+# Variables
+
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# automatic
+?F = $(notdir $?)
+# makefile
+MAKEFLAGS = Rrqp
+# environment
+VSCODE_LOG_NATIVE = false
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# environment
+HOMEDRIVE = C:
+# automatic
+@F = $(notdir $@)
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# makefile
+CURDIR := c:/Users/pc/Desktop/Projects/DesAsm
+# default
+SHELL := sh.exe
+# environment
+WINDIR = C:\W 
+INDOWS
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
+# environment
+ONEDRIVE = C:\Users\pc\OneDrive
+# environment
+PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
+# makefile (from `makefile', line 1)
+MAKEFILE_LIST :=  makefile
+# environment
+TMP = C:\Users\pc\AppData\Local\Temp
+# environment
+VSCODE_VERBOSE_LOGGING = true
+# environment
+PROGRAMW6432 = C:\Program Files
+# environment
+PROGRAMDATA = C:\ProgramData
+# environment
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-a28512f5-dcfc-44e0-b9f7-40bdaeee5818-sock
+# environment
+VSCODE_CWD = C:\Users\pc\AppData\Local\Programs\Microsoft VS Code
+# environment
+SMLNJ_HOME = C:\Program Files (x86)\SMLNJ\
+# environment
+PATH = C:\Program Files\AdoptOpenJDK\jdk-11.0.11.9-hotspot\bin;C:\Program Files (x86)\VMware\VMware Workstation\bin\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Android;C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin;C:\Windows\System32;C:\Program Files\Git\cmd;C:\Program Files (x86)\Bitvise SSH Client;C:\GCC55\mingw-w64\x86_64-5.4.0-posix-seh-rt_v5-rev0\mingw64\bin;C:\Program Files (x86)\SMLNJ\bin\;C:\Program Files\MATLAB\R2020b\bin;C:\Program Files\SourceGear\Common\DiffMerge\;C:\Program Files\Oracle\VirtualBox;C:\Program Files (x86)\MiKTeX 2.9\miktex\bin\;C:\Program Files (x86)\LyX 2.3\Perl\bin;C:\Program Files (x86)\Pulse Secure\VC142.CRT\X64\;C:\Program Files (x86)\Pulse Secure\VC142.CRT\X86\;C:\Program Files\nodejs\;C:\Program Files (x86)\Common Files\Pulse Secure\TNC Client Plugin\;C:\Users\pc\AppData\Local\Microsoft\WindowsApps;C:\Users\pc\AppData\Local\Programs\Microsoft VS Code\bin;C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin;C:\GCC55\mingw-w64\x86_64-5.4.0-posix-seh-rt_v5-rev0\mingw64\bin;C:\Users\pc\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin;C:\GnuWin32\bin;;C:\Program Files\JetBrains\PyCharm 2021.2.3\bin;;C:\Users\pc\AppData\Roaming\npm
+# environment
+COMMONP 
+ROGRAMW6432 = C:\Program Files\Common Files
+# environment
+PROCESSOR_ARCHITECTURE = x86
+# environment
+USERPROFILE = C:\Users\pc
+# environment
+ALLUSERSPROFILE = C:\ProgramData
+# environment
+VSCODE_LOG_STACK = false
+# environment
+NUMBER_OF_PROCESSORS = 4
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# default
+.FEATURES := target-specific order-only second-expansion else-if archives
+# environment
+SYNAPROGDIR = Synaptics\SynTP
+# automatic
+%F = $(notdir $%)
+# environment
+ANDROID_SDK_HOME = C:\Android
+# environment
+CHROM 
+E_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_12512_CYEBKCOFJWOYGRNQ
+# environment
+VSCODE_PIPE_LOGGING = true
+# environment
+COMPUTERNAME = DESKTOP-86KTLQ1
+# environment
+PROGRAMFILES = C:\Program Files (x86)
+# environment
+DRIVERDATA = C:\Windows\System32\Drivers\DriverData
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = undefined
+# environment
+USERNAME = pc
+# environment
+PUBLIC = C:\Users\Public
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# environment
+VSCODE_CODE_CACHE_PATH = C: 
+\Users\pc\AppData\Roaming\Code\CachedData\e18005f0f1b33c29e81d732535d8c0e47cafb0b5
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+# environment
+COMMONPROGRAMFILES = C:\Program Files (x86)\Common Files
+# environment
+LOGONSERVER = \\DESKTOP-86KTLQ1
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# environment
+USERDOMAIN = DESKTOP-86KTLQ1
+# default
+MAKE = $(MAKE_COMMAND)
+# default
+MAKECMDGOALS := all
+# default
+MAKE_VERSION := 3.81
+# makefile
+.DEFAULT_GOAL := all
+# environment
+PROGRAMFILES(X86 
+) = C:\Program Files (x86)
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# environment
+LOCALAPPDATA = C:\Users\pc\AppData\Local
+# environment
+PSMODULEPATH = C:\Users\pc\Documents\WindowsPowerShell\Modules;C:\Users\pc\AppData\Local\Google\Cloud SDK\google-cloud-sdk\platform\PowerShell
+# default
+MAKE_COMMAND := make.exe
+# environment
+PROCESSOR_ARCHITEW6432 = AMD64
+# default
+.VARIABLES := 
+# automatic
+*F = $(notdir $*)
+# environment
+PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 78 Stepping 3, GenuineIntel
+# envi 
+ronment
+OS = Windows_NT
+# environment
+VSCODE_IPC_HOOK = \\.\pipe\3058e90def63a712a14000231c360f65-1.66.0-main-sock
+# environment
+HOMEPATH = \Users\pc
+# environment
+COMMONPROGRAMFILES(X86) = C:\Program Files (x86)\Common Files
+# environment
+PROMPT = $P$G
+# environment
+MFLAGS = -Rrqp
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# environment
+SYSTEMROOT = C:\WINDOWS
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# automatic
++F = $(notdir $+)
+# environment
+APPDATA = C:\Users\pc\AppData\Roaming
+# environment
+__COMPA 
+T_LAYER = DetectorsAppHealth
+# environment
+TEMP = C:\Users\pc\AppData\Local\Temp
+# environment
+COMSPEC = C:\WINDOWS\system32\cmd.exe
+# default
+MAKEFILES := 
+# automatic
+<F = $(notdir $<)
+# environment
+LC_ALL = C
+# automatic
+^F = $(notdir $^)
+# default
+SUFFIXES := 
+# environment
+SYSTEMDRIVE = C:
+# environment
+SESSIONNAME = Console
+# environment
+PROCESSOR_REVISION = 4e03
+# environment
+PYCHARM = C:\Program Files\JetBrains\PyCharm 2021.2.3\bin;
+# environment
+MAKELEVEL := 0
+# environment
+LANG = C
+# environment
+P 
+ROCESSOR_LEVEL = 6
+# environment
+VSCODE_PID = 12512
+# environment
+USERDOMAIN_ROAMINGPROFILE = DESKTOP-86KTLQ1
+# variable set hash-table stats:
+# Load=91/1024=9%, Rehash=0, Collisions=9/113=8%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# : could not be stat'd.
+# C:\Android (key C:/Android, mtime 1565250855): 8 files, no impossibilities.
+# C:\Program Files (x86)\Bitvise SSH Client (key C:/Program Files (x86)/Bitvise SSH Client, mtime 1596959031): 47 files, no i 
+mpossibilities.
+# C:\GCC55\mingw-w64\x86_64-5.4.0-posix-seh-rt_v5-rev0\mingw64\bin (key C:/GCC55/mingw-w64/x86_64-5.4.0-posix-seh-rt_v5-rev0/mingw64/bin, mtime 1596890295): 61 files, no impossibilities.
+# C:\WINDOWS\System32\WindowsPowerShell\v1.0\ (key C:/WINDOWS/System32/WindowsPowerShell/v1.0/, mtime 1625531307): 30 files, no impossibilities.
+# C:\WINDOWS\System32\Wbem (key C:/WINDOWS/System32/Wbem, mtime 1647052661): 171 files, no impossibilities.
+# . (key c:/Users/pc/Desktop/Projects/DesAsm, mtime 1648 
+636800): 18 files, no impossibilities.
+# C:\Program Files\SourceGear\Common\DiffMerge\ (key C:/Program Files/SourceGear/Common/DiffMerge/, mtime 1608070435): 9 files, no impossibilities.
+# C:\Users\pc\AppData\Local\Microsoft\WindowsApps (key C:/Users/pc/AppData/Local/Microsoft/WindowsApps, mtime 1648044790): 24 files, no impossibilities.
+# C:\Program Files\nodejs\ (key C:/Program Files/nodejs/, mtime 1640997748): 13 files, no impossibilities.
+# C:\Program Files (x86)\Pulse Secure\VC142.CRT\X64\ (key C:/Prog 
+ram Files (x86)/Pulse Secure/VC142.CRT/X64/, mtime 1638958065): 10 files, no impossibilities.
+# C:\Program Files (x86)\SMLNJ\bin\ (key C:/Program Files (x86)/SMLNJ/bin/, mtime 1604173573): 14 files, no impossibilities.
+# C:\GnuWin32\bin (key C:/GnuWin32/bin, mtime 1641410258): 12 files, no impossibilities.
+# C:\Program Files\JetBrains\PyCharm 2021.2.3\bin (key C:/Program Files/JetBrains/PyCharm 2021.2.3/bin, mtime 1636286237): 28 files, no impossibilities.
+# C:\Program Files\MATLAB\R2020b\bin (key C:/Progra 
+m Files/MATLAB/R2020b/bin, mtime 1607434114): 16 files, no impossibilities.
+# C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin (key C:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin, mtime 1596887087): 58 files, no impossibilities.
+# C:\Program Files (x86)\VMware\VMware Workstation\bin\ (key C:/Program Files (x86)/VMware/VMware Workstation/bin/, mtime 1617810112): 3 files, no impossibilities.
+# C:\WINDOWS\System32\OpenSSH\: could not be stat'd.
+# C:\WINDOWS (key C:/WINDOWS, mtime 16484919 
+62): 117 files, no impossibilities.
+# C:\Program Files\AdoptOpenJDK\jdk-11.0.11.9-hotspot\bin (key C:/Program Files/AdoptOpenJDK/jdk-11.0.11.9-hotspot/bin, mtime 1619771799): 127 files, no impossibilities.
+# C:\Program Files (x86)\Common Files\Pulse Secure\TNC Client Plugin\ (key C:/Program Files (x86)/Common Files/Pulse Secure/TNC Client Plugin/, mtime 1643714313): 26 files, no impossibilities.
+# C:\Program Files\Oracle\VirtualBox: could not be stat'd.
+# C:\Users\pc\AppData\Local\Google\Cloud SDK\google-cl 
+oud-sdk\bin (key C:/Users/pc/AppData/Local/Google/Cloud SDK/google-cloud-sdk/bin, mtime 1621020372): 20 files, no impossibilities.
+# C:\Program Files (x86)\MiKTeX 2.9\miktex\bin\ (key C:/Program Files (x86)/MiKTeX 2.9/miktex/bin/, mtime 1638543704): 598 files, no impossibilities.
+# C:\Program Files\Git\cmd (key C:/Program Files/Git/cmd, mtime 1596522809): 8 files, no impossibilities.
+# C:\WINDOWS\system32 (key C:/WINDOWS/system32, mtime 1648793259): 3014 files, no impossibilities.
+# C:\Program Files (x86)\L 
+yX 2.3\Perl\bin (key C:/Program Files (x86)/LyX 2.3/Perl/bin, mtime 1638543960): 11 files, no impossibilities.
+# C:\Users\pc\AppData\Local\Programs\Microsoft VS Code\bin (key C:/Users/pc/AppData/Local/Programs/Microsoft VS Code/bin, mtime 1648840167): 4 files, no impossibilities.
+# C:\Program Files (x86)\Pulse Secure\VC142.CRT\X86\ (key C:/Program Files (x86)/Pulse Secure/VC142.CRT/X86/, mtime 1638958065): 9 files, no impossibilities.
+# C:\Users\pc\AppData\Roaming\npm (key C:/Users/pc/AppData/Roaming/npm, m 
+time 1641049433): 12 files, no impossibilities.
+
+# 4468 files, no impossibilities in 30 directories.
+
+# Implicit Rules
+
+# No implicit rules.
+
+# Files
+
+all:
+#  Command-line target.
+#  Implicit rule search has not been done.
+#  Implicit/static pattern stem: `'
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := all
+# automatic
+# % := 
+# automatic
+# * := 
+# automatic
+# + := 
+# automatic
+# | := 
+# automatic
+# < := 
+# automatic
+# ^ := 
+# automatic
+# ? := 
+# va 
+riable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=1/10=10%
+#  commands to execute (from `makefile', line 2):
+	flexBison/win_flex.exe scanner.lex
+	flexBison/win_bison.exe -Wcounterexamples -d parser.ypp
+	g++ -std=c++17 -g3 -o dasm *.c *.cpp
+	
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+makefile:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-26 15:17:17
+#  File has be 
+en updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+.SUFFIXES:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# files hash-table stats:
+# Load=4/1024=0%, Rehash=0, Collisions=0/17=0%
+# VPATH Search Paths
+
+# No `vpath' search paths.
+
+# No general (`VPATH' variable) search path.
+
+# # of strings in strcache: 1
+# # of strcache buffers: 1
+# strcache size: total = 4096 / ma 
+x = 4096 / min = 4096 / avg = 4096
+# strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
+
+# Finished Make data base on Fri Apr 01 22:30:10 2022
+
+ 

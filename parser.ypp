@@ -1,16 +1,21 @@
 %{
-	#include "utility.h"
-
 	int yylex();
 	void yyerror(const char* s);
+	#include "utility.h"
+	#include <string>
+
 	extern int yylineno;
+
+	#define YYERROR_VERBOSE 1
+	#define YYDEBUG 1
+	extern int yydebug;
 %}
 
 %union{
 //lexer fields:
-	char* text;
+	std::string* text;
 	Binop binop;
-
+	int integer;
 //semantic properties:
 
 };
@@ -19,17 +24,30 @@
 %token INT REAL PAIR
 %token IS_A
 %token COLON
-%token GlobalId LocalId
+%token ID
 %token T
-%token BINOP
+%left BINOP
 %token PI NUMBER
-%token LPAREN RPAREN LBRACE RBRACE
+%token LPAREN RPAREN
 
 %%
+Program: Delcerations;
+Delcerations: Delcerations Declaration | Declaration;
+Declaration: CURVE AnnotatedId LPAREN Params RPAREN COLON Statment {};
+Params: AnnotatedId Params | ;
+AnnotatedId: ID | ID IS_A TypeToken;
+TypeToken:	INT | REAL | PAIR;
 
-Program: ;
+Statment: Exp;
 
+Literal: PI | NUMBER;
+Exp: Literal | ID | Exp BINOP Exp | LPAREN Exp RPAREN | T;
 %%
+
+void yyerror(const char* s){
+	printf("syntax error. line %d\n", yylineno);
+	exit(1);
+}
 
 int main(){
 	yyparse();

@@ -1,0 +1,356 @@
+Terminals unused in grammar
+
+    DISPLAY
+    LBRACE
+    RBRACE
+
+
+Grammar
+
+    0 $accept: Delcerations $end
+
+    1 Delcerations: Delcerations Declaration
+    2             | Declaration
+
+    3 Declaration: CURVE AnnotatedId LPAREN Params RPAREN COLON Statment
+
+    4 Params: Params AnnotatedId
+    5       | AnnotatedId
+
+    6 AnnotatedId: ID
+    7            | ID IS_A TypeToken
+
+    8 TypeToken: INT
+    9          | REAL
+   10          | PAIR
+
+   11 Statment: Exp
+
+   12 Literal: PI
+   13        | NUMBER
+
+   14 Exp: Literal
+   15    | ID
+   16    | Exp BINOP Exp
+   17    | LPAREN Exp RPAREN
+   18    | T
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    CURVE (258) 3
+    DISPLAY (259)
+    INT (260) 8
+    REAL (261) 9
+    PAIR (262) 10
+    IS_A (263) 7
+    COLON (264) 3
+    ID (265) 6 7 15
+    T (266) 18
+    BINOP (267) 16
+    PI (268) 12
+    NUMBER (269) 13
+    LPAREN (270) 3 17
+    RPAREN (271) 3 17
+    LBRACE (272)
+    RBRACE (273)
+
+
+Nonterminals, with rules where they appear
+
+    $accept (19)
+        on left: 0
+    Delcerations (20)
+        on left: 1 2
+        on right: 0 1
+    Declaration (21)
+        on left: 3
+        on right: 1 2
+    Params (22)
+        on left: 4 5
+        on right: 3 4
+    AnnotatedId (23)
+        on left: 6 7
+        on right: 3 4 5
+    TypeToken (24)
+        on left: 8 9 10
+        on right: 7
+    Statment (25)
+        on left: 11
+        on right: 3
+    Literal (26)
+        on left: 12 13
+        on right: 14
+    Exp (27)
+        on left: 14 15 16 17 18
+        on right: 11 16 17
+
+
+State 0
+
+    0 $accept: . Delcerations $end
+
+    CURVE  shift, and go to state 1
+
+    Delcerations  go to state 2
+    Declaration   go to state 3
+
+
+State 1
+
+    3 Declaration: CURVE . AnnotatedId LPAREN Params RPAREN COLON Statment
+
+    ID  shift, and go to state 4
+
+    AnnotatedId  go to state 5
+
+
+State 2
+
+    0 $accept: Delcerations . $end
+    1 Delcerations: Delcerations . Declaration
+
+    $end   shift, and go to state 6
+    CURVE  shift, and go to state 1
+
+    Declaration  go to state 7
+
+
+State 3
+
+    2 Delcerations: Declaration .
+
+    $default  reduce using rule 2 (Delcerations)
+
+
+State 4
+
+    6 AnnotatedId: ID .
+    7            | ID . IS_A TypeToken
+
+    IS_A  shift, and go to state 8
+
+    $default  reduce using rule 6 (AnnotatedId)
+
+
+State 5
+
+    3 Declaration: CURVE AnnotatedId . LPAREN Params RPAREN COLON Statment
+
+    LPAREN  shift, and go to state 9
+
+
+State 6
+
+    0 $accept: Delcerations $end .
+
+    $default  accept
+
+
+State 7
+
+    1 Delcerations: Delcerations Declaration .
+
+    $default  reduce using rule 1 (Delcerations)
+
+
+State 8
+
+    7 AnnotatedId: ID IS_A . TypeToken
+
+    INT   shift, and go to state 10
+    REAL  shift, and go to state 11
+    PAIR  shift, and go to state 12
+
+    TypeToken  go to state 13
+
+
+State 9
+
+    3 Declaration: CURVE AnnotatedId LPAREN . Params RPAREN COLON Statment
+
+    ID  shift, and go to state 4
+
+    Params       go to state 14
+    AnnotatedId  go to state 15
+
+
+State 10
+
+    8 TypeToken: INT .
+
+    $default  reduce using rule 8 (TypeToken)
+
+
+State 11
+
+    9 TypeToken: REAL .
+
+    $default  reduce using rule 9 (TypeToken)
+
+
+State 12
+
+   10 TypeToken: PAIR .
+
+    $default  reduce using rule 10 (TypeToken)
+
+
+State 13
+
+    7 AnnotatedId: ID IS_A TypeToken .
+
+    $default  reduce using rule 7 (AnnotatedId)
+
+
+State 14
+
+    3 Declaration: CURVE AnnotatedId LPAREN Params . RPAREN COLON Statment
+    4 Params: Params . AnnotatedId
+
+    ID      shift, and go to state 4
+    RPAREN  shift, and go to state 16
+
+    AnnotatedId  go to state 17
+
+
+State 15
+
+    5 Params: AnnotatedId .
+
+    $default  reduce using rule 5 (Params)
+
+
+State 16
+
+    3 Declaration: CURVE AnnotatedId LPAREN Params RPAREN . COLON Statment
+
+    COLON  shift, and go to state 18
+
+
+State 17
+
+    4 Params: Params AnnotatedId .
+
+    $default  reduce using rule 4 (Params)
+
+
+State 18
+
+    3 Declaration: CURVE AnnotatedId LPAREN Params RPAREN COLON . Statment
+
+    ID      shift, and go to state 19
+    T       shift, and go to state 20
+    PI      shift, and go to state 21
+    NUMBER  shift, and go to state 22
+    LPAREN  shift, and go to state 23
+
+    Statment  go to state 24
+    Literal   go to state 25
+    Exp       go to state 26
+
+
+State 19
+
+   15 Exp: ID .
+
+    $default  reduce using rule 15 (Exp)
+
+
+State 20
+
+   18 Exp: T .
+
+    $default  reduce using rule 18 (Exp)
+
+
+State 21
+
+   12 Literal: PI .
+
+    $default  reduce using rule 12 (Literal)
+
+
+State 22
+
+   13 Literal: NUMBER .
+
+    $default  reduce using rule 13 (Literal)
+
+
+State 23
+
+   17 Exp: LPAREN . Exp RPAREN
+
+    ID      shift, and go to state 19
+    T       shift, and go to state 20
+    PI      shift, and go to state 21
+    NUMBER  shift, and go to state 22
+    LPAREN  shift, and go to state 23
+
+    Literal  go to state 25
+    Exp      go to state 27
+
+
+State 24
+
+    3 Declaration: CURVE AnnotatedId LPAREN Params RPAREN COLON Statment .
+
+    $default  reduce using rule 3 (Declaration)
+
+
+State 25
+
+   14 Exp: Literal .
+
+    $default  reduce using rule 14 (Exp)
+
+
+State 26
+
+   11 Statment: Exp .
+   16 Exp: Exp . BINOP Exp
+
+    BINOP  shift, and go to state 28
+
+    $default  reduce using rule 11 (Statment)
+
+
+State 27
+
+   16 Exp: Exp . BINOP Exp
+   17    | LPAREN Exp . RPAREN
+
+    BINOP   shift, and go to state 28
+    RPAREN  shift, and go to state 29
+
+
+State 28
+
+   16 Exp: Exp BINOP . Exp
+
+    ID      shift, and go to state 19
+    T       shift, and go to state 20
+    PI      shift, and go to state 21
+    NUMBER  shift, and go to state 22
+    LPAREN  shift, and go to state 23
+
+    Literal  go to state 25
+    Exp      go to state 30
+
+
+State 29
+
+   17 Exp: LPAREN Exp RPAREN .
+
+    $default  reduce using rule 17 (Exp)
+
+
+State 30
+
+   16 Exp: Exp . BINOP Exp
+   16    | Exp BINOP Exp .
+
+    $default  reduce using rule 16 (Exp)

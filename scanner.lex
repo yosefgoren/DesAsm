@@ -1,15 +1,16 @@
 %{
-	#include "parser.tab.hpp"
 	#include "stdlib.h"
-	#include "string.h"
+	#include <string>
+	#include "utility.h"
+	#include "parser.tab.hpp"
 %}
 
 %option noyywrap
 %option yylineno
 
-global_id	([A-Z][a-zA-Z]*)
-local_id	([a-z_]+)
+id	([a-zA-Z][a-zA-Z0-9]*)
 number	([1-9][0-9]*)
+whitespace  		([\t\n\r ])
 
 %%
 
@@ -22,15 +23,18 @@ t	return T;
 pi	return PI;
 ~	return IS_A;
 :	return COLON;
-\+	{yylval.binop = PLUS; return BINOP;}
-\*	{yylval.binop = MULT; return BINOP;}
--	{yylval.binop = MINUS; return BINOP;}
-{global_id}	{yylval.text = alloCloneStr(yytext); return GlobalId;}
-{local_id}	{yylval.text = alloCloneStr(yytext); return LocalId;}
+
+{id}	{yylval.text = new std::string(yytext); return ID;}
 {number}	{yylval.integer = atoi(yytext); return NUMBER;}	
 \(	return LPAREN;
 \)	return RPAREN;
 \[	return LBRACE;
 \]	return RBRACE;
+\+	{yylval.binop = PLUS; return BINOP;}
+\*	{yylval.binop = MULT; return BINOP;}
+-	{yylval.binop = MINUS; return BINOP;}
+
+{whitespace}	;
+.	{printf("at line %d: unexpected character: \'%s\'\n", yytext, yylineno); exit(1);};
 
 %%

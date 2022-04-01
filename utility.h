@@ -7,6 +7,4 @@ enum Binop{
 	MULT
 };
 
-char* alloCloneStr(const char* src);
-
 #endif
