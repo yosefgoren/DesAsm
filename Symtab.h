@@ -51,6 +51,13 @@ struct Symtab{
 	 */
 	const std::string& defineAnonFunc(const std::string& sym, const std::vector<std::string>& params);
 
+	/**
+	 * @return all symbols from local scopes.
+	 * the returned vector begining is the first symbols from the earliest scope,
+	 * the last symbols in the returned vector are the last symbols from the latest scope.
+	 */
+	const std::vector<std::vector<std::string>>& getLocalScopes() const;
+
 	struct SymInfo{
 		SymInfo(const std::string& dsm_exp);
 		virtual const std::string& getDsmExp() const;
@@ -79,7 +86,7 @@ struct Symtab{
 
 private:
 	std::map<std::string, SymInfo*> table;
-	std::vector<std::set<std::string>> nested_scopes;
+	std::vector<std::vector<std::string>> nested_scopes;
 	int anon_count;
 
 

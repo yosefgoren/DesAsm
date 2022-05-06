@@ -21,6 +21,7 @@
 	std::string* text;
 //semantic properties:
 	std::vector<std::string>* param_list;
+	std::string* symbol;
 };
 
 %token CURVE DISPLAY FOR IN
@@ -30,6 +31,7 @@
 %left <text> BINOP
 %token <text> NUMBER ID
 %type <param_list> FormalsSpec FormalsList FormalsListTail
+%type <symbol> Statment
 %%
 Program: Delcerations;
 Delcerations: Delcerations Declaration | Declaration;
@@ -58,8 +60,27 @@ FormalsList: FormalsListTail {$$ = $1;}
 FormalsListTail: ID COMMA FormalsListTail {$3->push_back(*$1); delete $1; $$ = $3;}
 	| ID {$$ = new std::vector<std::string>(); $$->push_back(*$1); delete $1;};
 
-Statment: Exp
-	| FOR ID IN NUMBER COLON Statment;
+Statment: {
+		$$ = new string(symtab.getAnonSymbol());
+		//output the dsm exp for the new anon function.
+		//output all local scope symbols in format (x, y, ...)
+		cout << " = ";
+	} Exp
+	| FOR ID IN NUMBER COLON {
+		//open scope: inside - declare ID.
+	}
+	Statment {
+		$$ = new string(symtab.getAnonSymbol());
+		//output the dsm exp for the new anon function.
+		//output all local scope symbols in format (x, y, ...) - accept 't' and ID.
+		cout << " = ";
+		cout << symtab.getSymInfo(*$7).getDsmExp();
+		//output all local scope symbols in format (x, y, ...) - but 't' is replaced with L_split(...),
+		//	and ID is replaced with L_index(...)
+		//close scope
+		delete $1; delete $7;
+	}
+	;
 
 Exp: NUMBER {cout << *$1; delete $1;}
 	| LparenPrint Exp COMMA {cout << ',';} Exp RparenPrint

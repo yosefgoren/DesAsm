@@ -21,7 +21,7 @@ const string& Symtab::defineGlobalValue(const string& sym){
 void Symtab::closeScope(){
 	if(nested_scopes.empty())
 		throw InternalError("cannot close scope - no local scopes open");
-	set<string> last_scope = nested_scopes.back();
+	vector<string> last_scope = nested_scopes.back();
 	for(auto sym: last_scope){
 		delete table[sym];
 		table.erase(sym);
@@ -46,6 +46,10 @@ const std::string& Symtab::defineAnonFunc(const std::string& sym, const std::vec
 	table[sym] = new SymInfo("a_{"+sym+"}");
 	openScope(params);
 	return table[sym]->getDsmExp();
+}
+
+const std::vector<std::vector<std::string>>& Symtab::getLocalScopes() const{
+	return nested_scopes;
 }
 
 const std::string& Symtab::SymInfo::getDsmExp() const{
@@ -98,11 +102,9 @@ Symtab::SymInfo* Symtab::allocateSubscriptSymInfo(const std::string& sym){
 }
 
 void Symtab::openScope(const std::vector<std::string>& local_symbols){
-	nested_scopes.push_back(set<string>());
-	set<string>& new_scope = nested_scopes.back();
 	for(auto sym: local_symbols){
 		checkDefinable(sym);
 		table[sym] = allocateSubscriptSymInfo(sym);
-		new_scope.insert(sym);
 	}
+	nested_scopes.push_back(local_symbols);
 }
