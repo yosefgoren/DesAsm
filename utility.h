@@ -1,10 +1,8 @@
 #ifndef UTILITY_H
 #define UTILITY_H
+#include <string>
+using namespace std;
 
-enum Binop{
-	PLUS,
-	MINUS,
-	MULT
-};
+string toDasmName(string name);
 
 #endif

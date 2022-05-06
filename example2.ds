@@ -1,20 +1,20 @@
-curve CartesianGrid~pair(n~int):
+curve CartesianGrid(n):
 	(CartesianX(n),CartesianY(n))
 
-curve CartesianX~real(n~int):
+curve CartesianX(n):
 	part:
 		GridAux1(n)
 	part:
 		GridAux2(n)
 
-curve CartesianY~real(n~int):
+curve CartesianY(n):
 	part:
 		GridAux2(n)
 	part:
 		GridAux1(n)
 
-curve GridAux1~real(n~int):
+curve GridAux1(n):
 	floor(t*(n+1))/n
 
-curve GridAux2~real(n~int):
+curve GridAux2(n):
 	mod(t*(n+1),1)

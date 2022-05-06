@@ -1,16 +1,16 @@
-curve Circle~pair(r~real):
-	r*(cos(2*pi t), sin(2*pi t))
+curve Circle(r):
+	r*(cos(2*pi*t), sin(2*pi*t))
 
 curve Connect(p, q):
 	p*t + q*(1-t)
 
-Center~pair:
+curve Center:
 	(0,0)
 
-Mid~real:
+curve Mid:
 	0.5
 
-curve Triple~pair:
+curve Triple:
 	from 0 to Mid:
 		for i in range(10):
 			Circle(2*i)+(i,0)

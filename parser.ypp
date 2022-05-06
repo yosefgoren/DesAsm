@@ -3,6 +3,11 @@
 	void yyerror(const char* s);
 	#include "utility.h"
 	#include <string>
+	#include <vector>
+	#include <iostream>
+	#include "Symtab.h"
+	Symtab symtab;
+	using namespace std;
 
 	extern int yylineno;
 
@@ -14,42 +19,75 @@
 %union{
 //lexer fields:
 	std::string* text;
-	Binop binop;
-	int integer;
 //semantic properties:
-
+	std::vector<std::string>* param_list;
 };
 
-%token CURVE DISPLAY
-%token INT REAL PAIR
-%token IS_A
-%token COLON
-%token ID
-%token T
-%left BINOP
-%token PI NUMBER
-%token LPAREN RPAREN
-
+%token CURVE DISPLAY FOR IN
+%token COLON COMMA
+%token LPAREN RPAREN LBRACE RBRACE
+ 
+%left <text> BINOP
+%token <text> NUMBER ID
+%type <param_list> FormalsSpec FormalsList FormalsListTail
 %%
 Program: Delcerations;
 Delcerations: Delcerations Declaration | Declaration;
-Declaration: CURVE AnnotatedId LPAREN Params RPAREN COLON Statment {};
-Params: AnnotatedId Params | ;
-AnnotatedId: ID | ID IS_A TypeToken;
-TypeToken:	INT | REAL | PAIR;
 
-Statment: Exp;
+LparenPrint: LPAREN {cout << "\\left(";};
+RparenPrint: RPAREN {cout << "\\right)";};
+IdPrint: ID {cout << symtab.getSymInfo(*$1).getDsmExp(); delete $1;};
 
-Literal: PI | NUMBER;
-Exp: Literal | ID | Exp BINOP Exp | LPAREN Exp RPAREN | T;
+Declaration: CURVE ID FormalsSpec COLON
+	{
+		symtab.defineFunction(*$2, *$3);
+		cout << symtab.getSymInfo(*$2).getDsmExp()<<"\\left(";
+		for(auto param_sym: *$3){
+			cout << symtab.getSymInfo(param_sym).getDsmExp();
+			if(*($3->rbegin()) != param_sym)
+				cout << " , ";
+		}
+		cout << "\\right)";
+	}
+	{cout << "=";} Statment {cout << endl;};
+
+FormalsSpec: LparenPrint FormalsList RparenPrint {$$ = $2; $$->push_back("t");}
+	| {$$ = new std::vector<std::string>(); $$->push_back("t");};
+FormalsList: FormalsListTail {$$ = $1;}
+	| {$$ = new std::vector<std::string>();};
+FormalsListTail: ID COMMA FormalsListTail {$3->push_back(*$1); delete $1; $$ = $3;}
+	| ID {$$ = new std::vector<std::string>(); $$->push_back(*$1); delete $1;};
+
+Statment: Exp
+	| FOR ID IN NUMBER COLON Statment;
+
+Exp: NUMBER {cout << *$1; delete $1;}
+	| LparenPrint Exp COMMA {cout << ',';} Exp RparenPrint
+	| LparenPrint Exp RparenPrint
+	| IdPrint
+	| Exp BINOP {cout << *$2 << " "; delete $2;} Exp 
+	| FuncCall;
+
+FuncCall: IdPrint FuncCallTail;
+FuncCallTail: LparenPrint ExpList RparenPrint;
+
+ExpList: Exp COMMA {cout << ',';} ExpList
+	| Exp
+	| ;
 %%
 
 void yyerror(const char* s){
-	printf("syntax error. line %d\n", yylineno);
+	printf("\nsyntax error. line %d\n", yylineno);
 	exit(1);
 }
 
 int main(){
-	yyparse();
+	try{
+		Symtab symtab = Symtab();
+		yyparse();
+	} catch(const SemanticError& e){
+		cout << "\n" << yylineno << ": " << e.errorMsg() << endl;
+	}
+	cout << "done!" << endl;
 	return 0;
 }
