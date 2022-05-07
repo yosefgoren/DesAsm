@@ -117,7 +117,10 @@ void Symtab::checkDefinable(const std::string& sym){
 }
 
 Symtab::SymInfo* Symtab::allocateSubscriptSymInfo(const std::string& sym){
-	return new SymInfo(sym == "t" ? "t" : sym.substr(0,1) + "_{" + sym + "}");
+	string dsm_exp = sym.substr(0,1);
+	if(sym.length() > 1)
+		dsm_exp += "_{" + sym + "}";
+	return new SymInfo(dsm_exp);
 }
 
 void Symtab::openScope(const std::vector<std::string>& local_symbols){

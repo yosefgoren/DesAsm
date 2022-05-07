@@ -1,8 +1,8 @@
 curve Circle:
-	(sin(2*pi*t), cos(2*pi*t))
+	(sin(2*pi*t), cos(2*pi*t), 0)
 	
-curve Circles(x, y):
+curve Circles:
 	for i in 4:
 		for j in 4:
 			for k in 4:
-				Circle(t)*k*0.25 + (2*i, 2*j)
+				Circle(t)*k*0.25 + (2*i, 2*j, 4-k)

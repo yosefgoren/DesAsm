@@ -16,6 +16,7 @@ whitespace  		([\t\n\r ])
 %%
 
 curve	return CURVE;
+func	return FUNC;
 display	return DISPLAY;
 for		return FOR;
 in		return IN;

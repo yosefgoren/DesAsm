@@ -21,38 +21,42 @@
 	std::string* text;
 //semantic properties:
 	std::vector<std::string>* param_list;
+	bool boolean;
 };
 
-%token CURVE DISPLAY FOR IN
+%token CURVE DISPLAY FUNC FOR IN
 %token COMMA
 %token LPAREN RPAREN LBRACE RBRACE
- 
+
 %left <text> BINOP
 %token <text> NUMBER ID COLON
 %type <text> Statment Exp ExpList FuncCall FuncCallTail
 %type <param_list> FormalsSpec FormalsList FormalsListTail
-
+%type <boolean> DeclarationHead
 %%
 Program: Delcerations;
 Delcerations: Delcerations Declaration | Declaration;
 
-Declaration: CURVE ID FormalsSpec COLON {
+DeclarationHead: CURVE {$$ = true;} | FUNC {$$ = false;};
+
+Declaration: DeclarationHead ID FormalsSpec COLON {
+		if($1)
+			$3->insert($3->begin(), "t");
 		symtab.defineFunction(*$2, *$3);
 		$4 = new string(symtab.getLocalsInFormat());
 	} Statment {
 		cout << symtab.getSymInfo(*$2).getDsmExp() << *$4;
-		cout << " = " << symtab.getSymInfo(*$6).getDsmExp() << *$4;
-		cout << endl;
+		cout << " = " << symtab.getSymInfo(*$6).getDsmExp() << *$4 << endl;
 		symtab.closeScope();
 		delete $2; delete $4; delete $6;
 	};
 
-FormalsSpec: LPAREN FormalsList RPAREN {$$ = $2; $$->push_back("t");}
-	| {$$ = new std::vector<std::string>(); $$->push_back("t");};
+FormalsSpec: LPAREN FormalsList RPAREN {$$ = $2;}
+	| {$$ = new std::vector<std::string>();};
 FormalsList: FormalsListTail {$$ = $1;}
 	| {$$ = new std::vector<std::string>();};
-FormalsListTail: ID COMMA FormalsListTail {$3->push_back(*$1); delete $1; $$ = $3;}
-	| ID {$$ = new std::vector<std::string>(); $$->push_back(*$1); delete $1;};
+FormalsListTail: ID COMMA FormalsListTail {$3->insert($3->begin(), *$1); delete $1; $$ = $3;}
+	| ID {$$ = new std::vector<std::string>({*$1}); delete $1;};
 
 Statment: Exp {
 		$$ = new string(symtab.getAnonSymbol());
@@ -84,6 +88,8 @@ Statment: Exp {
 
 Exp: NUMBER {$$ = $1;}
 	| LPAREN Exp COMMA Exp RPAREN {$$ = new string("\\left("+*$2+" , "+*$4+"\\right)"); delete $2; delete $4;}
+	| LPAREN Exp COMMA Exp COMMA Exp RPAREN
+		{$$ = new string("\\left["+*$2+" , "+*$4+" , "+*$6+"\\right]"); delete $2; delete $4; delete $6;}
 	| LPAREN Exp RPAREN {$$ = $2; *$$ = "\\left("+*$$+"\\right)";}
 	| ID {$$ = $1; $$ = new string(symtab.getSymInfo(*$$).getDsmExp());}
 	| Exp BINOP Exp {$$ = new string(*$1+" "+*$2+" "+*$3); delete $1; delete $2; delete $3;}
@@ -103,12 +109,16 @@ void yyerror(const char* s){
 }
 
 int main(){
+	cout << endl;
+	cout << "L_{0}\\left(x,y,t\\right)=\\frac{t-x}{y-x}" << endl;
+	cout << "L_{1}\\left(x,y,t\\right)=\\left(1-t\\right)x+ty" << endl;
+	cout << "L_{split}(t,k)=L_{0}(0,\\frac{1}{k},\\operatorname{mod}(t,\\frac{1}{k}))" << endl;
+	cout << "L_{index}(t,k)=\\operatorname{floor}(kt)+1" << endl;
 	try{
 		Symtab symtab = Symtab();
 		yyparse();
 	} catch(const SemanticError& e){
 		cout << "\nline " << yylineno << ": " << e.errorMsg() << endl;
 	}
-	cout << "done!" << endl;
 	return 0;
 }
