@@ -88,12 +88,14 @@ Statment: Exp {
 
 Exp: NUMBER {$$ = $1;}
 	| LPAREN Exp COMMA Exp RPAREN {$$ = new string("\\left("+*$2+" , "+*$4+"\\right)"); delete $2; delete $4;}
-	| LPAREN Exp COMMA Exp COMMA Exp RPAREN
+	| LBRACE Exp COMMA Exp COMMA Exp RBRACE
 		{$$ = new string("\\left["+*$2+" , "+*$4+" , "+*$6+"\\right]"); delete $2; delete $4; delete $6;}
 	| LPAREN Exp RPAREN {$$ = $2; *$$ = "\\left("+*$$+"\\right)";}
-	| ID {$$ = $1; $$ = new string(symtab.getSymInfo(*$$).getDsmExp());}
+	| ID {$$ = $1; *$$ = symtab.getSymInfo(*$$).getDsmExp();}
 	| Exp BINOP Exp {$$ = new string(*$1+" "+*$2+" "+*$3); delete $1; delete $2; delete $3;}
-	| FuncCall {$$ = $1;};
+	| FuncCall {$$ = $1;}
+	| ID LBRACE NUMBER RBRACE {$$ = $1; *$$ = symtab.getSymInfo(*$$).getDsmExp()+"\\left["+*$3+"\\right]"; delete $3;}
+	;
 
 FuncCall: ID FuncCallTail {$$ = new string(symtab.getSymInfo(*$1).getDsmExp()+*$2); delete $1; delete $2;};
 FuncCallTail: LPAREN ExpList RPAREN {$$ = $2; *$$ = "\\left("+*$$+"\\right)";};
@@ -114,6 +116,7 @@ int main(){
 	cout << "L_{1}\\left(x,y,t\\right)=\\left(1-t\\right)x+ty" << endl;
 	cout << "L_{split}(t,k)=L_{0}(0,\\frac{1}{k},\\operatorname{mod}(t,\\frac{1}{k}))" << endl;
 	cout << "L_{index}(t,k)=\\operatorname{floor}(kt)+1" << endl;
+	cout << endl;
 	try{
 		Symtab symtab = Symtab();
 		yyparse();

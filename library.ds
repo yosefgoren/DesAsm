@@ -1,3 +1,9 @@
-curve rotate(x, y, q):
-	(x*cos(q)-y*sin(q), x*sin(q)+y*cos(q))
+func rotateX(x, y, q):
+	x*cos(q)-y*sin(q)
+
+func rotateY(x, y, q):
+	x*sin(q)+y*cos(q)
+
+func rotateXY(c, q):
+	[rotateX(c[1], c[2], q), rotateY(c[1], c[2]), c[3]]
 
