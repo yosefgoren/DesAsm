@@ -1,0 +1,7 @@
+curve Circle:
+	(sin(2*pi*t), cos(2*pi*t))
+	
+curve Circles:
+	for i in 4:
+		for j in 4:
+			Circle(t) + (2*i, 2*j)

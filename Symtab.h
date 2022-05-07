@@ -45,18 +45,26 @@ struct Symtab{
 	/**
 	 * @brief define an anonymous function.
 	 * @param sym should be the identifier returned by 'getAnonSymbol'.
+	 * @param new_params the parameters added to the top scope by this new anon function.
 	 * opens the local scope for the definition of this new function.
 	 * if definition is not possible, @throw InternalError.
 	 * @return the dsm exp of the new function.
 	 */
-	const std::string& defineAnonFunc(const std::string& sym, const std::vector<std::string>& params);
+	const std::string& defineAnonFunc(const std::string& sym, const std::vector<std::string>& new_params = {});
 
 	/**
 	 * @return all symbols from local scopes.
 	 * the returned vector begining is the first symbols from the earliest scope,
 	 * the last symbols in the returned vector are the last symbols from the latest scope.
 	 */
+
 	const std::vector<std::vector<std::string>>& getLocalScopes() const;
+	/**
+	 * @return a string containing all local parameters in format '(x, y, z ...)'
+	 * The ordering is the same as in 'getLocalScopes'.
+	 */
+	std::string getLocalsInFormat(const std::map<std::string, std::string>& replace={}
+		, const std::set<std::string> ignore={});
 
 	struct SymInfo{
 		SymInfo(const std::string& dsm_exp);

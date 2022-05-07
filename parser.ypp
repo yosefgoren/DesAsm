@@ -21,37 +21,34 @@
 	std::string* text;
 //semantic properties:
 	std::vector<std::string>* param_list;
-	std::string* symbol;
 };
 
 %token CURVE DISPLAY FOR IN
-%token COLON COMMA
+%token COMMA
 %token LPAREN RPAREN LBRACE RBRACE
  
 %left <text> BINOP
-%token <text> NUMBER ID
+%token <text> NUMBER ID COLON
+%type <text> Statment Exp ExpList FuncCall FuncCallTail
 %type <param_list> FormalsSpec FormalsList FormalsListTail
-%type <symbol> Statment
+
 %%
 Program: Delcerations;
 Delcerations: Delcerations Declaration | Declaration;
 
 LparenPrint: LPAREN {cout << "\\left(";};
 RparenPrint: RPAREN {cout << "\\right)";};
-IdPrint: ID {cout << symtab.getSymInfo(*$1).getDsmExp(); delete $1;};
 
-Declaration: CURVE ID FormalsSpec COLON
-	{
+Declaration: CURVE ID FormalsSpec COLON {
 		symtab.defineFunction(*$2, *$3);
-		cout << symtab.getSymInfo(*$2).getDsmExp()<<"\\left(";
-		for(auto param_sym: *$3){
-			cout << symtab.getSymInfo(param_sym).getDsmExp();
-			if(*($3->rbegin()) != param_sym)
-				cout << " , ";
-		}
-		cout << "\\right)";
-	}
-	{cout << "=";} Statment {cout << endl;};
+		$4 = new string(symtab.getLocalsInFormat());
+	} Statment {
+		cout << symtab.getSymInfo(*$2).getDsmExp() << *$4;
+		cout << " = " << symtab.getSymInfo(*$6).getDsmExp() << *$4;
+		cout << endl;
+		symtab.closeScope();
+		delete $2; delete $4; delete $6;
+	};
 
 FormalsSpec: LparenPrint FormalsList RparenPrint {$$ = $2; $$->push_back("t");}
 	| {$$ = new std::vector<std::string>(); $$->push_back("t");};
@@ -60,41 +57,47 @@ FormalsList: FormalsListTail {$$ = $1;}
 FormalsListTail: ID COMMA FormalsListTail {$3->push_back(*$1); delete $1; $$ = $3;}
 	| ID {$$ = new std::vector<std::string>(); $$->push_back(*$1); delete $1;};
 
-Statment: {
+Statment: Exp {
 		$$ = new string(symtab.getAnonSymbol());
-		//output the dsm exp for the new anon function.
-		//output all local scope symbols in format (x, y, ...)
-		cout << " = ";
-	} Exp
+		cout << symtab.defineAnonFunc(*$$)+symtab.getLocalsInFormat()+" = "+*$1;
+		cout << endl;
+		symtab.closeScope();
+	}
 	| FOR ID IN NUMBER COLON {
-		//open scope: inside - declare ID.
+		$5 = new string(symtab.getAnonSymbol());
+		//open scope and inside - declare ID:
+		symtab.defineAnonFunc(*$5, std::vector<std::string>({*$2}));
 	}
 	Statment {
-		$$ = new string(symtab.getAnonSymbol());
-		//output the dsm exp for the new anon function.
-		//output all local scope symbols in format (x, y, ...) - accept 't' and ID.
-		cout << " = ";
-		cout << symtab.getSymInfo(*$7).getDsmExp();
-		//output all local scope symbols in format (x, y, ...) - but 't' is replaced with L_split(...),
-		//	and ID is replaced with L_index(...)
-		//close scope
-		delete $1; delete $7;
+		$$ = $5;
+		//output anon func definition in format 'func(x, y, ...)', 'ID' is not a parameter.
+		cout << symtab.getSymInfo(*$$).getDsmExp()+symtab.getLocalsInFormat({}, {*$2})+" = ";
+		
+		//output value of our anon func: a call to the 'Statment' anon func,
+		//	it's 't' parameter is replaced with 'L_split' and it's 'ID' parameter is replaced with 'L_index':
+		cout << symtab.getSymInfo(*$7).getDsmExp()+symtab.getLocalsInFormat({
+			{"t","L_{split}\\left(t, "+*$4+"\\right)"},
+			{*$2,"L_{index}\\left(t, "+*$4+"\\right)"},
+		});
+		cout << endl;
+		symtab.closeScope();
+		delete $2; delete $4; delete $7;
 	}
 	;
 
-Exp: NUMBER {cout << *$1; delete $1;}
-	| LparenPrint Exp COMMA {cout << ',';} Exp RparenPrint
-	| LparenPrint Exp RparenPrint
-	| IdPrint
-	| Exp BINOP {cout << *$2 << " "; delete $2;} Exp 
-	| FuncCall;
+Exp: NUMBER {$$ = $1;}
+	| LPAREN Exp COMMA Exp RPAREN {$$ = new string("\\left("+*$2+" , "+*$4+"\\right)"); delete $2; delete $4;}
+	| LPAREN Exp RPAREN {$$ = $2; *$$ = "\\left("+*$$+"\\right)";}
+	| ID {$$ = $1; $$ = new string(symtab.getSymInfo(*$$).getDsmExp());}
+	| Exp BINOP Exp {$$ = new string(*$1+" "+*$2+" "+*$3); delete $1; delete $2; delete $3;}
+	| FuncCall {$$ = $1;};
 
-FuncCall: IdPrint FuncCallTail;
-FuncCallTail: LparenPrint ExpList RparenPrint;
+FuncCall: ID FuncCallTail {$$ = new string(symtab.getSymInfo(*$1).getDsmExp()+*$2); delete $1; delete $2;};
+FuncCallTail: LPAREN ExpList RPAREN {$$ = $2; *$$ = "\\left("+*$$+"\\right)";};
 
-ExpList: Exp COMMA {cout << ',';} ExpList
-	| Exp
-	| ;
+ExpList: Exp COMMA ExpList {$$ = $1; *$$ += " , "+*$3; delete $3;}
+	| Exp {$$ = $1;}
+	| {$$ = new string(" ");};
 %%
 
 void yyerror(const char* s){
@@ -107,7 +110,7 @@ int main(){
 		Symtab symtab = Symtab();
 		yyparse();
 	} catch(const SemanticError& e){
-		cout << "\n" << yylineno << ": " << e.errorMsg() << endl;
+		cout << "\nline " << yylineno << ": " << e.errorMsg() << endl;
 	}
 	cout << "done!" << endl;
 	return 0;

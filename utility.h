@@ -1,8 +1,7 @@
 #ifndef UTILITY_H
 #define UTILITY_H
 #include <string>
-using namespace std;
+#include <vector>
 
-string toDasmName(string name);
 
 #endif

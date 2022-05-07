@@ -40,16 +40,35 @@ string Symtab::getAnonSymbol(){
 	return to_string(++anon_count);
 }
 
-const std::string& Symtab::defineAnonFunc(const std::string& sym, const std::vector<std::string>& params){
+const std::string& Symtab::defineAnonFunc(const std::string& sym, const std::vector<std::string>& new_params){
 	if(table.count(sym) > 0)
 		throw InternalError("cannot define anon function with symbol: '"+sym+"'");
 	table[sym] = new SymInfo("a_{"+sym+"}");
-	openScope(params);
+	openScope(new_params);
 	return table[sym]->getDsmExp();
 }
 
 const std::vector<std::vector<std::string>>& Symtab::getLocalScopes() const{
 	return nested_scopes;
+}
+
+std::string Symtab::getLocalsInFormat(const std::map<std::string, std::string>& replace
+		, const std::set<std::string> ignore){
+	vector<const string*> items;
+	for(vector<string>& scope: nested_scopes)
+		for(const string& sym: scope)
+			if(ignore.count(sym) == 0)
+				items.push_back(&sym);
+	
+	string res = "\\left(";
+	for(const string* symp: items){
+		const string& sym = *symp;
+		res += replace.count(sym)>0 ? replace.at(sym) : getSymInfo(sym).getDsmExp();
+		if(*(items.rbegin()) != symp)
+			res += " , ";
+	}
+	res += "\\right)";
+	return res;
 }
 
 const std::string& Symtab::SymInfo::getDsmExp() const{
@@ -98,7 +117,7 @@ void Symtab::checkDefinable(const std::string& sym){
 }
 
 Symtab::SymInfo* Symtab::allocateSubscriptSymInfo(const std::string& sym){
-	return new SymInfo(sym.substr(0,1) + "_{" + sym + "}");
+	return new SymInfo(sym == "t" ? "t" : sym.substr(0,1) + "_{" + sym + "}");
 }
 
 void Symtab::openScope(const std::vector<std::string>& local_symbols){
