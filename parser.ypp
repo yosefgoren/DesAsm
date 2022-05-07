@@ -36,9 +36,6 @@
 Program: Delcerations;
 Delcerations: Delcerations Declaration | Declaration;
 
-LparenPrint: LPAREN {cout << "\\left(";};
-RparenPrint: RPAREN {cout << "\\right)";};
-
 Declaration: CURVE ID FormalsSpec COLON {
 		symtab.defineFunction(*$2, *$3);
 		$4 = new string(symtab.getLocalsInFormat());
@@ -50,7 +47,7 @@ Declaration: CURVE ID FormalsSpec COLON {
 		delete $2; delete $4; delete $6;
 	};
 
-FormalsSpec: LparenPrint FormalsList RparenPrint {$$ = $2; $$->push_back("t");}
+FormalsSpec: LPAREN FormalsList RPAREN {$$ = $2; $$->push_back("t");}
 	| {$$ = new std::vector<std::string>(); $$->push_back("t");};
 FormalsList: FormalsListTail {$$ = $1;}
 	| {$$ = new std::vector<std::string>();};
