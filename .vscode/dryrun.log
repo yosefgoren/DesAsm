@@ -3,6 +3,5 @@ make.exe: Entering directory `c:/Users/pc/Desktop/Projects/DesAsm'
 flexBison/win_flex.exe scanner.lex
 flexBison/win_bison.exe -Wcounterexamples -d parser.ypp
 g++ -std=c++17 -g3 -o dasm *.c *.cpp
- 
 make.exe: Leaving directory `c:/Users/pc/Desktop/Projects/DesAsm'
  
