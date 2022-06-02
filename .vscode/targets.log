@@ -7,7 +7,7 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 
 # This program built for i386-pc-mingw32
 
-# Make data base, printed on Thu May 19 11:22:59 2022
+# Make data base, printed on Thu Jun 02 20:01:29 2022
 
 # Variables
 
@@ -52,7 +52,7 @@ PROGRAMW6432 = C:\Program Files
 # environment
 PROGRAMDATA = C:\ProgramData
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-f20ed11d-9095-4eb8-9bf5-e6a750bb36d0-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-2788fe47-b5ef-49db-a326-b5c4f25d9c6a-sock
 # environment
 VSCODE_CWD = C:\Users\pc\AppData\Local\Programs\Microsoft VS Code
 # environment
@@ -82,7 +82,7 @@ SYNAPROGDIR = Synaptics\SynTP
 # environment
 ANDROID_SDK_HOME = C:\Android
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_5364_FVGGPUKJPJADIKPK
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_8976_EIVRDFAYNGVPWASL
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
@@ -102,7 +102,7 @@ VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
 VSCODE_CODE_CACHE_PATH = C:\Users\pc\AppData\Roaming\Code\CachedData\c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
 COMMONPROGRAMFILES = C:\Program Files (x86)\Common Files
 # environment
@@ -188,7 +188,7 @@ LANG = C
 # environment
 PROCESSOR_LEVEL = 6
 # environment
-VSCODE_PID = 5364
+VSCODE_PID = 8976
 # environment
 USERDOMAIN_ROAMINGPROFILE = DESKTOP-86KTLQ1
 # variable set hash-table stats:
@@ -206,9 +206,9 @@ USERDOMAIN_ROAMINGPROFILE = DESKTOP-86KTLQ1
 # C:\GCC55\mingw-w64\x86_64-5.4.0-posix-seh-rt_v5-rev0\mingw64\bin (key C:/GCC55/mingw-w64/x86_64-5.4.0-posix-seh-rt_v5-rev0/mingw64/bin, mtime 1596890295): 61 files, no impossibilities.
 # C:\WINDOWS\System32\WindowsPowerShell\v1.0\ (key C:/WINDOWS/System32/WindowsPowerShell/v1.0/, mtime 1625531307): 30 files, no impossibilities.
 # C:\WINDOWS\System32\Wbem (key C:/WINDOWS/System32/Wbem, mtime 1652340770): 171 files, no impossibilities.
-# . (key c:/Users/pc/Desktop/Projects/DesAsm, mtime 1652894246): 26 files, no impossibilities.
+# . (key c:/Users/pc/Desktop/Projects/DesAsm, mtime 1654107026): 30 files, no impossibilities.
 # C:\Program Files\SourceGear\Common\DiffMerge\ (key C:/Program Files/SourceGear/Common/DiffMerge/, mtime 1608070435): 9 files, no impossibilities.
-# C:\Users\pc\AppData\Local\Microsoft\WindowsApps (key C:/Users/pc/AppData/Local/Microsoft/WindowsApps, mtime 1652810069): 26 files, no impossibilities.
+# C:\Users\pc\AppData\Local\Microsoft\WindowsApps (key C:/Users/pc/AppData/Local/Microsoft/WindowsApps, mtime 1653584175): 26 files, no impossibilities.
 # C:\Program Files\nodejs\ (key C:/Program Files/nodejs/, mtime 1640997748): 13 files, no impossibilities.
 # C:\Program Files (x86)\Pulse Secure\VC142.CRT\X64\ (key C:/Program Files (x86)/Pulse Secure/VC142.CRT/X64/, mtime 1638958065): 10 files, no impossibilities.
 # C:\Program Files (x86)\SMLNJ\bin\ (key C:/Program Files (x86)/SMLNJ/bin/, mtime 1604173573): 14 files, no impossibilities.
@@ -226,13 +226,13 @@ USERDOMAIN_ROAMINGPROFILE = DESKTOP-86KTLQ1
 # C:\Program Files (x86)\Nmap (key C:/Program Files (x86)/Nmap, mtime 1651062165): 37 files, no impossibilities.
 # C:\Program Files (x86)\MiKTeX 2.9\miktex\bin\ (key C:/Program Files (x86)/MiKTeX 2.9/miktex/bin/, mtime 1638543704): 598 files, no impossibilities.
 # C:\Program Files\Git\cmd (key C:/Program Files/Git/cmd, mtime 1596522809): 8 files, no impossibilities.
-# C:\WINDOWS\system32 (key C:/WINDOWS/system32, mtime 1652948334): 3019 files, no impossibilities.
+# C:\WINDOWS\system32 (key C:/WINDOWS/system32, mtime 1654172301): 3019 files, no impossibilities.
 # C:\Program Files (x86)\LyX 2.3\Perl\bin (key C:/Program Files (x86)/LyX 2.3/Perl/bin, mtime 1638543960): 11 files, no impossibilities.
 # C:\Users\pc\AppData\Local\Programs\Microsoft VS Code\bin (key C:/Users/pc/AppData/Local/Programs/Microsoft VS Code/bin, mtime 1652897328): 4 files, no impossibilities.
 # C:\Program Files (x86)\Pulse Secure\VC142.CRT\X86\ (key C:/Program Files (x86)/Pulse Secure/VC142.CRT/X86/, mtime 1638958065): 9 files, no impossibilities.
 # C:\Users\pc\AppData\Roaming\npm (key C:/Users/pc/AppData/Roaming/npm, mtime 1641049433): 12 files, no impossibilities.
 
-# 4520 files, no impossibilities in 31 directories.
+# 4524 files, no impossibilities in 31 directories.
 
 # Implicit Rules
 
@@ -305,6 +305,6 @@ makefile:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Thu May 19 11:22:59 2022
+# Finished Make data base on Thu Jun 02 20:01:29 2022
 
  

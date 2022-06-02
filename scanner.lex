@@ -2,7 +2,6 @@
 	#include "stdlib.h"
 	#include <string>
 	#include <vector>
-	#include "utility.h"
 	#include "parser.tab.hpp"
 %}
 
@@ -25,6 +24,7 @@ in		return IN;
 
 {id}	{yylval.text = new std::string(yytext); return ID;}
 {number}	{yylval.text =new std::string(yytext); return NUMBER;}	
+~ return AND_ALSO;
 \(	return LPAREN;
 \)	return RPAREN;
 \[	return LBRACE;
@@ -32,8 +32,9 @@ in		return IN;
 \+	{yylval.text = new std::string(yytext); return BINOP;}
 \*	{yylval.text = new std::string("\\cdot"); return BINOP;}
 -	{yylval.text = new std::string(yytext); return BINOP;}
+\/	{yylval.text = new std::string(yytext); return BINOP;}
 
 {whitespace}	;
-.	{printf("at line %d: unexpected character: \'%s\'\n", yytext, yylineno); exit(1);};
+.	{printf("at line %d: unexpected character: \'%s\'\n", yylineno, yytext); exit(1);};
 
 %%

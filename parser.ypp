@@ -12,28 +12,31 @@
 	extern int yylineno;
 
 	#define YYERROR_VERBOSE 1
-	#define YYDEBUG 1
-	extern int yydebug;
+	#define YYDEBUG 0
 %}
 
 %union{
 //lexer fields:
 	std::string* text;
 //semantic properties:
+	std::vector<std::string>* symbol_list;
 	std::vector<std::string>* param_list;
 	bool boolean;
 };
 
 %token CURVE DISPLAY FUNC FOR IN
-%token COMMA
+%token COMMA AND_ALSO
 %token LPAREN RPAREN LBRACE RBRACE
 
 %left <text> BINOP
 %token <text> NUMBER ID COLON
 %type <text> Statment Exp ExpList FuncCall FuncCallTail
+%type <symbol_list> Statments
 %type <param_list> FormalsSpec FormalsList FormalsListTail
 %type <boolean> DeclarationHead
+
 %%
+
 Program: Delcerations;
 Delcerations: Delcerations Declaration | Declaration;
 
@@ -44,11 +47,16 @@ Declaration: DeclarationHead ID FormalsSpec COLON {
 			$3->insert($3->begin(), "t");
 		symtab.defineFunction(*$2, *$3);
 		$4 = new string(symtab.getLocalsInFormat());
-	} Statment {
-		cout << symtab.getSymInfo(*$2).getDsmExp() << *$4;
-		cout << " = " << symtab.getSymInfo(*$6).getDsmExp() << *$4 << endl;
-		symtab.closeScope();
-		delete $2; delete $4; delete $6;
+	} Statments {
+		// int counter = 0;
+		for(const std::string& symbol : *$6){
+			// cout << "declaring symbol: " << symbol << endl;
+			// cout << symtab.getSymInfo(*$2).getDsmExp() << counter++ << *$4;
+			cout << symtab.getSymInfo(*$2).getDsmExp() << *$4;
+			cout << " = " << symtab.getSymInfo(symbol).getDsmExp() << *$4 << endl;
+			symtab.closeScope();
+			delete $2; delete $4; delete $6;
+		}
 	};
 
 FormalsSpec: LPAREN FormalsList RPAREN {$$ = $2;}
@@ -57,6 +65,15 @@ FormalsList: FormalsListTail {$$ = $1;}
 	| {$$ = new std::vector<std::string>();};
 FormalsListTail: ID COMMA FormalsListTail {$3->insert($3->begin(), *$1); delete $1; $$ = $3;}
 	| ID {$$ = new std::vector<std::string>({*$1}); delete $1;};
+
+Statments: Statments AND_ALSO Statment {
+		// std::cout << "got new statment symbol: " << *$3 << endl;
+		$1->push_back(*$3);
+		$$ = $1;
+		delete $3;
+	}
+	| Statment {$$ = new std::vector<std::string>({*$1}); delete $1;}
+	;
 
 Statment: Exp {
 		$$ = new string(symtab.getAnonSymbol());
@@ -105,27 +122,3 @@ ExpList: Exp COMMA ExpList {$$ = $1; *$$ += " , "+*$3; delete $3;}
 	| {$$ = new string(" ");};
 %%
 
-void yyerror(const char* s){
-	printf("\nsyntax error. line %d\n", yylineno);
-	exit(1);
-}
-
-int main(int argc, char** argv){
-	cout << endl;
-	for(int i = 0; i < argc; ++i)
-		if(argv[i] == "nolib"){
-			cout << "L_{0}\\left(x,y,t\\right)=\\frac{t-x}{y-x}" << endl;
-			cout << "L_{1}\\left(x,y,t\\right)=\\left(1-t\\right)x+ty" << endl;
-			cout << "L_{split}(t,k)=L_{0}(0,\\frac{1}{k},\\operatorname{mod}(t,\\frac{1}{k}))" << endl;
-			cout << "L_{index}(t,k)=\\operatorname{floor}(kt)+1" << endl;
-			cout << endl;
-		}
-	
-	try{
-		Symtab symtab = Symtab();
-		yyparse();
-	} catch(const SemanticError& e){
-		cout << "\nline " << yylineno << ": " << e.errorMsg() << endl;
-	}
-	return 0;
-}

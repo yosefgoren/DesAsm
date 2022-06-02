@@ -1,4 +1,6 @@
 flexBison/
+build/
 *.tab.*
 makefile
 lex.yy.c
+dasm.exe

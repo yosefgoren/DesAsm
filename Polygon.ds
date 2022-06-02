@@ -1,0 +1,9 @@
+curve connect(v, u):
+	v*t + u*(1-t)
+
+curve Circle:
+	(sin(2*pi*t), cos(2*pi*t))
+
+curve Triangle(n):
+	for i in 3:
+		connect(t, Circle(i/3), Circle(mod(i+1,3)/3))
