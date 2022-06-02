@@ -1,0 +1,6 @@
+1. enable arbitrary expression as for loop argument.
+2. enable importing other files.
+3. enable 'display' feature.
+4. enable 'inline latex' feature.
+5. enable basic type properties and checking to exressions.
+5. enable 'function' alternative to 'curve'.
