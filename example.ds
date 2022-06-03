@@ -16,3 +16,4 @@ curve Multi:
 		for j in 5:
 			for k in 6:
 				Triangle(t)*k*0.25 + (2*i, 2*j)
+	~ (t,t)

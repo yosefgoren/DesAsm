@@ -47,15 +47,33 @@ Declaration: DeclarationHead ID FormalsSpec COLON {
 		symtab.defineFunction(*$2, *$3);
 		$4 = new string(symtab.getLocalsInFormat());
 	} Statments {
-		// int counter = 0;
-		for(const std::string& symbol : *$6){
-			// cout << "declaring symbol: " << symbol << endl;
-			// cout << symtab.getSymInfo(*$2).getDsmExp() << counter++ << *$4;
-			cout << symtab.getSymInfo(*$2).getDsmExp() << *$4;
-			cout << " = " << symtab.getSymInfo(symbol).getDsmExp() << *$4 << endl;
-			symtab.closeScope();
-			delete $2; delete $4; delete $6;
+		std::string decl_rvalue;
+		if($6->size() > 1){
+			int counter = 1;
+			std::string aggregate_sym = symtab.getAnonSymbol();//TODO: need to add k_0 or statment split variable here.
+			symtab.defineAnonFunc(aggregate_sym, std::vector<std::string>({"k_0"}));
+			int chop_size = std::string("\\left(").size();
+			std::string anon_params_format = "\\left(k_0,"+$4->substr(chop_size, $4->size()-chop_size);
+			cout << symtab.getSymInfo(aggregate_sym).getDsmExp() << anon_params_format <<  "=";
+			
+			cout << "\\left\\{";
+			for(std::string& symbol : *$6){
+				if(symbol != (*$6)[0])
+					cout << ",";
+				cout << "k_0=" << counter++ << ":";//TODO: change k_0 to anon symbol. Otherwise there are issues with nested multiple statments!
+				// cout << "declaring symbol: " << symbol << endl;
+				// cout << symtab.getSymInfo(*$2).getDsmExp() << counter++ << *$4;
+				cout << symtab.getSymInfo(symbol).getDsmExp() << *$4;
+			}
+			cout << "\\right\\}" << endl;
+			
+			decl_rvalue = symtab.getSymInfo(aggregate_sym).getDsmExp() + *$4;//here replace 't' with L_split and 'k_0' with L_indx
+		} else {
+			decl_rvalue = symtab.getSymInfo((*$6)[0]).getDsmExp() + *$4;
 		}
+		cout << symtab.getSymInfo(*$2).getDsmExp() << *$4 <<  "=" << decl_rvalue << endl;
+		symtab.closeScope();
+		delete $2; delete $4; delete $6;
 	};
 
 FormalsSpec: LPAREN FormalsList RPAREN {$$ = $2;}
