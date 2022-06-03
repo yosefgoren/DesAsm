@@ -4,3 +4,10 @@
 4. enable 'inline latex' feature.
 5. enable basic type properties and checking to exressions.
 5. enable 'function' alternative to 'curve'.
+6. enable comments.
+7. enable creating slides.
+
+
+* make interactive gui - basic.
+* make gui and extension that works on vscode.
+* make syntax anlizer that works from vscode.

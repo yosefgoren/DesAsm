@@ -8,10 +8,10 @@
 %option noyywrap
 %option yylineno
 
-id	([a-zA-Z][a-zA-Z0-9]*)
-number	((([1-9][0-9]*)|0)(.[0-9]+)?)
-whitespace  		([\t\n\r ])
-
+id			([a-zA-Z][a-zA-Z0-9]*)
+number		((([1-9][0-9]*)|0)(.[0-9]+)?)
+whitespace  ([\t\n\r ])
+comment 	(#[^\n\r]*)
 %%
 
 curve	return CURVE;
@@ -22,6 +22,7 @@ in		return IN;
 :	return COLON;
 ,	return COMMA;
 
+{comment} {;}
 {id}	{yylval.text = new std::string(yytext); return ID;}
 {number}	{yylval.text =new std::string(yytext); return NUMBER;}	
 ~ return AND_ALSO;
@@ -33,6 +34,7 @@ in		return IN;
 \*	{yylval.text = new std::string("\\cdot"); return BINOP;}
 -	{yylval.text = new std::string(yytext); return BINOP;}
 \/	{yylval.text = new std::string(yytext); return BINOP;}
+
 
 {whitespace}	;
 .	{printf("at line %d: unexpected character: \'%s\'\n", yylineno, yytext); exit(1);};
