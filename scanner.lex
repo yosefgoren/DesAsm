@@ -34,6 +34,7 @@ in		return IN;
 \*	{yylval.text = new std::string("\\cdot"); return BINOP;}
 -	{yylval.text = new std::string(yytext); return BINOP;}
 \/	{yylval.text = new std::string(yytext); return BINOP;}
+\^	{yylval.text = new std::string(yytext); return BINOP;}
 
 
 {whitespace}	;
