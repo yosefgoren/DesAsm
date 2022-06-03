@@ -38,13 +38,13 @@ int main(int argc, char** argv){
 		#endif
 		yyparse();
 	} catch(const SemanticError& e){
-		// cout << "\nline " << yylineno << ": " << e.errorMsg() << endl; //TODO: enable this!
+		cout << "\nline " << yylineno << ": " << e.errorMsg() << endl;
 	}
 	cout << endl << "0" << endl;
 	return 0;
 }
 
 void yyerror(const char* s){
-	printf("\nsyntax error. line %d\n", yylineno);
+	printf("\nsyntax error. line %d: %s\n", yylineno, s);
 	exit(1);
 }

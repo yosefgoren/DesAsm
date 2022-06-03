@@ -10,9 +10,9 @@
 	using namespace std;
 
 	extern int yylineno;
+	bool parsing_curve;
 
 	#define YYERROR_VERBOSE 1
-	#define YYDEBUG 0
 %}
 
 %union{
@@ -33,17 +33,16 @@
 %type <text> Statment Exp ExpList FuncCall FuncCallTail
 %type <symbol_list> Statments
 %type <param_list> FormalsSpec FormalsList FormalsListTail
-%type <boolean> DeclarationHead
 
 %%
 
 Program: Delcerations;
 Delcerations: Delcerations Declaration | Declaration;
 
-DeclarationHead: CURVE {$$ = true;} | FUNC {$$ = false;};
+DeclarationHead: CURVE {parsing_curve = true;} | FUNC {parsing_curve = false;};
 
 Declaration: DeclarationHead ID FormalsSpec COLON {
-		if($1)
+		if(parsing_curve)
 			$3->insert($3->begin(), "t");
 		symtab.defineFunction(*$2, *$3);
 		$4 = new string(symtab.getLocalsInFormat());
@@ -68,6 +67,9 @@ FormalsListTail: ID COMMA FormalsListTail {$3->insert($3->begin(), *$1); delete 
 
 Statments: Statments AND_ALSO Statment {
 		// std::cout << "got new statment symbol: " << *$3 << endl;
+		if(!parsing_curve){
+			yyerror("consecutive statments are only allowed in 'curve' declarations");
+		}
 		$1->push_back(*$3);
 		$$ = $1;
 		delete $3;
@@ -81,7 +83,10 @@ Statment: Exp {
 		cout << endl;
 		symtab.closeScope();
 	}
-	| FOR ID IN NUMBER COLON {
+	| FOR ID IN Exp COLON {
+		if(!parsing_curve){
+			yyerror("loops are only allowed in 'curve' declarations");
+		}
 		$5 = new string(symtab.getAnonSymbol());
 		//open scope and inside - declare ID:
 		symtab.defineAnonFunc(*$5, std::vector<std::string>({*$2}));

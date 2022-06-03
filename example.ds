@@ -4,15 +4,15 @@ curve Circle:
 curve connect(v, u):
 	v*t + u*(1-t)
 
-curve Triangle():
-	for i in 3:
-		connect(t, Circle(i/3), Circle(mod(i+1,3)/3))
+curve Polygon(n):
+	for i in n:
+		connect(t, Circle(i/n), Circle(mod(i+1,n)/n))
 
-func squared(n):
-	n^2
+curve Triangle():
+	Polygon(t,3)
 
 curve Multi:
 	for i in 3:
 		for j in 5:
 			for k in 6:
-				Triangle(t)*squared(k)*0.25 + (2*i, 2*j)
+				Triangle(t)*k*0.25 + (2*i, 2*j)
