@@ -52,13 +52,23 @@ const std::vector<std::vector<std::string>>& Symtab::getLocalScopes() const{
 	return nested_scopes;
 }
 
-std::string Symtab::getLocalsInFormat(const std::map<std::string, std::string>& replace
-		, const std::set<std::string> ignore){
-	vector<const string*> items;
-	for(vector<string>& scope: nested_scopes)
+std::vector<std::string> Symtab::getVariables() const{
+	vector<string> items;
+	for(const vector<string>& scope: nested_scopes)
 		for(const string& sym: scope)
-			if(ignore.count(sym) == 0)
-				items.push_back(&sym);
+			items.push_back(sym);
+	return items;
+}
+
+std::string Symtab::getVariablesFormat(
+		const std::vector<std::string> variables,
+		const std::map<std::string, std::string>& replace, 
+		const std::set<std::string> ignore
+) const {
+	vector<const string*> items;
+	for(const string& sym: variables)
+		if(ignore.count(sym) == 0)
+			items.push_back(&sym);
 	
 	string res = "\\left(";
 	for(const string* symp: items){
@@ -69,6 +79,27 @@ std::string Symtab::getLocalsInFormat(const std::map<std::string, std::string>& 
 	}
 	res += "\\right)";
 	return res;
+}
+
+std::string Symtab::getLocalsInFormat(const std::map<std::string, std::string>& replace
+		, const std::set<std::string> ignore) const {
+	return getVariablesFormat(getVariables(), replace, ignore);
+	
+	// vector<const string*> items;
+	// for(vector<string>& scope: nested_scopes)
+	// 	for(const string& sym: scope)
+	// 		if(ignore.count(sym) == 0)
+	// 			items.push_back(&sym);
+	
+	// string res = "\\left(";
+	// for(const string* symp: items){
+	// 	const string& sym = *symp;
+	// 	res += replace.count(sym)>0 ? replace.at(sym) : getSymInfo(sym).getDsmExp();
+	// 	if(*(items.rbegin()) != symp)
+	// 		res += " , ";
+	// }
+	// res += "\\right)";
+	// return res;
 }
 
 const std::string& Symtab::SymInfo::getDsmExp() const{

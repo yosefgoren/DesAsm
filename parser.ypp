@@ -29,7 +29,8 @@
 %token LPAREN RPAREN LBRACE RBRACE
 
 %left <text> BINOP
-%token <text> NUMBER ID COLON
+%token <text> NUMBER ID
+%token <symbol_list> COLON
 %type <text> Statment Exp ExpList FuncCall FuncCallTail
 %type <symbol_list> Statments
 %type <param_list> FormalsSpec FormalsList FormalsListTail
@@ -45,33 +46,42 @@ Declaration: DeclarationHead ID FormalsSpec COLON {
 		if(parsing_curve)
 			$3->insert($3->begin(), "t");
 		symtab.defineFunction(*$2, *$3);
-		$4 = new string(symtab.getLocalsInFormat());
+		$4 = new vector<string>(symtab.getVariables());
 	} Statments {
-		std::string decl_rvalue;
+		string decl_rvalue;
+		vector<string> params = *$4;
+		string params_format = symtab.getVariablesFormat(params);
+		int num_statments = $6->size();
 		if($6->size() > 1){
-			int counter = 1;
+			//define an anon function,
+			//	for each i (natural number input) given as it's fist paramter, it act's like the i'th statment:
+			//lvalue:
 			std::string aggregate_sym = symtab.getAnonSymbol();//TODO: need to add k_0 or statment split variable here.
-			symtab.defineAnonFunc(aggregate_sym, std::vector<std::string>({"k_0"}));
-			int chop_size = std::string("\\left(").size();
-			std::string anon_params_format = "\\left(k_0,"+$4->substr(chop_size, $4->size()-chop_size);
-			cout << symtab.getSymInfo(aggregate_sym).getDsmExp() << anon_params_format <<  "=";
+			symtab.defineAnonFunc(aggregate_sym, std::vector<std::string>({"k"}));
 			
+			params.push_back("k");
+			std::string anon_params_format = symtab.getVariablesFormat(params);
+			cout << symtab.getSymInfo(aggregate_sym).getDsmExp() << anon_params_format <<  "=";
+			//rvalue:
+			int counter = 1;
 			cout << "\\left\\{";
 			for(std::string& symbol : *$6){
 				if(symbol != (*$6)[0])
 					cout << ",";
-				cout << "k_0=" << counter++ << ":";//TODO: change k_0 to anon symbol. Otherwise there are issues with nested multiple statments!
-				// cout << "declaring symbol: " << symbol << endl;
-				// cout << symtab.getSymInfo(*$2).getDsmExp() << counter++ << *$4;
-				cout << symtab.getSymInfo(symbol).getDsmExp() << *$4;
+				cout << "k=" << counter++ << ":";//TODO: change k_0 to anon symbol. Otherwise there are issues with nested multiple statments!
+				cout << symtab.getSymInfo(symbol).getDsmExp() << params_format;
 			}
 			cout << "\\right\\}" << endl;
-			
-			decl_rvalue = symtab.getSymInfo(aggregate_sym).getDsmExp() + *$4;//here replace 't' with L_split and 'k_0' with L_indx
+			//rvalue function that uses the anon function:
+			decl_rvalue = symtab.getSymInfo(aggregate_sym).getDsmExp()+
+					symtab.getVariablesFormat(params, {
+						{"t","L_{split}\\left(t, "+to_string(num_statments)+"\\right)"},
+						{"k","L_{index}\\left(t, "+to_string(num_statments)+"\\right)"}
+					});//here replace 't' with L_split and 'k_0' with L_indx
 		} else {
-			decl_rvalue = symtab.getSymInfo((*$6)[0]).getDsmExp() + *$4;
+			decl_rvalue = symtab.getSymInfo((*$6)[0]).getDsmExp() + params_format;
 		}
-		cout << symtab.getSymInfo(*$2).getDsmExp() << *$4 <<  "=" << decl_rvalue << endl;
+		cout << symtab.getSymInfo(*$2).getDsmExp() << params_format << "=" << decl_rvalue << endl;
 		symtab.closeScope();
 		delete $2; delete $4; delete $6;
 	};
@@ -105,12 +115,12 @@ Statment: Exp {
 		if(!parsing_curve){
 			yyerror("loops are only allowed in 'curve' declarations");
 		}
-		$5 = new string(symtab.getAnonSymbol());
+		$5 = new vector<string>({symtab.getAnonSymbol()});
 		//open scope and inside - declare ID:
-		symtab.defineAnonFunc(*$5, std::vector<std::string>({*$2}));
+		symtab.defineAnonFunc((*$5)[0], std::vector<std::string>({*$2}));
 	}
 	Statment {
-		$$ = $5;
+		$$ =  new string((*$5)[0]);
 		//output anon func definition in format 'func(x, y, ...)', 'ID' is not a parameter.
 		cout << symtab.getSymInfo(*$$).getDsmExp()+symtab.getLocalsInFormat({}, {*$2})+" = ";
 		
@@ -122,7 +132,7 @@ Statment: Exp {
 		});
 		cout << endl;
 		symtab.closeScope();
-		delete $2; delete $4; delete $7;
+		delete $2; delete $4; delete $5; delete $7;
 	}
 	;
 

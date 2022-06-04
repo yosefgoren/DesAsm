@@ -8,12 +8,10 @@ curve Polygon(n):
 	for i in n:
 		connect(t, Circle(i/n), Circle(mod(i+1,n)/n))
 
-curve Triangle():
-	Polygon(t,3)
-
 curve Multi:
-	for i in 3:
-		for j in 5:
-			for k in 6:
-				Triangle(t)*k*0.25 + (2*i, 2*j)
-	~ (t,t)
+	for i in 4:
+		for j in 4:
+			Polygon(t, 4*i+j)+(2*j-5, 2*i-5)
+	~
+	Polygon(t,20)*2*pi
+

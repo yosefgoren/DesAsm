@@ -59,12 +59,23 @@ struct Symtab{
 	 */
 
 	const std::vector<std::vector<std::string>>& getLocalScopes() const;
+	
 	/**
 	 * @return a string containing all local parameters in format '(x, y, z ...)'
 	 * The ordering is the same as in 'getLocalScopes'.
 	 */
-	std::string getLocalsInFormat(const std::map<std::string, std::string>& replace={}
-		, const std::set<std::string> ignore={});
+	std::string getLocalsInFormat(
+			const std::map<std::string, std::string>& replace={}, 
+			const std::set<std::string> ignore={}
+	) const;
+
+	std::vector<std::string> getVariables() const;
+
+	std::string getVariablesFormat(
+			const std::vector<std::string> variables,
+			const std::map<std::string, std::string>& replace={}, 
+			const std::set<std::string> ignore={}
+	) const;
 
 	struct SymInfo{
 		SymInfo(const std::string& dsm_exp);

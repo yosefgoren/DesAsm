@@ -1,10 +1,9 @@
-1. enable arbitrary expression as for loop argument.
+1. enable nested multiple statments, and make it not depend on charecter 'k'.
 2. enable importing other files.
 3. enable 'display' feature.
 4. enable 'inline latex' feature.
 5. enable basic type properties and checking to exressions.
 7. enable creating slides.
-
 
 * make interactive gui - basic.
 * make gui and extension that works on vscode.
