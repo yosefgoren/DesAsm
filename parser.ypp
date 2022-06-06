@@ -78,6 +78,7 @@ Declaration: DeclarationHead ID FormalsSpec COLON {
 						{"t","L_{split}\\left(t, "+to_string(num_statments)+"\\right)"},
 						{"k","L_{index}\\left(t, "+to_string(num_statments)+"\\right)"}
 					});//here replace 't' with L_split and 'k_0' with L_indx
+			symtab.closeScope();//this closes the scope opened by the anon function.
 		} else {
 			decl_rvalue = symtab.getSymInfo((*$6)[0]).getDsmExp() + params_format;
 		}

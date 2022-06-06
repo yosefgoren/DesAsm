@@ -1,10 +1,18 @@
-1. enable nested multiple statments, and make it not depend on charecter 'k'.
-2. enable importing other files.
-3. enable 'display' feature.
-4. enable 'inline latex' feature.
-5. enable basic type properties and checking to exressions.
-7. enable creating slides.
+features:
+* nested multiple statments, and make it not depend on charecter 'k'.
+* importing other files.
+* 'display' feature.
+* 'inline latex' feature.
+* basic type properties and checking to exressions.
+* creating slides.
+* 3d graphics projections.
+* colors and custom colors
+* unary operators (like -1)
 
-* make interactive gui - basic.
-* make gui and extension that works on vscode.
-* make syntax anlizer that works from vscode.
+external tools:
+* interactive gui - basic.
+* gui and extension that works on vscode.
+* syntax analysis (colors and warnings) that works from vscode.
+
+inner changes:
+* throw an error when script ends but a local scope is still open (likely only possible with internal errors).

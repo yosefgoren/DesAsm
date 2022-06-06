@@ -6,9 +6,8 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # PARTICULAR PURPOSE.
 
 # This program built for i386-pc-mingw32
- 
 
-# Make data base, printed on Sat Jun 04 10:43:15 2022
+# Make data base, printed on Mon Jun 06 23:36:09 2022
 
 # Variables
 
@@ -35,8 +34,7 @@ CURDIR := c:/Users/pc/Desktop/Projects/DesAsm
 # default
 SHELL := sh.exe
 # environment
-WINDIR = C:\W 
-INDOWS
+WINDIR = C:\WINDOWS
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # environment
@@ -54,17 +52,15 @@ VSCODE_VERBOSE_LOGGING = true
 # environment
 PROGRAMW6432 = C:\Program Files
 # environment
-P 
-ROGRAMDATA = C:\ProgramData
+PROGRAMDATA = C:\ProgramData
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-c9b69fa3-ee25-421f-847b-e2c299f4c799-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-c7edebb6-89b6-4b2e-8070-8746a0cdf52a-sock
 # environment
 VSCODE_CWD = C:\Users\pc\AppData\Local\Programs\Microsoft VS Code
 # environment
 SMLNJ_HOME = C:\Program Files (x86)\SMLNJ\
 # environment
-PATH = C:\Program Files\AdoptOpenJDK\jdk-11.0.11.9-hotspot\bin;C:\Program Files (x86)\VMware\VMware Workstation\bin\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Android;C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin;C:\Windows\System32;C:\Program Files\Git\cmd;C:\Program Files (x86)\Bitvise SSH Client;C:\GCC55\mingw-w64\x86_64-5.4.0-posix-seh-rt_v5-rev0\mingw64\bin;C:\Program Files (x86)\SMLNJ\bin\;C:\Program Files\MATLAB\R2020b\bin;C:\Program Files\SourceGear\Common\DiffMerge\;C:\Program Files\Oracle\VirtualBox;C:\Program Files (x86)\MiKTeX 2.9\miktex\bin\;C:\Program Files (x86)\LyX 2.3\Perl\bin;C:\Program Files (x86)\Pulse Secure\VC142.CRT\X64\;C:\Program Files (x86)\Pulse Secure\VC142.CRT\X86\;C:\Program Files\nodejs\;C:\Program Files (x86)\Common Files\Pulse Secure\TNC Client Plugin\;C:\Users\pc\AppData\Local\Microsoft\WindowsApps;C:\Users\pc\AppData\Local\Programs\Microsoft VS Code\bin;C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin;C:\GCC55\mingw-w64\x86_64-5.4.0-posix-seh-rt_v5-rev0\mingw64\bin;C:\Users\pc\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin;C:\GnuWin32\bin;;C:\Program Files\JetBrains\PyCharm 2021.2.3\bi 
-n;;C:\Users\pc\AppData\Roaming\npm;C:\Program Files (x86)\Nmap
+PATH = C:\Program Files\AdoptOpenJDK\jdk-11.0.11.9-hotspot\bin;C:\Program Files (x86)\VMware\VMware Workstation\bin\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Android;C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin;C:\Windows\System32;C:\Program Files\Git\cmd;C:\Program Files (x86)\Bitvise SSH Client;C:\GCC55\mingw-w64\x86_64-5.4.0-posix-seh-rt_v5-rev0\mingw64\bin;C:\Program Files (x86)\SMLNJ\bin\;C:\Program Files\MATLAB\R2020b\bin;C:\Program Files\SourceGear\Common\DiffMerge\;C:\Program Files\Oracle\VirtualBox;C:\Program Files (x86)\MiKTeX 2.9\miktex\bin\;C:\Program Files (x86)\LyX 2.3\Perl\bin;C:\Program Files (x86)\Pulse Secure\VC142.CRT\X64\;C:\Program Files (x86)\Pulse Secure\VC142.CRT\X86\;C:\Program Files\nodejs\;C:\Program Files (x86)\Common Files\Pulse Secure\TNC Client Plugin\;C:\Users\pc\AppData\Local\Microsoft\WindowsApps;C:\Users\pc\AppData\Local\Programs\Microsoft VS Code\bin;C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin;C:\GCC55\mingw-w64\x86_64-5.4.0-posix-seh-rt_v5-rev0\mingw64\bin;C:\Users\pc\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin;C:\GnuWin32\bin;;C:\Program Files\JetBrains\PyCharm 2021.2.3\bin;;C:\Users\pc\AppData\Roaming\npm;C:\Program Files (x86)\Nmap
 # environment
 COMMONPROGRAMW6432 = C:\Program Files\Common Files
 # environment
@@ -88,7 +84,7 @@ SYNAPROGDIR = Synaptics\SynTP
 # environment
 ANDROID_SDK_HOME = C:\Android
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_9276_BAHLTPOHRHUEVWMH
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_1000_DGLSBCEJKBZVJJUH
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
@@ -108,7 +104,7 @@ VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
 VSCODE_CODE_CACHE_PATH = C:\Users\pc\AppData\Roaming\Code\CachedData\c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 COMMONPROGRAMFILES = C:\Program Files (x86)\Common Files
 # environment
@@ -123,6 +119,8 @@ MAKE = $(MAKE_COMMAND)
 MAKECMDGOALS := all
 # default
 MAKE_VERSION := 3.81
+# environment
+GEVENT_SUPPORT = True
 # makefile
 .DEFAULT_GOAL := all
 # environment
@@ -141,8 +139,7 @@ PROCESSOR_ARCHITEW6432 = AMD64
 .VARIABLES := 
 # automatic
 *F = $(notdir $*)
-# environme 
-nt
+# environment
 PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 78 Stepping 3, GenuineIntel
 # environment
 OS = Windows_NT
@@ -197,11 +194,11 @@ PROCESSOR_LEVEL = 6
 # environment
 FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # environment
-VSCODE_PID = 9276
+VSCODE_PID = 1000
 # environment
 USERDOMAIN_ROAMINGPROFILE = DESKTOP-86KTLQ1
 # variable set hash-table stats:
-# Load=92/1024=9%, Rehash=0, Collisions=9/114=8%
+# Load=93/1024=9%, Rehash=0, Collisions=9/115=8%
 
 # Pattern-specific Variable Values
 
@@ -211,12 +208,11 @@ USERDOMAIN_ROAMINGPROFILE = DESKTOP-86KTLQ1
 
 # : could not be stat'd.
 # C:\Android (key C:/Android, mtime 1565250855): 8 files, no impossibilities.
-# C:\Program Files (x86)\Bit 
-vise SSH Client (key C:/Program Files (x86)/Bitvise SSH Client, mtime 1596959031): 47 files, no impossibilities.
+# C:\Program Files (x86)\Bitvise SSH Client (key C:/Program Files (x86)/Bitvise SSH Client, mtime 1596959031): 47 files, no impossibilities.
 # C:\GCC55\mingw-w64\x86_64-5.4.0-posix-seh-rt_v5-rev0\mingw64\bin (key C:/GCC55/mingw-w64/x86_64-5.4.0-posix-seh-rt_v5-rev0/mingw64/bin, mtime 1596890295): 61 files, no impossibilities.
 # C:\WINDOWS\System32\WindowsPowerShell\v1.0\ (key C:/WINDOWS/System32/WindowsPowerShell/v1.0/, mtime 1625531307): 30 files, no impossibilities.
 # C:\WINDOWS\System32\Wbem (key C:/WINDOWS/System32/Wbem, mtime 1652340770): 171 files, no impossibilities.
-# . (key c:/Users/pc/Desktop/Projects/DesAsm, mtime 1654256349): 30 files, no impossibilities.
+# . (key c:/Users/pc/Desktop/Projects/DesAsm, mtime 1654412029): 31 files, no impossibilities.
 # C:\Program Files\SourceGear\Common\DiffMerge\ (key C:/Program Files/SourceGear/Common/DiffMerge/, mtime 1608070435): 9 files, no impossibilities.
 # C:\Users\pc\AppData\Local\Microsoft\WindowsApps (key C:/Users/pc/AppData/Local/Microsoft/WindowsApps, mtime 1653584175): 26 files, no impossibilities.
 # C:\Program Files\nodejs\ (key C:/Program Files/nodejs/, mtime 1640997748): 13 files, no impossibilities.
@@ -227,7 +223,6 @@ vise SSH Client (key C:/Program Files (x86)/Bitvise SSH Client, mtime 1596959031
 # C:\Program Files\MATLAB\R2020b\bin (key C:/Program Files/MATLAB/R2020b/bin, mtime 1607434114): 16 files, no impossibilities.
 # C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin (key C:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin, mtime 1596887087): 58 files, no impossibilities.
 # C:\Program Files (x86)\VMware\VMware Workstation\bin\ (key C:/Program Files (x86)/VMware/VMware Workstation/bin/, mtime 1617810112): 3 files, no impossibilities.
- 
 # C:\WINDOWS\System32\OpenSSH\: could not be stat'd.
 # C:\WINDOWS (key C:/WINDOWS, mtime 1652340768): 117 files, no impossibilities.
 # C:\Program Files\AdoptOpenJDK\jdk-11.0.11.9-hotspot\bin (key C:/Program Files/AdoptOpenJDK/jdk-11.0.11.9-hotspot/bin, mtime 1619771799): 127 files, no impossibilities.
@@ -236,16 +231,14 @@ vise SSH Client (key C:/Program Files (x86)/Bitvise SSH Client, mtime 1596959031
 # C:\Users\pc\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin (key C:/Users/pc/AppData/Local/Google/Cloud SDK/google-cloud-sdk/bin, mtime 1621020372): 20 files, no impossibilities.
 # C:\Program Files (x86)\Nmap (key C:/Program Files (x86)/Nmap, mtime 1651062165): 37 files, no impossibilities.
 # C:\Program Files (x86)\MiKTeX 2.9\miktex\bin\ (key C:/Program Files (x86)/MiKTeX 2.9/miktex/bin/, mtime 1638543704): 598 files, no impossibilities.
-# C:\Program Files\Gi 
-t\cmd (key C:/Program Files/Git/cmd, mtime 1596522809): 8 files, no impossibilities.
-# C:\WINDOWS\system32 (key C:/WINDOWS/system32, mtime 1654240515): 3019 files, no impossibilities.
+# C:\Program Files\Git\cmd (key C:/Program Files/Git/cmd, mtime 1596522809): 8 files, no impossibilities.
+# C:\WINDOWS\system32 (key C:/WINDOWS/system32, mtime 1654536568): 3019 files, no impossibilities.
 # C:\Program Files (x86)\LyX 2.3\Perl\bin (key C:/Program Files (x86)/LyX 2.3/Perl/bin, mtime 1638543960): 11 files, no impossibilities.
 # C:\Users\pc\AppData\Local\Programs\Microsoft VS Code\bin (key C:/Users/pc/AppData/Local/Programs/Microsoft VS Code/bin, mtime 1652897328): 4 files, no impossibilities.
-# C:\Program Files (x 
-86)\Pulse Secure\VC142.CRT\X86\ (key C:/Program Files (x86)/Pulse Secure/VC142.CRT/X86/, mtime 1638958065): 9 files, no impossibilities.
+# C:\Program Files (x86)\Pulse Secure\VC142.CRT\X86\ (key C:/Program Files (x86)/Pulse Secure/VC142.CRT/X86/, mtime 1638958065): 9 files, no impossibilities.
 # C:\Users\pc\AppData\Roaming\npm (key C:/Users/pc/AppData/Roaming/npm, mtime 1641049433): 12 files, no impossibilities.
 
-# 4524 files, no impossibilities in 31 directories.
+# 4525 files, no impossibilities in 31 directories.
 
 # Implicit Rules
 
@@ -306,8 +299,7 @@ makefile:
 #  File has not been updated.
 
 # files hash-table stats:
-# Load=4/1024=0%, Rehash 
-=0, Collisions=0/17=0%
+# Load=4/1024=0%, Rehash=0, Collisions=0/17=0%
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -319,6 +311,6 @@ makefile:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Sat Jun 04 10:43:15 2022
+# Finished Make data base on Mon Jun 06 23:36:09 2022
 
  

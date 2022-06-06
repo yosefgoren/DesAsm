@@ -1,0 +1,10 @@
+curve connect(u,v):
+	u*t + (1-t)*v
+
+curve Window:
+	for i in 2:
+		connect(t, (i-1, -2), (i-1, 2)))
+	~
+	for i in 2:
+		connect(t, (-1, 2*i-3), (1, 2*i-3)))
+	

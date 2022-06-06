@@ -1,0 +1,45 @@
+getting input script from: ..\us_flag.ds
+
+L_{0}\left(x,y,t\right)=\frac{t-x}{y-x}
+L_{1}\left(x,y,t\right)=\left(1-t\right)x+ty
+L_{split}(t,k)=L_{0}(0,\frac{1}{k},\operatorname{mod}(t,\frac{1}{k}))
+L_{index}(t,k)=\operatorname{floor}(kt)+1
+
+a_{1}\left(t\right) = \left(\operatorname{cos}\left(2 \cdot \pi \cdot t\right) , \operatorname{sin}\left(2 \cdot \pi \cdot t\right)\right)
+c_{circle}\left(t\right)=a_{1}\left(t\right)
+a_{2}\left(t , u , v\right) = u \cdot t + v \cdot \left(1 - t\right)
+c_{connect}\left(t , u , v\right)=a_{2}\left(t , u , v\right)
+a_{3}\left(t , i , n , i_{inner}\right) = c_{connect}\left(t , c_{circle}\left(\left(i + 0.25\right) / n\right) , i_{inner} \cdot c_{circle}\left(\left(i + 0.75\right) / n\right)\right)
+a_{4}\left(t , i , n , i_{inner}\right) = c_{connect}\left(t , i_{inner} \cdot c_{circle}\left(\left(i + 0.75\right) / n\right) , c_{circle}\left(\left(i + 1.25\right) / n\right)\right)
+a_{5}\left(t , i , n , i_{inner} , k\right)=\left\{k=1:a_{3}\left(t , i , n , i_{inner}\right),k=2:a_{4}\left(t , i , n , i_{inner}\right)\right\}
+s_{starv}\left(t , i , n , i_{inner}\right)=a_{5}\left(L_{split}\left(t, 2\right) , i , n , i_{inner} , L_{index}\left(t, 2\right)\right)
+a_{7}\left(t , n , i_{inner} , i\right) = s_{starv}\left(t , i , n , i_{inner}\right)
+a_{6}\left(t , n , i_{inner}\right) = a_{7}\left(L_{split}\left(t, n\right) , n , i_{inner} , L_{index}\left(t, n\right)\right)
+s_{star}\left(t , n , i_{inner}\right)=a_{6}\left(t , n , i_{inner}\right)
+a_{10}\left(t , n , k , x , j\right) = s_{star}\left(t , 5 , 0.5\right) \cdot 0.5 + \left(2 \cdot x , 2 \cdot j\right)
+a_{9}\left(t , n , k , x\right) = a_{10}\left(L_{split}\left(t, k\right) , n , k , x , L_{index}\left(t, k\right)\right)
+a_{8}\left(t , n , k\right) = a_{9}\left(L_{split}\left(t, n\right) , n , k , L_{index}\left(t, n\right)\right)
+s_{starray}\left(t , n , k\right)=a_{8}\left(t , n , k\right)
+a_{11}\left(t\right) = s_{starray}\left(t , 6 , 5\right)
+a_{12}\left(t\right) = s_{starray}\left(t , 5 , 4\right) + \left(1,1\right)
+a_{13}\left(t , k\right)=\left\{k=1:a_{11}\left(t\right),k=2:a_{12}\left(t\right)\right\}
+s_{stars}\left(t\right)=a_{13}\left(L_{split}\left(t, 2\right) , L_{index}\left(t, 2\right)\right)
+a_{14}\left(t , h_{height} , w_{width}\right) = c_{connect}\left(t , \left(0,0\right) , \left(0 , h_{height}\right)\right)
+a_{15}\left(t , h_{height} , w_{width}\right) = c_{connect}\left(t , \left(0 , h_{height}\right) , \left(w_{width} , h_{height}\right)\right)
+a_{16}\left(t , h_{height} , w_{width}\right) = c_{connect}\left(t , \left(w_{width} , h_{height}\right) , \left(w_{width} , 0\right)\right)
+a_{17}\left(t , h_{height} , w_{width}\right) = c_{connect}\left(t , \left(w_{width} , 0\right) , \left(0,0\right)\right)
+a_{18}\left(t , h_{height} , w_{width} , k\right)=\left\{k=1:a_{14}\left(t , h_{height} , w_{width}\right),k=2:a_{15}\left(t , h_{height} , w_{width}\right),k=3:a_{16}\left(t , h_{height} , w_{width}\right),k=4:a_{17}\left(t , h_{height} , w_{width}\right)\right\}
+r_{rectangle}\left(t , h_{height} , w_{width}\right)=a_{18}\left(L_{split}\left(t, 4\right) , h_{height} , w_{width} , L_{index}\left(t, 4\right)\right)
+a_{20}\left(t , i\right) = r_{rectangle}\left(t , 1.3 , 20\right) + \left(0 , 2.6 \cdot i\right)
+a_{19}\left(t\right) = a_{20}\left(L_{split}\left(t, 4\right) , L_{index}\left(t, 4\right)\right)
+h_{highStripes}\left(t\right)=a_{19}\left(t\right)
+a_{22}\left(t , i\right) = r_{rectangle}\left(t , 1.3 , 32\right) + \left(0 , 2.6 \cdot i\right)
+a_{21}\left(t\right) = a_{22}\left(L_{split}\left(t, 3\right) , L_{index}\left(t, 3\right)\right)
+l_{lowStripes}\left(t\right)=a_{21}\left(t\right)
+a_{23}\left(t\right) = s_{stars}\left(t\right)
+a_{24}\left(t\right) = h_{highStripes}\left(t\right)
+a_{25}\left(t\right) = l_{lowStripes}\left(t\right)
+a_{26}\left(t , k\right)=\left\{k=1:a_{23}\left(t\right),k=2:a_{24}\left(t\right),k=3:a_{25}\left(t\right)\right\}
+f_{flag}\left(t\right)=a_{26}\left(L_{split}\left(t, 3\right) , L_{index}\left(t, 3\right)\right)
+
+0
