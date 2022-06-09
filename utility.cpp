@@ -16,8 +16,9 @@ int main(int argc, char** argv){
 		input_filename = argv[1];
 	}
 	cout << "getting input script from: " << input_filename << endl << endl;
+	// std::vector<std::string> open_files_stack = {input_filename};
+	
 	redirectStdin(input_filename);
-
 	bool printlib = true;
 	for(int i = 0; i < argc; ++i)
 		if(argv[i] == "nolib")
