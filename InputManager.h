@@ -19,6 +19,10 @@ public:
 	 */
 	void popInputFile();
 
+	bool isEmpty() const;
+
+	bool isFileOpened(std::string filename) const;
+
 private:
 	struct InputFile{
 		std::string filename;
