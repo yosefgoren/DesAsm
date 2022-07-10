@@ -2,6 +2,8 @@
 #include "display_latex.h"
 #include <assert.h>
 #include <iostream>
+#include <fstream>
+#include <string>
 #include <cstdio>
 #include "Symtab.h"
 #include "parser.tab.hpp"
@@ -14,20 +16,20 @@ void redirectStdin(string input_filename){
 /**
  * redirect stdout to file 'path'.
  */
-FILE* redirectStdout(string output_filename){
+void redirectStdout(string output_filename){
 	freopen(output_filename.c_str(), "w", stdout);
 }
 
 void printStdLib(){
-	cout << "L_{0}\\left(x,y,t\\right)=\\frac{t-x}{y-x}" << endl;
-	cout << "L_{1}\\left(x,y,t\\right)=\\left(1-t\\right)x+ty" << endl;
-	cout << "L_{split}(t,k)=L_{0}(0,\\frac{1}{k},\\operatorname{mod}(t,\\frac{1}{k}))" << endl;
-	cout << "L_{index}(t,k)=\\operatorname{floor}(kt)+1" << endl;
-	cout << endl;
+	lout << "L_{0}\\left(x,y,t\\right)=\\frac{t-x}{y-x}" << endl;
+	lout << "L_{1}\\left(x,y,t\\right)=\\left(1-t\\right)x+ty" << endl;
+	lout << "L_{split}(t,k)=L_{0}(0,\\frac{1}{k},\\operatorname{mod}(t,\\frac{1}{k}))" << endl;
+	lout << "L_{index}(t,k)=\\operatorname{floor}(kt)+1" << endl;
+	lout << endl;
 }
 
 int main(int argc, char** argv){
-	string output_filename = "..\\output.tex";
+	string latex_output_filename = default_output_file_name;
 	string input_filename = "..\\example.ds";
 
 	if(argc > 1){
@@ -41,7 +43,7 @@ int main(int argc, char** argv){
 		if(argv[i] == "nostdlib")
 			printstdlib = false;
 	
-	FILE* old_stdout = redirectStdout(output_filename);
+	lout.open(latex_output_filename, fstream::out);
 
 	if(printstdlib)
 		printStdLib();
@@ -58,11 +60,12 @@ int main(int argc, char** argv){
 			yyparse();
 		} catch(const SemanticError& e){
 			cout << "\nline " << yylineno << ": " << e.errorMsg() << endl;
+			exit(1);
 		}
 		open_files_stack.pop_back();
 	}
-	// cout << endl << "compilation finished succesfully." << endl;
-	display_latex({"x=1","y=2"});
+	cout << endl << "compilation finished succesfully." << endl;
+	display_latex(latex_output_filename);
 	return 0;
 }
 

@@ -1,0 +1,29 @@
+#include <string>
+#include <fstream>
+#include <vector>
+
+class InputManager{
+public:
+	/**
+	 * start to read from the file 'initial_input_filename' as stdin.
+	 */
+	InputManager(std::string initial_input_filename);
+
+	/**
+	 * read from the file 'input_filename' as stdin, 'popInputFile' is called: return to current file in progess.
+	 */
+	void pushInputFile(std::string input_filename);
+
+	/**
+	 * stop reading from top file in stack.
+	 */
+	void popInputFile();
+
+private:
+	struct InputFile{
+		std::string filename;
+		std::fstream stream;
+	};
+	std::vector<InputFile> open_files;
+    std::streambuf* original_cinbuf;
+};

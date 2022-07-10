@@ -1,8 +1,0 @@
-curve square:
-	(0, t)
-	~ (1, t)
-	~ (t, 0)
-	~ (t, 1)
-
-curve foo:
-	1

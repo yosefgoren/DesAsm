@@ -15,3 +15,5 @@ curve Drawing:
 	~
 	Circle(t)*5
 
+display Drawing(t)
+

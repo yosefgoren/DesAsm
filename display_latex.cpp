@@ -5,6 +5,8 @@
 
 using namespace std;
 
+fstream lout;
+
 /**
  * execute the command 'cmd' on the command line (windows).
  */
@@ -74,11 +76,21 @@ void insert_into_file(string path, string delimiter, string content){
 	write_file(path, before + content + after);
 }
 
+string doubleBackslashes(string s) {
+	string res = "";
+	for (char c : s) {
+		res += c;
+		if (c == '\\')
+			res += '\\';
+	}
+	return res;
+}
+
 /**
  * given a string or raw latex code, create a html file with the latex content
  * inserted to a 'desmos calculator' instance and open the html file on firefox.
  */
-void display_latex(vector<string> latex_statments){
+void display_latex(string latex_filename){
 	static const string display_base_root = "..\\..\\DsmApp";
 	static const string display_tmp_root = "..\\display_tmp";
 	
@@ -88,6 +100,15 @@ void display_latex(vector<string> latex_statments){
 	//copy the display_base folder to the display_tmp folder:
 	copy_folder(display_base_root, display_tmp_root);
 
+	vector<string> latex_statments;
+	//open 'latex_file' and insert each line into 'latex_statments':
+	ifstream file(latex_filename);
+	string line;
+	while(getline(file, line)){
+		//since the latex goes through another evaluation in html file, we need to double the backslashes:
+		latex_statments.push_back(doubleBackslashes(line));
+	}
+
 	//insert the latex content into the html file:
 	string js_commands = "\n";
 	for (string statment : latex_statments) {
@@ -95,5 +116,5 @@ void display_latex(vector<string> latex_statments){
 	}
 	insert_into_file(display_html_filepath, "insert after this @@@:\n", js_commands);
 
-	// open_html_file(display_html_filepath);
+	open_html_file(display_html_filepath);
 }

@@ -32,8 +32,25 @@
 	
 	<script>
 		//
-calculator.setExpression({latex:"x=1"});
-calculator.setExpression({latex:"y=2"});
+calculator.setExpression({latex:"L_{0}\\left(x,y,t\\right)=\\frac{t-x}{y-x}"});
+calculator.setExpression({latex:"L_{1}\\left(x,y,t\\right)=\\left(1-t\\right)x+ty"});
+calculator.setExpression({latex:"L_{split}(t,k)=L_{0}(0,\\frac{1}{k},\\operatorname{mod}(t,\\frac{1}{k}))"});
+calculator.setExpression({latex:"L_{index}(t,k)=\\operatorname{floor}(kt)+1"});
+calculator.setExpression({latex:""});
+calculator.setExpression({latex:"a_{1}\\left(t\\right) = \\left(\\operatorname{sin}\\left(2 \\cdot \\pi \\cdot t\\right) , \\operatorname{cos}\\left(2 \\cdot \\pi \\cdot t\\right)\\right)"});
+calculator.setExpression({latex:"C_{Circle}\\left(t\\right)=a_{1}\\left(t\\right)"});
+calculator.setExpression({latex:"a_{2}\\left(t , v , u\\right) = v \\cdot t + u \\cdot \\left(1 - t\\right)"});
+calculator.setExpression({latex:"c_{connect}\\left(t , v , u\\right)=a_{2}\\left(t , v , u\\right)"});
+calculator.setExpression({latex:"a_{4}\\left(t , n , i\\right) = c_{connect}\\left(t , C_{Circle}\\left(i / n\\right) , C_{Circle}\\left(\\operatorname{mod}\\left(i + 1 , n\\right) / n\\right)\\right)"});
+calculator.setExpression({latex:"a_{3}\\left(t , n\\right) = a_{4}\\left(L_{split}\\left(t, n\\right) , n , L_{index}\\left(t, n\\right)\\right)"});
+calculator.setExpression({latex:"P_{Polygon}\\left(t , n\\right)=a_{3}\\left(t , n\\right)"});
+calculator.setExpression({latex:"a_{7}\\left(t , i , j\\right) = P_{Polygon}\\left(t , 3 \\cdot i + j - 1\\right) + \\left(2 \\cdot j - 4 , 2 \\cdot i - 4\\right)"});
+calculator.setExpression({latex:"a_{6}\\left(t , i\\right) = a_{7}\\left(L_{split}\\left(t, 3\\right) , i , L_{index}\\left(t, 3\\right)\\right)"});
+calculator.setExpression({latex:"a_{5}\\left(t\\right) = a_{6}\\left(L_{split}\\left(t, 3\\right) , L_{index}\\left(t, 3\\right)\\right)"});
+calculator.setExpression({latex:"a_{8}\\left(t\\right) = C_{Circle}\\left(t\\right) \\cdot 5"});
+calculator.setExpression({latex:"a_{9}\\left(t , k\\right)=\\left\\{k=1:a_{5}\\left(t\\right),k=2:a_{8}\\left(t\\right)\\right\\}"});
+calculator.setExpression({latex:"D_{Drawing}\\left(t\\right)=a_{9}\\left(L_{split}\\left(t, 2\\right) , L_{index}\\left(t, 2\\right)\\right)"});
+calculator.setExpression({latex:"D_{Drawing}\\left(t\\right)"});
 
 	</script>
 </body>

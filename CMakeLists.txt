@@ -4,10 +4,10 @@ project(dasm VERSION 0.1.0)
 include(CTest)
 enable_testing()
 # add_compile_options(-DYYDEBUG 1)
-add_executable(dasm parser.tab.cpp Exceptions.cpp lex.yy.cpp Symtab.cpp utility.cpp display_latex.cpp)
+add_executable(dasm parser.tab.cpp Exceptions.cpp lex.yy.cpp Symtab.cpp utility.cpp display_latex.cpp)# InputManager.cpp
 set(SLASH "\\")
 
-add_custom_command(OUTPUT lex.yy.cpp	
+add_custom_command(OUTPUT lex.yy.cpp
 	COMMAND ..${SLASH}flexBison${SLASH}win_flex.exe ..${SLASH}scanner.lex
 	COMMAND copy lex.yy.c ..${SLASH}lex.yy.cpp
 	COMMAND copy lex.yy.c lex.yy.cpp

@@ -102,15 +102,14 @@ struct Symtab{
 	private:	
 		const std::string& sym;
 	};
-
+	
+	void openScope(const std::vector<std::string>& local_symbols);
 private:
 	std::map<std::string, SymInfo*> table;
 	std::vector<std::vector<std::string>> nested_scopes;
 	int anon_count;
 
-
 	void defineBuiltInSymbols();
 	void checkDefinable(const std::string& sym);
 	SymInfo* allocateSubscriptSymInfo(const std::string& sym);
-	void openScope(const std::vector<std::string>& local_symbols);
 };
