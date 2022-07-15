@@ -1,19 +1,6 @@
-curve Circle:
+import "Polygon.ds"
+
+curve circle:
 	(sin(2*pi*t), cos(2*pi*t))
 
-curve connect(v, u):
-	v*t + u*(1-t)
-
-curve Polygon(n):
-	for i in n:
-		connect(t, Circle(i/n), Circle(mod(i+1,n)/n))
-
-curve Drawing:
-	for i in 3:
-		for j in 3:
-			Polygon(t, 3*i+j-1)+(2*j-4, 2*i-4)
-	~
-	Circle(t)*5
-
-display Drawing(t)
-
+display circle(t)

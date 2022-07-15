@@ -1,5 +1,6 @@
 #include "InputManager.h"
 #include <iostream>
+#include <exception>
 
 using namespace std;
 
@@ -18,10 +19,12 @@ InputManager::InputManager(string initial_input_filename){
 
 void InputManager::pushInputFile(string input_filename){
 	if(isFileOpened(input_filename))
-		throw "file already opened";
+		throw runtime_error("file named: " + input_filename + "already opened");
 	open_files.push_back(InputFile());
 	open_files.back().filename = input_filename;
 	open_files.back().stream.open(input_filename, ios::in);
+	if(!open_files.back().stream.is_open())
+		throw runtime_error("file named: " + input_filename + " not found");
 	cin.rdbuf(open_files.back().stream.rdbuf());//redirect cin to the file
 }
 

@@ -46,15 +46,3 @@ curve flag:
 	highStripes(t)
 	~
 	lowStripes(t)
-
-curve jaggedCircle(n, offset):
-	for i in n:
-		connect(t, circle(i/n+offset), circle((i+1)/n+offset))
-
-curve triangle(offset):
-	jaggedCircle(t, 3, offset+0.5)
-
-curve starOfDavid:
-	jaggedCircle(t, 3, 0.25)
-	~
-	jaggedCircle(t, 3, 0.75)
