@@ -5,8 +5,7 @@ include(CTest)
 enable_testing()
 # add_compile_options(-DYYDEBUG 1)
 add_executable(dasm parser.tab.cpp Exceptions.cpp lex.yy.cpp Symtab.cpp utility.cpp display_latex.cpp)
-add_executable(cinmanager CinManager.cpp cinmanager_test.cpp)
-add_executable(filemanager CinManager.cpp filemanager_test.cpp FileManager.cpp)
+add_executable(preprocessor CinManager.cpp preprocessor.cpp)
 set(SLASH "\\")
 
 add_custom_command(OUTPUT lex.yy.cpp

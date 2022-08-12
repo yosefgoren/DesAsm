@@ -7,3 +7,4 @@ dasm.exe
 output.tex
 *.ds
 *.tex
+lex.yy.c

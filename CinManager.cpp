@@ -4,7 +4,7 @@
 
 using namespace std;
 
-InputManager::InputManager(string initial_input_filename){
+CinManager::CinManager(string initial_input_filename){
 	original_cinbuf = cin.rdbuf();//save original cin
 	
 	open_files.push_back(InputFile());
@@ -13,7 +13,7 @@ InputManager::InputManager(string initial_input_filename){
 	cin.rdbuf(open_files.back().stream.rdbuf());//redirect cin to the file
 }
 
-void InputManager::pushInputFile(string input_filename){
+void CinManager::pushInputFile(string input_filename){
 	if(isFileOpened(input_filename))
 		throw runtime_error("file named: " + input_filename + "already opened");
 	open_files.push_back(InputFile());
@@ -24,7 +24,7 @@ void InputManager::pushInputFile(string input_filename){
 	cin.rdbuf(open_files.back().stream.rdbuf());//redirect cin to the file
 }
 
-void InputManager::popInputFile(){
+void CinManager::popInputFile(){
 	if(open_files.size() == 0)
 		throw "no file to pop";
 	open_files.pop_back();
@@ -33,11 +33,11 @@ void InputManager::popInputFile(){
 		cin.rdbuf(original_cinbuf);//restore cin to original cin
 }
 
-bool InputManager::isEmpty() const{
+bool CinManager::isEmpty() const{
 	return open_files.size() == 0;
 }
 
-bool InputManager::isFileOpened(std::string filename) const{
+bool CinManager::isFileOpened(std::string filename) const{
 	for(int i = 0; i < open_files.size(); i++){
 		if(open_files[i].filename == filename)
 			return true;

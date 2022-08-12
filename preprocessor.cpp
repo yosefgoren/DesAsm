@@ -31,9 +31,8 @@ vector<string> tokenize(string line){
 
 set<string> imported_files = {};
 
-string recursiveRead(string initial_filename){
-	InputManager im(initial_filename);
-	string result;
+void recursiveRead(string initial_filename, ostream& out){
+	CinManager im(initial_filename);
 
 	string line;
 	string filename;
@@ -41,13 +40,13 @@ string recursiveRead(string initial_filename){
 		// cout << "AA" << endl;//DB
 		while(getline(cin, line)){
 			// cout << "BB, line: " << line << endl;//DB
-			result += line + "\n";
+			out << line + "\n";
 			//check if line contains 'import', if so set 'filename' to the next word:
 			vector<string> tokens;
 			tokens = tokenize(line);
 			if(tokens.size() > 1 && tokens[0] == "import"){
 				filename = tokens[1];
-				cout << "importing file named: " << filename << endl;//DB
+				// cout << "importing file named: " << filename << endl;//DB
 				if(imported_files.count(filename) == 0){
 					if(filename.size() < 3)
 						throw runtime_error("expected \"<filename>\" name after 'import' command.");
@@ -56,7 +55,7 @@ string recursiveRead(string initial_filename){
 					//add "..\"	to filename:
 					filename = "..\\" + filename;
 					//start importin from new file:
-					// cout << "chaning import src to: " << filename << endl;//DB
+					cout << "changing import src to: " << filename << endl;//DB
 					imported_files.insert(filename);
 					im.pushInputFile(filename);
 				}
@@ -64,12 +63,35 @@ string recursiveRead(string initial_filename){
 		}
 		im.popInputFile();
 	}
-	return result;
 }
 
-int main(){
+bool canOpenFile(string filename, ios::openmode mode){
+	ifstream file(filename, mode);
+	if(file.is_open()){
+		file.close();
+		return true;
+	}
+	return false;
+}
+
+int main(int argc, char** argv){
+	if(argc < 3){
+		cout << "usage: " << argv[0] << " <input_filename> <output_filename>" << endl;
+		return 0;
+	}
+	string input_filename = argv[1];
+	if(!canOpenFile(input_filename, ios::in)){
+		cout << "file named: " << input_filename << " could not be opened" << endl;
+		return 0;	
+	}
+	string output_filename = argv[2];
+	fstream out(output_filename, ios::out);
+	if(!out.is_open()){
+		cout << "file named: " << output_filename << " could not be opened" << endl;
+		return 0;	
+	}
+	
 	cout << "starting inmanager test\n";
-	string res = recursiveRead("..\\example.ds");
-	cout << res << endl;
+	recursiveRead(input_filename, out);
 	cout << "finished inmanager test\n";
 }

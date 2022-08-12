@@ -1,6 +1,4 @@
 import "Polygon.ds"
 
-curve circle:
-	(sin(2*pi*t), cos(2*pi*t))
-
 display circle(t)
+display starOfDavid(t)

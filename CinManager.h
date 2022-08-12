@@ -2,12 +2,12 @@
 #include <fstream>
 #include <vector>
 
-class InputManager{
+class CinManager{
 public:
 	/**
 	 * start to read from the file 'initial_input_filename' as stdin.
 	 */
-	InputManager(std::string initial_input_filename);
+	CinManager(std::string initial_input_filename);
 
 	/**
 	 * read from the file 'input_filename' as stdin, 'popInputFile' is called: return to current file in progess.

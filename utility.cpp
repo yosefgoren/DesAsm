@@ -5,8 +5,8 @@
 #include <string>
 #include <cstdio>
 #include "Symtab.h"
-#include "parser.tab.hpp"
 #include <iostream>
+#include "build/parser.tab.hpp"
 using namespace std;
 
 void redirectStdin(string input_filename){

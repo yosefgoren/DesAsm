@@ -1,7 +1,7 @@
 curve connect(v, u):
 	v*t + u*(1-t)
 
-curve Circle:
+curve circle:
 	(sin(2*pi*t), cos(2*pi*t))
 
 curve Polygon(n, offset):
