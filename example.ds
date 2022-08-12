@@ -2,3 +2,4 @@ import "Polygon.ds"
 
 display circle(t)
 display starOfDavid(t)
+display 2*circle(t) + starOfDavid(t)

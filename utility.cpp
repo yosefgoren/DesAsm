@@ -43,28 +43,33 @@ int main(int argc, char** argv){
 		if(argv[i] == "nostdlib")
 			printstdlib = false;
 	
+	//call preprocessor from shell to create aggregated 'ppout.ds' file:
+	string ppout_filename = "ppout.ds";
+	string preprocessor_command = "preprocessor.exe " + input_filename + " " + ppout_filename;
+	system(preprocessor_command.c_str());
+
+	//compile the aggregated 'ppout.ds' file and output result to 'output.tex':
 	lout.open(latex_output_filename, fstream::out);
 
 	if(printstdlib)
 		printStdLib();
 
-	// while(open_files_stack.size() > 0){
-		//get the top item from 'open_files_stack':
-		string top_file = input_filename; //open_files_stack.back().first;
-		redirectStdin(top_file);
-		try{
-			Symtab symtab = Symtab();
-			#if(YYDEBUG == 1)
-			yydebug = 1;
-			#endif
-			yyparse();
-		} catch(const SemanticError& e){
-			cout << "\nline " << yylineno << ": " << e.errorMsg() << endl;
-			exit(1);
-		}
-		//open_files_stack.pop_back();
-	// }
+	redirectStdin(ppout_filename);
+	try{
+		Symtab symtab = Symtab();
+		#if(YYDEBUG == 1)
+		yydebug = 1;
+		#endif
+		yyparse();
+	} catch(const SemanticError& e){
+		cout << "\nline " << yylineno << ": " << e.errorMsg() << endl;
+		exit(1);
+	}
+		
 	cout << endl << "compilation finished succesfully." << endl;
+	lout.close();
+
+	//display the compiled result:
 	display_latex(latex_output_filename);
 	return 0;
 }
