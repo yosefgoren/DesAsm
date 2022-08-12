@@ -8,20 +8,23 @@
 %option noyywrap
 %option yylineno
 
-id			([a-zA-Z][a-zA-Z0-9]*)
+id			([a-zA-Z_][a-zA-Z0-9_]*)
 number		((([1-9][0-9]*)|0)(.[0-9]+)?)
 whitespace  ([\t\n\r ])
 comment 	(#[^\n\r]*)
+filename	(\"[a-zA-Z0-9_\-\. ]+\")
 %%
 
 curve	return CURVE;
 func	return FUNC;
 display	return DISPLAY;
+import	return IMPORT;
 for		return FOR;
 in		return IN;
 :	return COLON;
 ,	return COMMA;
 
+{filename} {yylval.text = new std::string(yytext); return FILENAME;}
 {comment} {;}
 {id}	{yylval.text = new std::string(yytext); return ID;}
 {number}	{yylval.text =new std::string(yytext); return NUMBER;}	

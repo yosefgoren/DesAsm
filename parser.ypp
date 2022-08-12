@@ -24,12 +24,12 @@
 	bool boolean;
 };
 
-%token CURVE DISPLAY FUNC FOR IN
+%token CURVE DISPLAY FUNC FOR IN IMPORT
 %token COMMA AND_ALSO
 %token LPAREN RPAREN LBRACE RBRACE
 
 %left <text> BINOP
-%token <text> NUMBER ID
+%token <text> NUMBER ID FILENAME
 %token <symbol_list> COLON
 %type <text> Statment Exp ExpList FuncCall FuncCallTail
 %type <symbol_list> Statments
@@ -89,6 +89,20 @@ Declaration: DeclarationHead ID FormalsSpec COLON {
 		delete $2; delete $4; delete $6;
 	}
 	| DISPLAY {symtab.openScope({"t"});} Exp {lout << *$3 << endl; symtab.closeScope(); delete $3;}
+	| IMPORT FILENAME {
+		// string filename = *$2;
+		// if(filename.size() < 3)
+		// 	throw runtime_error("expected \"<filename>\" name after 'import' command.");
+		// //remove '"' from filename start and ending:
+		// filename = filename.substr(1, filename.size()-2);
+		// //add "..\"	to filename:
+		// filename = "..\\" + filename;
+		// //start reading from new file:
+		// // cout << "chaning import src to: " << filename << endl;//DB
+		// // imported_files.insert(filename);
+		// InputManager::getInstance().pushInputFile(filename);
+		delete $2;
+	};
 	;
 
 FormalsSpec: LPAREN FormalsList RPAREN {$$ = $2;}

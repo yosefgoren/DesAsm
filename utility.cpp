@@ -1,12 +1,12 @@
 #include "utility.h"
 #include "display_latex.h"
 #include <assert.h>
-#include <iostream>
 #include <fstream>
 #include <string>
 #include <cstdio>
 #include "Symtab.h"
 #include "parser.tab.hpp"
+#include <iostream>
 using namespace std;
 
 void redirectStdin(string input_filename){
@@ -36,7 +36,7 @@ int main(int argc, char** argv){
 		input_filename = argv[1];
 	}
 	cout << "getting input script from: " << input_filename << endl << endl;
-	vector<pair<string, int>> open_files_stack = {{input_filename, 0}};
+	// vector<pair<string, int>> open_files_stack = {{input_filename, 0}};
 	
 	bool printstdlib = true;
 	for(int i = 0; i < argc; ++i)
@@ -48,9 +48,9 @@ int main(int argc, char** argv){
 	if(printstdlib)
 		printStdLib();
 
-	while(open_files_stack.size() > 0){
+	// while(open_files_stack.size() > 0){
 		//get the top item from 'open_files_stack':
-		string top_file = open_files_stack.back().first;
+		string top_file = input_filename; //open_files_stack.back().first;
 		redirectStdin(top_file);
 		try{
 			Symtab symtab = Symtab();
@@ -62,8 +62,8 @@ int main(int argc, char** argv){
 			cout << "\nline " << yylineno << ": " << e.errorMsg() << endl;
 			exit(1);
 		}
-		open_files_stack.pop_back();
-	}
+		//open_files_stack.pop_back();
+	// }
 	cout << endl << "compilation finished succesfully." << endl;
 	display_latex(latex_output_filename);
 	return 0;

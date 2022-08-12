@@ -1,12 +1,8 @@
-#include "InputManager.h"
+#include "CinManager.h"
 #include <iostream>
 #include <exception>
 
 using namespace std;
-
-void redirectStdin(string input_filename){
-	freopen(input_filename.c_str(), "r", stdin);
-}
 
 InputManager::InputManager(string initial_input_filename){
 	original_cinbuf = cin.rdbuf();//save original cin

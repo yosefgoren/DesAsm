@@ -4,3 +4,6 @@ build/
 makefile
 lex.yy.c
 dasm.exe
+output.tex
+*.ds
+*.tex
