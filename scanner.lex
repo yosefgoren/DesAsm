@@ -8,7 +8,7 @@
 %option noyywrap
 %option yylineno
 
-id			([a-zA-Z_][a-zA-Z0-9_]*)
+id			([a-zA-Z][a-zA-Z0-9]*)
 number		((([1-9][0-9]*)|0)(.[0-9]+)?)
 whitespace  ([\t\n\r ])
 comment 	(#[^\n\r]*)

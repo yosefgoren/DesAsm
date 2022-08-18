@@ -37,16 +37,13 @@ void recursiveRead(string initial_filename, ostream& out){
 	string line;
 	string filename;
 	while(!im.isEmpty()){
-		// cout << "AA" << endl;//DB
 		while(getline(cin, line)){
-			// cout << "BB, line: " << line << endl;//DB
 			out << line + "\n";
 			//check if line contains 'import', if so set 'filename' to the next word:
 			vector<string> tokens;
 			tokens = tokenize(line);
 			if(tokens.size() > 1 && tokens[0] == "import"){
 				filename = tokens[1];
-				// cout << "importing file named: " << filename << endl;//DB
 				if(imported_files.count(filename) == 0){
 					if(filename.size() < 3)
 						throw runtime_error("expected \"<filename>\" name after 'import' command.");
