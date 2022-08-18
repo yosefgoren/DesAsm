@@ -1,0 +1,29 @@
+import "Polygon.ds"
+curve connect(v, u):
+	v*t + u*(1-t)
+
+curve circle:
+	(sin(2*pi*t), cos(2*pi*t))
+
+curve Polygon(n, offset):
+	for i in n:
+		connect(t, circle(i/n+offset), circle((i+1)/n+offset))
+
+import "library.ds"
+func rotateX(x, y, q):
+	x*cos(q)-y*sin(q)
+
+func rotateY(x, y, q):
+	x*sin(q)+y*cos(q)
+
+func rotateXY(c, q):
+	[rotateX(c[1], c[2], q), rotateY(c[1], c[2]), c[3]]
+
+
+curve starOfDavid:
+	Polygon(t, 3, 0.25)
+	~
+	Polygon(t, 3, 0.75)
+
+display circle(t)
+display starOfDavid(t)

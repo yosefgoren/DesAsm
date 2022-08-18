@@ -1,0 +1,22 @@
+curve L0(x1, x2):
+	(t-x1)/(x2-x1)
+
+curve L1(x1, x2):
+	(1-t)*x1+t*x2
+
+curve L2(x1, y1, x2, y2):
+	L1(y1-x1*(y2-y1)/(x2-x1), y1+(1-x1)*(y2-y1)/(x2-x1), t)
+
+curve Lsplit(k):
+	L0(0, 1/k, mod(t, 1/k))
+
+func Lspilt3(v,k):
+	[Lsplit(v[1], k), Lsplit(v[2], k), Lsplit(v[3], k)]
+
+curve Lindex(k):
+	floor(k*t)+1
+
+curve Lines(k):
+	(Lsplit(t,k), Lindex(t,k))
+
+display Lines(t,4)

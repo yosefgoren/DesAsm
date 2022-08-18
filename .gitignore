@@ -5,6 +5,5 @@ makefile
 lex.yy.c
 dasm.exe
 output.tex
-*.ds
 *.tex
 lex.yy.c
