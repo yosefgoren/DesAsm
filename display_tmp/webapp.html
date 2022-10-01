@@ -37,21 +37,29 @@ calculator.setExpression({latex:"L_{1}\\left(x,y,t\\right)=\\left(1-t\\right)x+t
 calculator.setExpression({latex:"L_{split}(t,k)=L_{0}(0,\\frac{1}{k},\\operatorname{mod}(t,\\frac{1}{k}))"});
 calculator.setExpression({latex:"L_{index}(t,k)=\\operatorname{floor}(kt)+1"});
 calculator.setExpression({latex:""});
-calculator.setExpression({latex:"a_{1}\\left(t , x_{x1} , x_{x2}\\right) = \\left(t - x_{x1}\\right) / \\left(x_{x2} - x_{x1}\\right)"});
-calculator.setExpression({latex:"L_{L0}\\left(t , x_{x1} , x_{x2}\\right)=a_{1}\\left(t , x_{x1} , x_{x2}\\right)"});
-calculator.setExpression({latex:"a_{2}\\left(t , x_{x1} , x_{x2}\\right) = \\left(1 - t\\right) \\cdot x_{x1} + t \\cdot x_{x2}"});
-calculator.setExpression({latex:"L_{L1}\\left(t , x_{x1} , x_{x2}\\right)=a_{2}\\left(t , x_{x1} , x_{x2}\\right)"});
-calculator.setExpression({latex:"a_{3}\\left(t , x_{x1} , y_{y1} , x_{x2} , y_{y2}\\right) = L_{L1}\\left(y_{y1} - x_{x1} \\cdot \\left(y_{y2} - y_{y1}\\right) / \\left(x_{x2} - x_{x1}\\right) , y_{y1} + \\left(1 - x_{x1}\\right) \\cdot \\left(y_{y2} - y_{y1}\\right) / \\left(x_{x2} - x_{x1}\\right) , t\\right)"});
-calculator.setExpression({latex:"L_{L2}\\left(t , x_{x1} , y_{y1} , x_{x2} , y_{y2}\\right)=a_{3}\\left(t , x_{x1} , y_{y1} , x_{x2} , y_{y2}\\right)"});
-calculator.setExpression({latex:"a_{4}\\left(t , k\\right) = L_{L0}\\left(0 , 1 / k , \\operatorname{mod}\\left(t , 1 / k\\right)\\right)"});
-calculator.setExpression({latex:"L_{Lsplit}\\left(t , k\\right)=a_{4}\\left(t , k\\right)"});
-calculator.setExpression({latex:"a_{5}\\left(v , k\\right) = \\left[L_{Lsplit}\\left(v\\left[1\\right] , k\\right) , L_{Lsplit}\\left(v\\left[2\\right] , k\\right) , L_{Lsplit}\\left(v\\left[3\\right] , k\\right)\\right]"});
-calculator.setExpression({latex:"L_{Lspilt3}\\left(v , k\\right)=a_{5}\\left(v , k\\right)"});
-calculator.setExpression({latex:"a_{6}\\left(t , k\\right) = \\operatorname{floor}\\left(k \\cdot t\\right) + 1"});
-calculator.setExpression({latex:"L_{Lindex}\\left(t , k\\right)=a_{6}\\left(t , k\\right)"});
-calculator.setExpression({latex:"a_{7}\\left(t , k\\right) = \\left(L_{Lsplit}\\left(t , k\\right) , L_{Lindex}\\left(t , k\\right)\\right)"});
-calculator.setExpression({latex:"L_{Lines}\\left(t , k\\right)=a_{7}\\left(t , k\\right)"});
-calculator.setExpression({latex:"L_{Lines}\\left(t , 4\\right)"});
+calculator.setExpression({latex:"a_{1}\\left(t , v , u\\right) = v \\cdot t + u \\cdot \\left(1 - t\\right)"});
+calculator.setExpression({latex:"c_{connect}\\left(t , v , u\\right)=a_{1}\\left(t , v , u\\right)"});
+calculator.setExpression({latex:"a_{2}\\left(t\\right) = \\left(\\operatorname{sin}\\left(2 \\cdot \\pi \\cdot t\\right) , \\operatorname{cos}\\left(2 \\cdot \\pi \\cdot t\\right)\\right)"});
+calculator.setExpression({latex:"c_{circle}\\left(t\\right)=a_{2}\\left(t\\right)"});
+calculator.setExpression({latex:"a_{4}\\left(t , n , o_{offset} , i\\right) = c_{connect}\\left(t , c_{circle}\\left(i / n + o_{offset}\\right) , c_{circle}\\left(\\left(i + 1\\right) / n + o_{offset}\\right)\\right)"});
+calculator.setExpression({latex:"a_{3}\\left(t , n , o_{offset}\\right) = a_{4}\\left(L_{split}\\left(t, n\\right) , n , o_{offset} , L_{index}\\left(t, n\\right)\\right)"});
+calculator.setExpression({latex:"P_{Polygon}\\left(t , n , o_{offset}\\right)=a_{3}\\left(t , n , o_{offset}\\right)"});
+calculator.setExpression({latex:"a_{5}\\left(x , y , q\\right) = x \\cdot \\operatorname{cos}\\left(q\\right) - y \\cdot \\operatorname{sin}\\left(q\\right)"});
+calculator.setExpression({latex:"r_{rotateX}\\left(x , y , q\\right)=a_{5}\\left(x , y , q\\right)"});
+calculator.setExpression({latex:"a_{6}\\left(x , y , q\\right) = x \\cdot \\operatorname{sin}\\left(q\\right) + y \\cdot \\operatorname{cos}\\left(q\\right)"});
+calculator.setExpression({latex:"r_{rotateY}\\left(x , y , q\\right)=a_{6}\\left(x , y , q\\right)"});
+calculator.setExpression({latex:"a_{7}\\left(c , q\\right) = \\left[r_{rotateX}\\left(c\\left[1\\right] , c\\left[2\\right] , q\\right) , r_{rotateY}\\left(c\\left[1\\right] , c\\left[2\\right]\\right) , c\\left[3\\right]\\right]"});
+calculator.setExpression({latex:"r_{rotateXY}\\left(c , q\\right)=a_{7}\\left(c , q\\right)"});
+calculator.setExpression({latex:"a_{8}\\left(t\\right) = P_{Polygon}\\left(t , 3 , 0.25\\right)"});
+calculator.setExpression({latex:"a_{9}\\left(t\\right) = P_{Polygon}\\left(t , 3 , 0.75\\right)"});
+calculator.setExpression({latex:"a_{10}\\left(t , k\\right)=\\left\\{k=1:a_{8}\\left(t\\right),k=2:a_{9}\\left(t\\right)\\right\\}"});
+calculator.setExpression({latex:"s_{starOfDavid}\\left(t\\right)=a_{10}\\left(L_{split}\\left(t, 2\\right) , L_{index}\\left(t, 2\\right)\\right)"});
+calculator.setExpression({latex:"a_{12}\\left(t , o_{o1} , o_{o2} , n , i\\right) = c_{circle}\\left(i / n + o_{o1}\\right) + c_{circle}\\left(t / 2 + i / n + o_{o2}\\right)"});
+calculator.setExpression({latex:"a_{11}\\left(t , o_{o1} , o_{o2} , n\\right) = a_{12}\\left(L_{split}\\left(t, n\\right) , o_{o1} , o_{o2} , n , L_{index}\\left(t, n\\right)\\right)"});
+calculator.setExpression({latex:"m_{mandala}\\left(t , o_{o1} , o_{o2} , n\\right)=a_{11}\\left(t , o_{o1} , o_{o2} , n\\right)"});
+calculator.setExpression({latex:"a_{13}\\left(t\\right) = m_{mandala}\\left(t , 2 , 3 , 10\\right)"});
+calculator.setExpression({latex:"m_{man}\\left(t\\right)=a_{13}\\left(t\\right)"});
+calculator.setExpression({latex:"m_{man}\\left(t\\right)"});
 
 	</script>
 </body>

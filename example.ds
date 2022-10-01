@@ -1,5 +1,10 @@
 import "Polygon.ds"
 
-display circle(t)
-display starOfDavid(t)
-display 2*circle(t) + starOfDavid(t)
+curve mandala(o1, o2, n):
+	for i in n:
+		circle(i/n+o1)+circle(t/2+i/n+o2)
+
+curve man:
+	mandala(t, 2, 3, 10)
+
+display man(t)
