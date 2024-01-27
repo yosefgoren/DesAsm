@@ -38,7 +38,6 @@ void recursiveRead(string initial_filename, ostream& out){
 	string filename;
 	while(!im.isEmpty()){
 		while(getline(cin, line)){
-			out << line + "\n";
 			//check if line contains 'import', if so set 'filename' to the next word:
 			vector<string> tokens;
 			tokens = tokenize(line);
@@ -56,6 +55,8 @@ void recursiveRead(string initial_filename, ostream& out){
 					imported_files.insert(filename);
 					im.pushInputFile(filename);
 				}
+			} else {
+				out << line + "\n";
 			}
 		}
 		im.popInputFile();
@@ -88,7 +89,5 @@ int main(int argc, char** argv){
 		return 0;	
 	}
 	
-	cout << "starting inmanager test\n";
 	recursiveRead(input_filename, out);
-	cout << "finished inmanager test\n";
 }

@@ -10,16 +10,16 @@ fstream lout;
 /**
  * execute the command 'cmd' on the command line (windows).
  */
-void execute_command(string cmd) {
-	system(cmd.c_str());
+int execute_command(string cmd) {
+	return system(cmd.c_str());
 }
 
 /**
  * open html file on 'path' on firefox.
  */
-void open_html_file(string path) {
+int open_html_file(string path) {
 	string cmd = "start firefox " + path;
-	execute_command(cmd);
+	return execute_command(cmd);
 }
 
 /**
@@ -27,16 +27,19 @@ void open_html_file(string path) {
  * without printing anything.
  */
 void copy_file(string src, string dst) {
-	string cmd = "xcopy " + src + " " + dst + "/i /y /q";
-	execute_command(cmd);
-}
-
-/**
- * copy all files from 'src' folder to 'dst' folder.
- */
-void copy_folder(string src, string dst) {
-	string cmd = "xcopy " + src + " " + dst + "/i /e /y";
-	execute_command(cmd);
+	fstream instream(src, ios::in);
+	if(!instream.is_open()){
+		throw std::runtime_error("failed to open: '"+src+"'");
+	}
+	fstream outstream(dst, ios::out);
+	if(!outstream.is_open()){
+		throw std::runtime_error("failed to open: '"+dst+"'");
+	}
+	
+	string line;
+	while (getline(instream, line)) {
+		outstream << line << "\n";
+	}
 }
 
 /**
@@ -66,14 +69,17 @@ string read_file(string path) {
 /**
  * insert 'content' into 'path' file after first instance of 'insert_after' string.
  */
-void insert_into_file(string path, string delimiter, string content){
+bool insert_into_file(string path, string delimiter, string content){
 	string file_content = read_file(path);
 	size_t pos = file_content.find(delimiter);
-	if (pos == string::npos)
-		return;
+	if (pos == string::npos) {
+		return false;
+	}
 	string before = file_content.substr(0, pos);
 	string after = file_content.substr(pos+delimiter.length());
 	write_file(path, before + content + after);
+
+	return true;
 }
 
 string doubleBackslashes(string s) {
@@ -91,18 +97,18 @@ string doubleBackslashes(string s) {
  * inserted to a 'desmos calculator' instance and open the html file on firefox.
  */
 void display_latex(string latex_filename){
-	static const string display_base_root = "..\\..\\DsmApp";
-	static const string display_tmp_root = "..\\display_tmp";
+	static const string media_path = "..\\BrowserDisp\\media";
+	static const string template_path = media_path+"\\template.html";
+	static const string output_path = media_path+"\\webapp.html";
+
+	copy_file(template_path, output_path);
 	
-	static const string display_html_filename = "webapp.html";
-	static const string display_html_filepath = display_tmp_root + "\\" + display_html_filename;
-
-	//copy the display_base folder to the display_tmp folder:
-	copy_folder(display_base_root, display_tmp_root);
-
 	vector<string> latex_statments;
 	//open 'latex_file' and insert each line into 'latex_statments':
 	ifstream file(latex_filename);
+	if(!file.is_open()){
+		throw std::runtime_error("failed to open source latex file: '"+latex_filename+"'");
+	}
 	string line;
 	while(getline(file, line)){
 		//since the latex goes through another evaluation in html file, we need to double the backslashes:
@@ -114,7 +120,9 @@ void display_latex(string latex_filename){
 	for (string statment : latex_statments) {
 		js_commands += "calculator.setExpression({latex:\"" + statment + "\"});\n";
 	}
-	insert_into_file(display_html_filepath, "insert after this @@@:\n", js_commands);
+	if(!insert_into_file(output_path, "insert after this @@@:\n", js_commands)){
+		throw std::runtime_error("failed to insert content to file: could not find insertion delimiter.");
+	}
 
-	open_html_file(display_html_filepath);
+	open_html_file(output_path);
 }

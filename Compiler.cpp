@@ -1,11 +1,12 @@
-#include "utility.h"
-#include "display_latex.h"
+#include "Compiler.h"
+#include "BrowserDisp/BrowserDisp.h"
 #include <assert.h>
 #include <fstream>
 #include <string>
 #include <cstdio>
 #include "Symtab.h"
 #include <iostream>
+#include "Prepr/Prepr.h"
 #include "build/parser.tab.hpp"
 using namespace std;
 
@@ -30,7 +31,7 @@ void printStdLib(){
 
 int main(int argc, char** argv){
 	string latex_output_filename = default_output_file_name;
-	string input_filename = "..\\example.ds";
+	string input_filename = "..\\DasmExamples\\example.ds";
 
 	if(argc > 1){
 		input_filename = argv[1];
@@ -45,8 +46,11 @@ int main(int argc, char** argv){
 	
 	//call preprocessor from shell to create aggregated 'ppout.ds' file:
 	string ppout_filename = "ppout.ds";
-	string preprocessor_command = "preprocessor.exe " + input_filename + " " + ppout_filename;
-	system(preprocessor_command.c_str());
+	string preprocessor_command = "Prepr.exe " + input_filename + " " + ppout_filename;
+	int res = system(preprocessor_command.c_str());
+	if(res != 0) {
+		throw std::runtime_error("preprocessor failed with error code: "+std::to_string(res));
+	}
 
 	//compile the aggregated 'ppout.ds' file and output result to 'output.tex':
 	lout.open(latex_output_filename, fstream::out);
@@ -77,4 +81,8 @@ int main(int argc, char** argv){
 void yyerror(const char* s){
 	printf("\nsyntax error. line %d: %s\n", yylineno, s);
 	exit(1);
+}
+
+void compile(std::istream& is, std::ostream& os) {
+	
 }

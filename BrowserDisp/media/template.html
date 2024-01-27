@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<link rel="stylesheet" href="app.css">
+	<title>DesAsm</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://www.desmos.com/api/v1.7/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+</head>
+
+<body>
+	<section>
+	<div id="calculator">
+		<div id="calculatorheader">Graphing Calculator</div>
+	</div>
+	<p aria-live="assertive" aria-atomic="true" class="dcg-aria-alert"></p>
+	
+	<form id ="script_form" onsubmit="runCompile(this); return false;">
+	<p><label for="script_box">DesAsm Script:</label></p>
+	<textarea id="script_box" name="script_box" rows="4" cols="50"></textarea>
+	<br>
+	<input id="compile_button" type="submit" value="Compile">
+	</form>
+
+	<!-- <button id="clear_button" onclick="clearClac();">Clear</button> -->
+
+	<script src="drag_element.js"></script>
+	<script src="init_graph_calc.js"></script>
+	<script src="misc.js"></script>
+	</section>
+	
+	<script>
+		//insert after this @@@:
+	</script>
+</body>
+</html>
+

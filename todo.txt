@@ -8,6 +8,15 @@ features:
 * 3d graphics projections.
 * colors and custom colors
 * unary operators (like -1)
+* vscode interpreter pipeline:
+    1. written by user
+    2. extension typescript. Read the file text and send it to webview.
+    3. sandbox javascript. Send raw text to WASM.
+    4. WASM. glue input with flex & bison
+    5. flex. tokenize raw src stream
+    6. bison. prase token stream and generate latex
+    7. WASM. forward output latex to sandbox javascript
+    8. sandbox javascript. forward latex to desmos API 
 
 external tools:
 * interactive gui - basic.

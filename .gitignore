@@ -9,4 +9,3 @@ output.tex
 lex.yy.c
 *.ds
 .ds
-display_tmp/
