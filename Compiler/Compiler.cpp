@@ -8,6 +8,7 @@
 using namespace std;
 
 std::string lout;
+Symtab symtab;
 
 void redirectStdin(string input_filename){
 	// freopen(input_filename.c_str(), "r", stdin);
@@ -29,13 +30,15 @@ typedef struct yy_buffer_state *YY_BUFFER_STATE;
 YY_BUFFER_STATE yy_scan_string(const char *str);
 
 std::string compile(const char* input_dasm, bool printstdlib){
+	lout = "";
+	symtab = Symtab();
 	if(printstdlib)
 		printStdLib();
 
 	// redirectStdin(tmp_filename);
+	// printf("compiling	:\n%s\n", input_dasm);
 	yy_scan_string(input_dasm);
 	try{
-		Symtab symtab = Symtab();
 		#if(YYDEBUG == 1)
 		yydebug = 1;
 		#endif

@@ -6,7 +6,7 @@
 	#include <vector>
 	#include <iostream>
 	#include "Compiler/Symtab.h"
-	Symtab symtab;
+	extern Symtab symtab;
 	using namespace std;
 
 	extern int yylineno;
