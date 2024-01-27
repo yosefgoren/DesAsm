@@ -1,0 +1,35 @@
+<!doctype html>
+  <head>
+  </head>
+  <body>
+    <script type='text/javascript'>
+      var Module = {
+        print: function(text) {
+          if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+          console.log(text);
+        },
+        printErr: function(text) {console.error(`WASM Error: ${text}`)}
+      };
+    </script>
+    {{{ SCRIPT }}}
+    <button id='rum-wasm'>Rum WASM</button>
+    <script type='text/javascript'>
+
+    let api = null;
+
+    Module.onRuntimeInitialized = async _ => {
+      api = {
+        init: Module.cwrap('init', null, null, null),
+        destroy: Module.cwrap('destroy', null, null, null),
+        step: Module.cwrap('step', 'string', null, null),
+      };
+    };
+
+    document.getElementById('rum-wasm').addEventListener('click', () => {  
+      api.init();
+      console.log(api.step());
+      api.destroy();
+    });
+    </script>
+  </body>
+</html>
