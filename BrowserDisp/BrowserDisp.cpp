@@ -1,11 +1,10 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <sstream>
 #include <vector>
 
 using namespace std;
-
-fstream lout;
 
 /**
  * execute the command 'cmd' on the command line (windows).
@@ -96,7 +95,7 @@ string doubleBackslashes(string s) {
  * given a string or raw latex code, create a html file with the latex content
  * inserted to a 'desmos calculator' instance and open the html file on firefox.
  */
-void display_latex(string latex_filename){
+void display_latex(const std::string latex_content){
 	static const string media_path = "..\\BrowserDisp\\media";
 	static const string template_path = media_path+"\\template.html";
 	static const string output_path = media_path+"\\webapp.html";
@@ -105,12 +104,9 @@ void display_latex(string latex_filename){
 	
 	vector<string> latex_statments;
 	//open 'latex_file' and insert each line into 'latex_statments':
-	ifstream file(latex_filename);
-	if(!file.is_open()){
-		throw std::runtime_error("failed to open source latex file: '"+latex_filename+"'");
-	}
+	stringstream ss(latex_content);
 	string line;
-	while(getline(file, line)){
+	while(getline(ss, line)){
 		//since the latex goes through another evaluation in html file, we need to double the backslashes:
 		latex_statments.push_back(doubleBackslashes(line));
 	}

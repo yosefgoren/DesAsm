@@ -21,7 +21,7 @@
       api = {
         init: Module.cwrap('init', null, null, null),
         destroy: Module.cwrap('destroy', null, null, null),
-        step: Module.cwrap('step', 'string', null, null),
+        compileDasm: Module.cwrap('compileDasm', 'string', '[string]', null),
       };
     };
 

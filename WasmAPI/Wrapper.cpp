@@ -2,7 +2,7 @@
 #include <string>
 #include <stdexcept>
 
-std::string compile(char* input_dasm);
+std::string compile(const char* input_dasm, bool printstdlib);
 
 extern "C" {
     #define COMM_BUF_SIZE 4096
@@ -18,7 +18,7 @@ extern "C" {
     }
 
     EMSCRIPTEN_KEEPALIVE char* compileDasm(char* input_dasm){
-        std::string res = compile(input_dasm);
+        std::string res = compile(input_dasm, true);
         if(res.size() >= COMM_BUF_SIZE){
             throw std::runtime_error("compiled output exceeds buffer size.");
         }

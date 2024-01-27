@@ -11,6 +11,7 @@ add_compile_options(-D_CRT_SECURE_NO_WARNINGS)
 add_executable(dasm
 	parser.tab.cpp
 	Compiler${SLASH}Exceptions.cpp
+	Compiler${SLASH}Main.cpp
 	lex.yy.cpp
 	Compiler${SLASH}Symtab.cpp
 	Compiler${SLASH}Compiler.cpp
