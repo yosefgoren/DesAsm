@@ -3,8 +3,8 @@
 
 #include <string>
 #include <vector>
-#include "Statment.h"
-#include "Compiler.h"
+#include "Compiler/Statment.h"
+#include "Compiler/Compiler.h"
 
 struct Exp : public Statment{
 	Exp(int value);

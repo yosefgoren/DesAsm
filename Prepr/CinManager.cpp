@@ -1,4 +1,4 @@
-#include "CinManager.h"
+#include "Prepr/CinManager.h"
 #include <iostream>
 #include <exception>
 

@@ -1,11 +1,11 @@
 %{
 	int yylex();
 	void yyerror(const char* s);
-	#include "Compiler.h"
+	#include "Compiler/Compiler.h"
 	#include <string>
 	#include <vector>
 	#include <iostream>
-	#include "Symtab.h"
+	#include "Compiler/Symtab.h"
 	Symtab symtab;
 	using namespace std;
 

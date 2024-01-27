@@ -1,9 +1,9 @@
 #ifndef PRINTER_H
 #define PRINTER_H
 
+#include "Compiler/Statment.h"
 #include <string>
 #include <vector>
-#include "Statment.h"
 
 std::string toDesmosName(const std::string& name);
 

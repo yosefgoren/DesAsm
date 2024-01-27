@@ -1,10 +1,10 @@
 #pragma once
 
+#include "Compiler/Exceptions.h"
 #include <string>
 #include <map>
 #include <set>
 #include <vector>
-#include "Exceptions.h"
 
 
 struct Symtab{

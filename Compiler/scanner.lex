@@ -1,8 +1,8 @@
 %{
-	#include "stdlib.h"
+	#include <stdlib.h>
 	#include <string>
 	#include <vector>
-	#include "parser.tab.hpp"
+	#include "build/parser.tab.hpp"
 %}
 
 %option noyywrap

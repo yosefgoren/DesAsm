@@ -1,4 +1,4 @@
-#include "Symtab.h"
+#include "Compiler/Symtab.h"
 using namespace std;
 
 Symtab::Symtab()

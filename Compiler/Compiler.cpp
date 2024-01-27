@@ -1,10 +1,10 @@
-#include "Compiler.h"
+#include "Compiler/Compiler.h"
 #include "BrowserDisp/BrowserDisp.h"
 #include <assert.h>
 #include <fstream>
 #include <string>
 #include <cstdio>
-#include "Symtab.h"
+#include "Compiler/Symtab.h"
 #include <iostream>
 #include "Prepr/Prepr.h"
 #include "build/parser.tab.hpp"
