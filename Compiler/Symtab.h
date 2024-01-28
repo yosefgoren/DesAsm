@@ -104,6 +104,7 @@ struct Symtab{
 	};
 	
 	void openScope(const std::vector<std::string>& local_symbols);
+	void reset();
 private:
 	std::map<std::string, SymInfo*> table;
 	std::vector<std::vector<std::string>> nested_scopes;

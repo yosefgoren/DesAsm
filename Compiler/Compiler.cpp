@@ -31,7 +31,7 @@ YY_BUFFER_STATE yy_scan_string(const char *str);
 
 std::string compile(const char* input_dasm, bool printstdlib){
 	lout = "";
-	symtab = Symtab();
+	symtab.reset();
 	if(printstdlib)
 		printStdLib();
 
@@ -44,7 +44,7 @@ std::string compile(const char* input_dasm, bool printstdlib){
 		#endif
 		yyparse();
 	} catch(const SemanticError& e){
-		printf("Compilation Failed: line %d: %s", yylineno, e.errorMsg().c_str());
+		fprintf(stderr, "Compilation Failed: line %d: %s", yylineno, e.errorMsg().c_str());
 	}
 
 	return lout;

@@ -5,7 +5,7 @@
 std::string compile(const char* input_dasm, bool printstdlib);
 
 extern "C" {
-    #define COMM_BUF_SIZE 10000
+    #define COMM_BUF_SIZE 100000
 
     char* output_buffer;
 

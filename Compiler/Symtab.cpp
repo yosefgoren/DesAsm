@@ -110,9 +110,11 @@ Symtab::SymInfo::SymInfo(const std::string& dsm_exp)
 	:dsm_exp(dsm_exp){}
 
 const Symtab::SymInfo& Symtab::getSymInfo(const string& sym) const{
-	if(table.count(sym) == 0)
+	if(table.count(sym) == 0){
 		throw NoSuchSymException(sym);
-	return *table.at(sym);
+	}
+	const SymInfo& s = *table.at(sym);
+	return s;
 }
 
 Symtab::SymExistsException::SymExistsException(const string& sym)
@@ -135,6 +137,7 @@ void Symtab::defineBuiltInSymbols(){
 	};
 	for(auto func_name: built_in_funcs)
 		table[func_name] = new SymInfo("\\operatorname{"+func_name+"}");
+	
 	std::set<std::string> built_in_values = {
 		"pi"
 	};
@@ -145,6 +148,14 @@ void Symtab::defineBuiltInSymbols(){
 void Symtab::checkDefinable(const std::string& sym){
 	if(table.count(sym) > 1)
 		throw SymExistsException(sym);
+}
+
+void Symtab::reset(){
+	table.clear();
+	nested_scopes.clear();
+	anon_count = 0;
+
+	defineBuiltInSymbols();
 }
 
 Symtab::SymInfo* Symtab::allocateSubscriptSymInfo(const std::string& sym){

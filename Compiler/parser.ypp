@@ -164,7 +164,11 @@ Exp: NUMBER {$$ = $1;}
 	| ID LBRACE NUMBER RBRACE {$$ = $1; *$$ = symtab.getSymInfo(*$$).getDsmExp()+"\\left["+*$3+"\\right]"; delete $3;}
 	;
 
-FuncCall: ID FuncCallTail {$$ = new string(symtab.getSymInfo(*$1).getDsmExp()+*$2); delete $1; delete $2;};
+	FuncCall: ID FuncCallTail {
+		$$ = new string(symtab.getSymInfo(*$1).getDsmExp()+*$2);
+		delete $1;
+		delete $2;
+	};
 FuncCallTail: LPAREN ExpList RPAREN {$$ = $2; *$$ = "\\left("+*$$+"\\right)";};
 
 ExpList: Exp COMMA ExpList {$$ = $1; *$$ += " , "+*$3; delete $3;}
