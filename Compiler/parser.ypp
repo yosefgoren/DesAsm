@@ -63,17 +63,20 @@ Declaration: DeclarationHead ID FormalsSpec COLON {
 			
 			params.push_back("k");
 			std::string anon_params_format = symtab.getVariablesFormat(params);
-			lout += symtab.getSymInfo(aggregate_sym).getDsmExp() + anon_params_format + "=";
+			latex_buf.clear();
+			latex_buf += symtab.getSymInfo(aggregate_sym).getDsmExp() + anon_params_format + "=";
 			//rvalue:
 			int counter = 1;
-			lout += "\\left\\{";
+			latex_buf += "\\left\\{";
 			for(std::string& symbol : *$6){
 				if(symbol != (*$6)[0])
-					lout += ",";
-				lout += "k=" + std::to_string(counter++) + ":";//TODO: change k_0 to anon symbol. Otherwise there are issues with nested multiple statments!
-				lout += symtab.getSymInfo(symbol).getDsmExp() + params_format;
+					latex_buf += ",";
+				latex_buf += "k=" + std::to_string(counter++) + ":";//TODO: change k_0 to anon symbol. Otherwise there are issues with nested multiple statments!
+				latex_buf += symtab.getSymInfo(symbol).getDsmExp() + params_format;
 			}
-			lout += "\\right\\}\n";
+			latex_buf += "\\right\\}";
+			gen.addLatex(latex_buf);
+
 			//rvalue function that uses the anon function:
 			decl_rvalue = symtab.getSymInfo(aggregate_sym).getDsmExp()+
 					symtab.getVariablesFormat(params, {
@@ -84,11 +87,11 @@ Declaration: DeclarationHead ID FormalsSpec COLON {
 		} else {
 			decl_rvalue = symtab.getSymInfo((*$6)[0]).getDsmExp() + params_format;
 		}
-		lout += symtab.getSymInfo(*$2).getDsmExp() + params_format + "=" + decl_rvalue + "\n";
+		gen.addLatex(symtab.getSymInfo(*$2).getDsmExp() + params_format + "=" + decl_rvalue);
 		symtab.closeScope();
 		delete $2; delete $4; delete $6;
 	}
-	| DISPLAY {symtab.openScope({"t"});} Exp {lout += *$3 + "\n"; symtab.closeScope(); delete $3;}
+	| DISPLAY {symtab.openScope({"t"});} Exp {gen.addLatex(*$3); symtab.closeScope(); delete $3;}
 	| IMPORT FILENAME {
 		// string filename = *$2;
 		// if(filename.size() < 3)
@@ -125,7 +128,7 @@ Statments: Statments AND_ALSO Statment {
 
 Statment: Exp {
 		$$ = new string(symtab.getAnonSymbol());
-		lout += symtab.defineAnonFunc(*$$) + symtab.getLocalsInFormat() + " = " + *$1 + "\n";
+		gen.addLatex(symtab.defineAnonFunc(*$$) + symtab.getLocalsInFormat() + " = " + *$1);
 		symtab.closeScope();
 	}
 	| FOR ID IN Exp COLON {
@@ -138,16 +141,17 @@ Statment: Exp {
 	}
 	Statment {
 		$$ =  new string((*$5)[0]);
+		latex_buf.clear();
 		//output anon func definition in format 'func(x, y, ...)', 'ID' is not a parameter.
-		lout += symtab.getSymInfo(*$$).getDsmExp()+symtab.getLocalsInFormat({}, {*$2})+" = ";
+		latex_buf += symtab.getSymInfo(*$$).getDsmExp()+symtab.getLocalsInFormat({}, {*$2})+" = ";
 		
 		//output value of our anon func: a call to the 'Statment' anon func,
 		//	it's 't' parameter is replaced with 'L_split' and it's 'ID' parameter is replaced with 'L_index':
-		lout += symtab.getSymInfo(*$7).getDsmExp()+symtab.getLocalsInFormat({
+		latex_buf += symtab.getSymInfo(*$7).getDsmExp()+symtab.getLocalsInFormat({
 			{"t","L_{split}\\left(t, "+*$4+"\\right)"},
 			{*$2,"L_{index}\\left(t, "+*$4+"\\right)"},
 		});
-		lout += "\n";
+		gen.addLatex(latex_buf);
 		symtab.closeScope();
 		delete $2; delete $4; delete $5; delete $7;
 	}

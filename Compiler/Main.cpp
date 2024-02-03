@@ -27,11 +27,11 @@ int main(int argc, char** argv){
 	}
 
 	std::string dasm_text = read_file(ppout_filename);
-	std::string latex_text = compile(dasm_text.c_str(), printstdlib);
+	std::string json_content = compile(dasm_text.c_str(), printstdlib);
 		
 	cout << endl << "compilation finished succesfully." << endl;
 
 	//display the compiled result:
-	display_latex(latex_text);
+	display_json(json_content);
 	return 0;
 }

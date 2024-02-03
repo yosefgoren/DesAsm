@@ -15,6 +15,8 @@ add_executable(dasm
 	lex.yy.cpp
 	Compiler${SLASH}Symtab.cpp
 	Compiler${SLASH}Compiler.cpp
+	Compiler${SLASH}Instruction.cpp
+	Compiler${SLASH}CodeGenerator.cpp
 	BrowserDisp${SLASH}BrowserDisp.cpp
 )
 add_executable(Prepr Prepr${SLASH}CinManager.cpp Prepr${SLASH}Prepr.cpp)

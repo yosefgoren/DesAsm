@@ -81,42 +81,28 @@ bool insert_into_file(string path, string delimiter, string content){
 	return true;
 }
 
-string doubleBackslashes(string s) {
-	string res = "";
-	for (char c : s) {
-		res += c;
-		if (c == '\\')
-			res += '\\';
-	}
-	return res;
-}
-
-/**
- * given a string or raw latex code, create a html file with the latex content
- * inserted to a 'desmos calculator' instance and open the html file on firefox.
- */
-void display_latex(const std::string latex_content){
+void display_json(const std::string json_content){
 	static const string media_path = "..\\BrowserDisp\\media";
 	static const string template_path = media_path+"\\template.html";
 	static const string output_path = media_path+"\\webapp.html";
 
 	copy_file(template_path, output_path);
 	
-	vector<string> latex_statments;
-	//open 'latex_file' and insert each line into 'latex_statments':
-	stringstream ss(latex_content);
-	string line;
-	while(getline(ss, line)){
-		//since the latex goes through another evaluation in html file, we need to double the backslashes:
-		latex_statments.push_back(doubleBackslashes(line));
-	}
+	// vector<string> latex_statments;
+	// //open 'latex_file' and insert each line into 'latex_statments':
+	// stringstream ss(latex_content);
+	// string line;
+	// while(getline(ss, line)){
+	// 	//since the latex goes through another evaluation in html file, we need to double the backslashes:
+	// 	latex_statments.push_back(doubleBackslashes(line));
+	// }
 
 	//insert the latex content into the html file:
-	string js_commands = "\n";
-	for (string statment : latex_statments) {
-		js_commands += "calculator.setExpression({latex:\"" + statment + "\"});\n";
-	}
-	if(!insert_into_file(output_path, "insert after this @@@:\n", js_commands)){
+	// string js_commands = "\n";
+	// for (string statment : latex_statments) {
+	// 	js_commands += "calculator.setExpression({latex:\"" + statment + "\"});\n";
+	// }
+	if(!insert_into_file(output_path, "insert after this @@@:", json_content)){
 		throw std::runtime_error("failed to insert content to file: could not find insertion delimiter.");
 	}
 

@@ -64,7 +64,8 @@
 		"xutility": "cpp",
 		"functional": "cpp",
 		"numeric": "cpp",
-		"random": "cpp"
+		"random": "cpp",
+		"numbers": "cpp"
 	},
 	"makefile.launchConfigurations": [
 		{

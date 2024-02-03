@@ -3,11 +3,14 @@
 #include <string>
 #include <cstdio>
 #include <iostream>
+#include <memory>
 #include "Compiler/Symtab.h"
+#include "Compiler/CodeGenerator.h"
 #include "build/parser.tab.hpp"
 using namespace std;
 
-std::string lout;
+std::string latex_buf;
+CodeGenrator gen;
 Symtab symtab;
 
 void redirectStdin(string input_filename){
@@ -15,10 +18,10 @@ void redirectStdin(string input_filename){
 }
 
 void printStdLib(){
-	lout += "L_{0}\\left(x,y,t\\right)=\\frac{t-x}{y-x}\n";
-	lout += "L_{1}\\left(x,y,t\\right)=\\left(1-t\\right)x+ty\n";
-	lout += "L_{split}(t,k)=L_{0}(0,\\frac{1}{k},\\operatorname{mod}(t,\\frac{1}{k}))\n";
-	lout += "L_{index}(t,k)=\\operatorname{floor}(kt)+1\n";
+	gen.addLatex("L_{0}\\left(x,y,t\\right)=\\frac{t-x}{y-x}");
+	gen.addLatex("L_{1}\\left(x,y,t\\right)=\\left(1-t\\right)x+ty");
+	gen.addLatex("L_{split}(t,k)=L_{0}(0,\\frac{1}{k},\\operatorname{mod}(t,\\frac{1}{k}))");
+	gen.addLatex("L_{index}(t,k)=\\operatorname{floor}(kt)+1");
 }
 
 void yyerror(const char* s){
@@ -30,7 +33,7 @@ typedef struct yy_buffer_state *YY_BUFFER_STATE;
 YY_BUFFER_STATE yy_scan_string(const char *str);
 
 std::string compile(const char* input_dasm, bool printstdlib){
-	lout = "";
+	gen.reset();
 	symtab.reset();
 	if(printstdlib)
 		printStdLib();
@@ -47,5 +50,6 @@ std::string compile(const char* input_dasm, bool printstdlib){
 		fprintf(stderr, "Compilation Failed: line %d: %s", yylineno, e.errorMsg().c_str());
 	}
 
-	return lout;
+	// printf("%s\n", gen.generate().c_str());
+	return gen.generate();
 }
