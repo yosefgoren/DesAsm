@@ -32,14 +32,20 @@ void yyerror(const char* s){
 typedef struct yy_buffer_state *YY_BUFFER_STATE;
 YY_BUFFER_STATE yy_scan_string(const char *str);
 
-std::string compile(const char* input_dasm, bool printstdlib){
+void resetGlobals() {
 	gen.reset();
 	symtab.reset();
-	if(printstdlib)
-		printStdLib();
+	yylineno = 1;
+}
 
-	// redirectStdin(tmp_filename);
-	// printf("compiling	:\n%s\n", input_dasm);
+std::string compile(const char* input_dasm, bool printstdlib){
+
+	resetGlobals();
+
+	if(printstdlib){
+		printStdLib();
+	}
+
 	yy_scan_string(input_dasm);
 	try{
 		#if(YYDEBUG == 1)
@@ -47,7 +53,7 @@ std::string compile(const char* input_dasm, bool printstdlib){
 		#endif
 		yyparse();
 	} catch(const SemanticError& e){
-		fprintf(stderr, "Compilation Failed: line %d: %s", yylineno, e.errorMsg().c_str());
+		throw runtime_error("Compilation Failed: line "+to_string(yylineno)+": "+e.errorMsg());
 	}
 
 	string output = gen.generate();

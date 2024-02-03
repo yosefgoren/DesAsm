@@ -1,13 +1,19 @@
 #include <emscripten/emscripten.h>
 #include <string>
-#include <stdexcept>
 
 std::string compile(const char* input_dasm, bool printstdlib);
 
+
 extern "C" {
     #define COMM_BUF_SIZE 100000
-
+    #include <stdexcept>
+    
     char* output_buffer;
+
+    char* retOnBuf(const char* data) {
+        strncpy(output_buffer, data, COMM_BUF_SIZE);
+        return output_buffer;
+    }
 
     EMSCRIPTEN_KEEPALIVE void init(){
         output_buffer = (char*)malloc(sizeof(char)*COMM_BUF_SIZE);
@@ -25,12 +31,12 @@ extern "C" {
                 throw std::runtime_error("compiled output exceeds buffer size.");
             }
         } catch (std::runtime_error& err) {
-            fprintf(stderr, "Dasm Compiler failed due to runtime error: '%s'\n", err.what());
+            // fprintf(stderr, "Dasm Compiler failed due to runtime error: '%s'\n", err.what());
+            return retOnBuf(("!Dasm Compiler failed due to runtime error:\n\t'"+std::string(err.what())+"'").c_str());
         } catch (...) {
-            fprintf(stderr, "Dasm Compiler failed due to unknown error.\n");
+            // fprintf(stderr, "Dasm Compiler failed due to unknown error.\n");
+            return retOnBuf("!Dasm Compiler failed due to unknown error.");
         }
-        strncpy(output_buffer, res.c_str(), COMM_BUF_SIZE);
-        // printf("compileDasm returning: %s\n", output_buffer);
-        return output_buffer;
+        return retOnBuf(res.c_str());
     }
 }

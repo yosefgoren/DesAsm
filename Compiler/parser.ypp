@@ -219,7 +219,7 @@ Exp: NUMBER {$$ = $1;}
 	| ID {$$ = $1; *$$ = symtab.getSymInfo(*$$).getDsmExp();}
 	| Exp BINOP Exp {$$ = new string(*$1+" "+*$2+" "+*$3); delete $1; delete $2; delete $3;}
 	| FuncCall {$$ = $1;}
-	| ID LBRACE NUMBER RBRACE {$$ = $1; *$$ = symtab.getSymInfo(*$$).getDsmExp()+"\\left["+*$3+"\\right]"; delete $3;}
+	| Exp LBRACE NUMBER RBRACE {$$ = $1; *$$ = symtab.getSymInfo(*$$).getDsmExp()+"\\left["+*$3+"\\right]"; delete $3;}
 	;
 
 	FuncCall: ID FuncCallTail {
