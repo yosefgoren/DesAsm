@@ -8,7 +8,7 @@ struct Instruction{
     static void resetGlobalId();
 
 protected:
-    static std::string createJson(const std::map<std::string, std::string>& items);
+    static std::string createJson(const std::map<std::string, std::string>& items, const std::string& newline_prefix = "");
     unsigned getId() const;
 
     std::map<std::string, std::string> elems;
@@ -28,20 +28,20 @@ struct LatexInstruction : public Instruction {
 struct SliderInstruction : public LatexInstruction {
     SliderInstruction(
         const std::string& symbol,
-        double init_val = 0,
-        double start = 0,
-        double end = 1,
-        double step = 0,
-        double period = 1000,
+        const std::string& init_val = "0",
+        const std::string& start = "0",
+        const std::string& end = "1",
+        const std::string& step = "0",
+        const std::string& period = "1000",
         bool is_running = true
     );
 private:
     std::string symbol;
-    double init_val = 0;
-    double start = 0;
-    double end = 1;
-    double step = 0;
-    double period = 1000;
+    const std::string& init_val = "0";
+    const std::string& start = "0";
+    const std::string& end = "1";
+    const std::string& step = "0";
+    const std::string& period = "1000";
     bool is_running = true;
 };
 

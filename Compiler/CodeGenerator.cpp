@@ -18,11 +18,11 @@ void CodeGenrator::addLatex(const string& latex) {
 
 void CodeGenrator::addSlider(
     const string& symbol,
-    double init_val,
-    double start,
-    double end,
-    double step,
-    double period,
+    const string& init_val,
+    const string& start,
+    const string& end,
+    const string& step,
+    const string& period,
     bool is_running
 ) {
     instructions.push_back(unique_ptr<SliderInstruction>(new SliderInstruction(
@@ -46,8 +46,9 @@ string CodeGenrator::generate() const {
     for (const unique_ptr<Instruction>& instr: instructions) {
         res += instr->getJson();
         if (++cnt != instructions.size()) {
-            res += ",\n";
+            res += ',';
         }
+        res += '\n';
     }
     res += "]\n";
     return res;

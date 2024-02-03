@@ -27,7 +27,7 @@ optionally - sliders may have persistancy as a feature: meaning updating the sou
 ### Syntax
 example:
 ```
-slider Q=0 [-9:9:-3] period 18
+let Q=0 [-9:9:-3] period 18
 ```
 will create a `Q` slider which will take the values:
 ```

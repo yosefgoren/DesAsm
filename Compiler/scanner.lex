@@ -9,20 +9,23 @@
 %option yylineno
 
 id			([a-zA-Z][a-zA-Z0-9]*)
-number		((([1-9][0-9]*)|0)(.[0-9]+)?)
+number		(-?(([1-9][0-9]*)|0)(\.[0-9]+)?)
 whitespace  ([\t\n\r ])
 comment 	(#[^\n\r]*)
 filename	(\"[a-zA-Z0-9_\-\. ]+\")
 %%
 
 curve	return CURVE;
+let	return LET;
 func	return FUNC;
-display	return DISPLAY;
+show	return SHOW;
+wait	return WAIT;
 import	return IMPORT;
 for		return FOR;
 in		return IN;
 :	return COLON;
 ,	return COMMA;
+=	return EQ;
 
 {filename} {yylval.text = new std::string(yytext); return FILENAME;}
 {comment} {;}

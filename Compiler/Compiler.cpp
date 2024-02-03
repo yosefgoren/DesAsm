@@ -50,6 +50,7 @@ std::string compile(const char* input_dasm, bool printstdlib){
 		fprintf(stderr, "Compilation Failed: line %d: %s", yylineno, e.errorMsg().c_str());
 	}
 
-	// printf("%s\n", gen.generate().c_str());
-	return gen.generate();
+	string output = gen.generate();
+	// printf("%s\n", output.c_str());
+	return output;
 }
