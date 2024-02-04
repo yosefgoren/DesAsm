@@ -26,7 +26,7 @@
 	bool boolean;
 };
 
-%token CURVE SHOW FUNC FOR IN IMPORT LET PERIOD WAIT
+%token CURVE SHOW FUNC FOR IN IMPORT LET SPEED WAIT
 %token COMMA AND_ALSO EQ MINUS
 %token LPAREN RPAREN LBRACE RBRACE
 
@@ -134,8 +134,8 @@ VarDecl: LET ID EQ Exp {
 	}
 	;
 
-OptPeriod: {$$ = new string("1000");}
-	| PERIOD NUMBER {$$ = $2;}
+OptPeriod: {$$ = new string("1");}
+	| SPEED NUMBER {$$ = $2;}
 	;
 
 OptWait: {$$ = false;}

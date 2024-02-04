@@ -23,6 +23,7 @@ wait	return WAIT;
 import	return IMPORT;
 for		return FOR;
 in		return IN;
+speed	return SPEED;
 :	return COLON;
 ,	return COMMA;
 =	return EQ;

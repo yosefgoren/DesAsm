@@ -22,7 +22,7 @@ void CodeGenrator::addSlider(
     const string& start,
     const string& end,
     const string& step,
-    const string& period,
+    const string& speed,
     bool is_running
 ) {
     instructions.push_back(unique_ptr<SliderInstruction>(new SliderInstruction(
@@ -31,7 +31,7 @@ void CodeGenrator::addSlider(
         start,
         end,
         step,
-        period,
+        to_string(4000.0/stod(speed)),
         is_running
     )));
 }
