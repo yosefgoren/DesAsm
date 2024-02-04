@@ -3,7 +3,7 @@
 #include <map>
 
 struct Instruction{
-    Instruction();
+    Instruction(bool hidden = true);
     virtual std::string getJson() const;
     static void resetGlobalId();
 
@@ -21,7 +21,8 @@ private:
 struct LatexInstruction : public Instruction {
     std::string expression;
     LatexInstruction(
-        const std::string& expression
+        const std::string& expression,
+        bool hidden = true
     );
 };
 

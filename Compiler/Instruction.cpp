@@ -4,10 +4,11 @@
 using namespace std;
 unsigned Instruction::global_id = 0;
 
-Instruction::Instruction()
+Instruction::Instruction(bool hidden)
     :id(global_id++), elems({
         {"type", "\"expression\""},
-        {"color", "\"#c74440\""}
+        {"color", "\"#c74440\""},
+        {"hidden", hidden ? "true" : "false"}
 }){
     elems.insert({{"id", '"'+to_string(id)+'"'}});
 }
@@ -30,8 +31,8 @@ string Instruction::createJson(const map<string, string>& items, const std::stri
     return out;
 }
 
-LatexInstruction::LatexInstruction(const std::string& expression)
-    :expression(expression){
+LatexInstruction::LatexInstruction(const std::string& expression, bool hidden)
+    :Instruction(hidden), expression(expression){
     elems.insert({"latex", '"'+expression+'"'});
 }
 

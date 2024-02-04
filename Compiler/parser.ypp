@@ -27,7 +27,7 @@
 };
 
 %token CURVE SHOW FUNC FOR IN IMPORT LET PERIOD WAIT
-%token COMMA AND_ALSO EQ
+%token COMMA AND_ALSO EQ MINUS
 %token LPAREN RPAREN LBRACE RBRACE
 
 %left <text> BINOP
@@ -96,7 +96,7 @@ Declaration: DeclarationHead ID FormalsSpec COLON {
 		symtab.closeScope();
 		delete $2; delete $4; delete $6;
 	}
-	| SHOW {symtab.openScope({"t"});} Exp {gen.addLatex(*$3); symtab.closeScope(); delete $3;}
+	| SHOW {symtab.openScope({"t"});} Exp {gen.addLatex(*$3, false); symtab.closeScope(); delete $3;}
 	| IMPORT FILENAME {
 		// string filename = *$2;
 		// if(filename.size() < 3)
@@ -114,9 +114,9 @@ Declaration: DeclarationHead ID FormalsSpec COLON {
 	| VarDecl
 	;
 
-VarDecl: LET AssignDecl {
-		symtab.defineGlobalValue(get<0>(*$2));
-		gen.addLatex(symtab.getSymInfo(get<0>(*$2)).getDsmExp()+"="+get<1>(*$2));
+VarDecl: LET ID EQ Exp {
+		symtab.defineGlobalValue(*$2);
+		gen.addLatex(symtab.getSymInfo(*$2).getDsmExp()+"="+*$4);
 		delete $2;
 	}
 	| LET AssignDecl LBRACE RangeSpec RBRACE OptPeriod OptWait{
@@ -147,15 +147,15 @@ AssignDecl: ID {$$ = new tuple<string, string>(*$1, 0); delete $1;}
 	;
 
 RangeSpec: {$$ = new tuple<string, string, string>("0", "1", "0");}//empty: all defaults
-	| NUMBER {
+	| Exp {
 		$$ = new tuple<string, string, string>(*$1, "1" , "0");
 		delete $1;
 	}
-	| NUMBER COLON NUMBER {
+	| Exp COLON Exp {
 		$$ = new tuple<string, string, string>(*$1, *$3, "0");
 		delete $1; delete $3;
 	}
-	| NUMBER COLON NUMBER COLON NUMBER {
+	| Exp COLON Exp COLON Exp {
 		$$ = new tuple<string, string, string>(*$1, *$3, *$5);
 		delete $1; delete $3; delete $5;
 	}
@@ -220,6 +220,7 @@ Exp: NUMBER {$$ = $1;}
 	| Exp BINOP Exp {$$ = new string(*$1+" "+*$2+" "+*$3); delete $1; delete $2; delete $3;}
 	| FuncCall {$$ = $1;}
 	| Exp LBRACE NUMBER RBRACE {$$ = $1; *$$ = symtab.getSymInfo(*$$).getDsmExp()+"\\left["+*$3+"\\right]"; delete $3;}
+	| MINUS Exp {$$ = $$ = $2; *$$ = "-"+*$$;}
 	;
 
 	FuncCall: ID FuncCallTail {

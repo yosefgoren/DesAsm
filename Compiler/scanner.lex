@@ -26,6 +26,7 @@ in		return IN;
 :	return COLON;
 ,	return COMMA;
 =	return EQ;
+-	return MINUS;
 
 {filename} {yylval.text = new std::string(yytext); return FILENAME;}
 {comment} {;}
@@ -38,7 +39,6 @@ in		return IN;
 \]	return RBRACE;
 \+	{yylval.text = new std::string(yytext); return BINOP;}
 \*	{yylval.text = new std::string("\\cdot"); return BINOP;}
--	{yylval.text = new std::string(yytext); return BINOP;}
 \/	{yylval.text = new std::string(yytext); return BINOP;}
 \^	{yylval.text = new std::string(yytext); return BINOP;}
 
