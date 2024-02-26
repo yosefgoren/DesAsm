@@ -23,6 +23,7 @@
 	std::vector<std::string>* param_list;
 	std::tuple<std::string, std::string, std::string>* range_spec;
 	std::tuple<std::string, std::string>* const_decl;
+	std::tuple<std::string, std::string>* domain_spec;
 	bool boolean;
 };
 
@@ -39,7 +40,7 @@
 %type <symbol_list> Statments
 %type <param_list> FormalsSpec FormalsList FormalsListTail
 %type <boolean> OptWait
-
+%type <domain_spec> OptDomain
 %%
 
 Program: Delcerations;
@@ -96,7 +97,11 @@ Declaration: DeclarationHead ID FormalsSpec COLON {
 		symtab.closeScope();
 		delete $2; delete $4; delete $6;
 	}
-	| SHOW {symtab.openScope({"t"});} Exp {gen.addLatex(*$3, false); symtab.closeScope(); delete $3;}
+	| SHOW {symtab.openScope({"t"});} Exp OptDomain {
+		gen.addLatex(*$3, false, $4);
+		symtab.closeScope();
+		delete $3; delete $4;
+	}
 	| IMPORT FILENAME {
 		// string filename = *$2;
 		// if(filename.size() < 3)
@@ -112,6 +117,15 @@ Declaration: DeclarationHead ID FormalsSpec COLON {
 		delete $2;
 	};
 	| VarDecl
+	;
+
+OptDomain: {
+		$$ = new std::tuple<std::string, std::string>({"0", "1"});
+	}
+	| IN LBRACE Exp COLON Exp RBRACE {
+		$$ = new std::tuple<std::string, std::string>({*$3, *$5});
+		delete $3; delete $5;
+	}
 	;
 
 VarDecl: LET ID EQ Exp {

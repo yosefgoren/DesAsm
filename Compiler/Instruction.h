@@ -22,7 +22,8 @@ struct LatexInstruction : public Instruction {
     std::string expression;
     LatexInstruction(
         const std::string& expression,
-        bool hidden = true
+        bool hidden = true,
+        const std::tuple<std::string, std::string>* domain = nullptr
     );
 };
 

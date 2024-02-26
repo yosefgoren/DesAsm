@@ -12,8 +12,8 @@ string doubleBackslashes(string s) {
 	return res;
 }
 
-void CodeGenrator::addLatex(const string& latex, bool hidden) {
-    instructions.push_back(unique_ptr<LatexInstruction>(new LatexInstruction(doubleBackslashes(latex), hidden)));
+void CodeGenrator::addLatex(const string& latex, bool hidden, const std::tuple<std::string, std::string>* domain) {
+    instructions.push_back(unique_ptr<LatexInstruction>(new LatexInstruction(doubleBackslashes(latex), hidden, domain)));
 }
 
 void CodeGenrator::addSlider(

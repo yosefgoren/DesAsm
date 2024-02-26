@@ -31,9 +31,16 @@ string Instruction::createJson(const map<string, string>& items, const std::stri
     return out;
 }
 
-LatexInstruction::LatexInstruction(const std::string& expression, bool hidden)
+LatexInstruction::LatexInstruction(const std::string& expression, bool hidden, const std::tuple<std::string, std::string>* domain)
     :Instruction(hidden), expression(expression){
     elems.insert({"latex", '"'+expression+'"'});
+    if (domain != nullptr) {
+        string domain_str = createJson({
+            {"min", '"'+std::get<0>(*domain)+'"'},
+            {"max", '"'+std::get<1>(*domain)+'"'}
+        });
+        elems.insert({"parametricDomain", domain_str});
+    }
 }
 
 SliderInstruction::SliderInstruction(

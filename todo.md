@@ -1,11 +1,8 @@
 # Features:
-* return offline support by downloading `calculator.js` for desmos v1.8 API.
 * add preprocessor support for WasmAPI
-* variables, sliders and timing
 * nested multiple statments, and make it not depend on charecter 'k '.
 * 'inline latex' feature.
 * basic type properties and checking to exressions.
-* sliders
 * 3d graphics projections.
 * colors and custom colors
 * unary operators (like -1)

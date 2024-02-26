@@ -5,7 +5,7 @@
 #include <memory>
 
 struct CodeGenrator {
-    void addLatex(const std::string& latex, bool hidden = true);
+    void addLatex(const std::string& latex, bool hidden = true, const std::tuple<std::string, std::string>* domain = nullptr);
     void addSlider(
         const std::string& symbol,
         const std::string& init_val = "0",
