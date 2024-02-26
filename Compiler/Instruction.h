@@ -8,7 +8,6 @@ struct Instruction{
     static void resetGlobalId();
 
 protected:
-    static std::string createJson(const std::map<std::string, std::string>& items, const std::string& newline_prefix = "");
     unsigned getId() const;
 
     std::map<std::string, std::string> elems;

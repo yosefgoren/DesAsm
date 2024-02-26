@@ -17,6 +17,7 @@ add_executable(dasm
 	Compiler${SLASH}Compiler.cpp
 	Compiler${SLASH}Instruction.cpp
 	Compiler${SLASH}CodeGenerator.cpp
+	Compiler${SLASH}Json.cpp
 	BrowserDisp${SLASH}BrowserDisp.cpp
 )
 add_executable(Prepr Prepr${SLASH}CinManager.cpp Prepr${SLASH}Prepr.cpp)

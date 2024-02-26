@@ -10,11 +10,34 @@ Symtab::~Symtab(){
 		delete key_value.second;
 }
 
-const string& Symtab::defineGlobalValue(const string& sym){
+Symtab::SymIntellisense::SymIntellisense(
+	std::string symbol,
+	int lineno
+): symbol(symbol), lineno(lineno) {}
+
+Symtab::SymIntellisense::SymIntellisense(
+	std::string symbol,
+	int lineno,
+	std::vector<std::string> arg_names
+): symbol(symbol), lineno(lineno), arg_names(arg_names) {}
+
+std::string Symtab::SymIntellisense::toString() const {
+	map<string, string> kvs = {
+		{"symbol", '"'+symbol+'"'},
+		{"lineno", '"'+std::to_string(lineno)+'"'},
+	};
+	if (arg_names.has_value()) {
+		kvs.insert({"args", createJson(arg_names.value(), "", true)});
+	}
+	return createJson(kvs);
+}
+
+const string& Symtab::defineGlobalValue(const string& sym, const SymIntellisense& isense){
 	checkDefinable(sym);
 
 	SymInfo* info = allocateSubscriptSymInfo(sym);
 	table[sym] = info;
+	table[sym]->isense.emplace(isense);
 	return info->getDsmExp();
 }
 
@@ -29,9 +52,14 @@ void Symtab::closeScope(){
 	nested_scopes.pop_back();
 }
 
-const string& Symtab::defineFunction(const std::string& sym, const std::vector<std::string>& params){
+const string& Symtab::defineFunction(
+	const std::string& sym,
+	const std::vector<std::string>& params,
+	const SymIntellisense& isense
+){
 	checkDefinable(sym);
 	table[sym] = allocateSubscriptSymInfo(sym);
+	table[sym]->isense.emplace(isense);
 	openScope(params);
 	return table[sym]->getDsmExp();
 }
@@ -171,4 +199,14 @@ void Symtab::openScope(const std::vector<std::string>& local_symbols){
 		table[sym] = allocateSubscriptSymInfo(sym);
 	}
 	nested_scopes.push_back(local_symbols);
+}
+
+std::string Symtab::generateIntellisense() const {
+	std::vector<string> isense_strings;
+	for(const auto& [sym, info]: table) {
+		if (info->isense.has_value()) {
+			isense_strings.push_back(info->isense.value().toString());
+		}
+	}
+	return createJson(isense_strings, "", false);
 }

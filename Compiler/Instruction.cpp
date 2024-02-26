@@ -1,4 +1,5 @@
 #include "Instruction.h"
+#include "Json.h"
 #include <map>
 
 using namespace std;
@@ -19,16 +20,6 @@ std::string Instruction::getJson() const {
 
 unsigned Instruction::getId() const {
     return id;
-}
-
-string Instruction::createJson(const map<string, string>& items, const std::string& newline_prefix){
-    std::string out = newline_prefix+"{\n";
-    int cnt = 0;
-    for(const auto& [key, value]: items) {
-        out += newline_prefix+"\t\"" + key + "\":" + value + (++cnt != items.size() ? "," : "" ) + "\n";
-    }
-    out += newline_prefix+"}";
-    return out;
 }
 
 LatexInstruction::LatexInstruction(const std::string& expression, bool hidden, const std::tuple<std::string, std::string>* domain)

@@ -53,7 +53,11 @@ DeclarationHead: CURVE {parsing_curve = true;}
 Declaration: DeclarationHead ID FormalsSpec COLON {
 		if(parsing_curve)
 			$3->insert($3->begin(), "t");
-		symtab.defineFunction(*$2, *$3);
+		symtab.defineFunction(*$2, *$3, {
+			*$2,
+			yylineno,
+			*$3,
+		});
 		$4 = new vector<string>(symtab.getVariables());
 	} Statments {
 		string decl_rvalue;
@@ -130,12 +134,12 @@ OptDomain: {
 
 VarDecl:
 	LET ID EQ Exp {
-		symtab.defineGlobalValue(*$2);
+		symtab.defineGlobalValue(*$2, {*$2, yylineno});
 		gen.addLatex(symtab.getSymInfo(*$2).getDsmExp()+"="+*$4);
 		delete $2;
 	}
 	| LET AssignDecl IN RangeSpec OptPeriod OptWait{
-		symtab.defineGlobalValue(get<0>(*$2));
+		symtab.defineGlobalValue(get<0>(*$2), {get<0>(*$2), yylineno});
 		gen.addSlider(
 			symtab.getSymInfo(get<0>(*$2)).getDsmExp(),
 			get<1>(*$2),

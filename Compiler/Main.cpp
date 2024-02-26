@@ -27,7 +27,7 @@ int main(int argc, char** argv){
 	}
 
 	std::string dasm_text = read_file(ppout_filename);
-	std::string json_content = compile(dasm_text.c_str(), printstdlib);
+	std::string json_content = compile(dasm_text.c_str(), printstdlib, true);
 		
 	cout << endl << "compilation finished succesfully." << endl;
 

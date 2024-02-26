@@ -38,7 +38,7 @@ void resetGlobals() {
 	yylineno = 1;
 }
 
-std::string compile(const char* input_dasm, bool printstdlib){
+std::string compile(const char* input_dasm, bool printstdlib, bool instructions_only){
 
 	resetGlobals();
 
@@ -56,7 +56,13 @@ std::string compile(const char* input_dasm, bool printstdlib){
 		throw runtime_error("Compilation Failed: line "+to_string(yylineno)+": "+e.errorMsg());
 	}
 
-	string output = gen.generate();
+	string output = instructions_only
+		? gen.generate()
+		: createJson({
+			{"instructions", gen.generate()},
+			{"intellisense", symtab.generateIntellisense()}
+		});
+	
 	// printf("%s\n", output.c_str());
 	return output;
 }

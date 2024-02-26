@@ -10,4 +10,4 @@ extern CodeGenrator gen;
 
 void redirectStdin(std::string input_filename);
 int main(int argc, char** argv);
-std::string compile(const char* input_dasm, bool printstdlib);
+std::string compile(const char* input_dasm, bool printstdlib, bool instructions_only);

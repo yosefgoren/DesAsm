@@ -1,22 +1,43 @@
 #pragma once
 
 #include "Compiler/Exceptions.h"
+#include "Compiler/Json.h"
 #include <string>
 #include <map>
 #include <set>
 #include <vector>
+#include <optional>
 
 
 struct Symtab{
 	Symtab();
 	~Symtab();
 
+	struct SymIntellisense {
+		SymIntellisense(
+			std::string symbol,
+			int lineno
+		);
+
+		SymIntellisense(
+			std::string symbol,
+			int lineno,
+			std::vector<std::string> arg_names
+		);
+
+		std::string toString() const;
+
+		std::string symbol;
+		int lineno;
+		std::optional<std::vector<std::string>> arg_names;
+	};
+
 	/**
 	 * @brief adds a new global-scope symbol to the table corresponding to a constant value.
 	 * if symbol already in table @throw SymExistsException.
 	 * @return the dsm expression that represents the new symbol.
 	 */
-	const std::string& defineGlobalValue(const std::string& sym);
+	const std::string& defineGlobalValue(const std::string& sym, const SymIntellisense& isense);
 
 	/**
 	 * @brief adds a new global-scope symbol to the table corresponding to a function.
@@ -24,7 +45,7 @@ struct Symtab{
 	 * if symbol already in table @throw SymExistsException.
 	 * @return the dsm expression of the new symbol.
 	 */
-	const std::string& defineFunction(const std::string& sym, const std::vector<std::string>& params);
+	const std::string& defineFunction(const std::string& sym, const std::vector<std::string>& params, const SymIntellisense& isense);
 
 	/**
 	 * @brief closes top local-scope; all symbols within the scope will be undefined.
@@ -80,6 +101,8 @@ struct Symtab{
 	struct SymInfo{
 		SymInfo(const std::string& dsm_exp);
 		virtual const std::string& getDsmExp() const;
+		
+		std::optional<SymIntellisense> isense;
 	private:
 		std::string dsm_exp;
 	};
@@ -105,6 +128,9 @@ struct Symtab{
 	
 	void openScope(const std::vector<std::string>& local_symbols);
 	void reset();
+
+	std::string generateIntellisense() const;
+	
 private:
 	std::map<std::string, SymInfo*> table;
 	std::vector<std::vector<std::string>> nested_scopes;

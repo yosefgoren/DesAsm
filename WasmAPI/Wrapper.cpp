@@ -1,7 +1,7 @@
 #include <emscripten/emscripten.h>
 #include <string>
 
-std::string compile(const char* input_dasm, bool printstdlib);
+std::string compile(const char* input_dasm, bool printstdlib, bool instructions_only);
 
 
 extern "C" {
@@ -26,7 +26,7 @@ extern "C" {
     EMSCRIPTEN_KEEPALIVE char* compileDasm(char* input_dasm){
         std::string res = "";
         try {
-            res = compile(input_dasm, true);
+            res = compile(input_dasm, true, false);
             if(res.size() >= COMM_BUF_SIZE){
                 throw std::runtime_error("compiled output exceeds buffer size.");
             }
