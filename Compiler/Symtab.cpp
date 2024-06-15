@@ -12,18 +12,21 @@ Symtab::~Symtab(){
 
 Symtab::SymIntellisense::SymIntellisense(
 	std::string symbol,
+	Expr::ValueType type,
 	int lineno
-): symbol(symbol), lineno(lineno) {}
+): symbol(symbol), type(type), lineno(lineno) {}
 
 Symtab::SymIntellisense::SymIntellisense(
 	std::string symbol,
+	Expr::ValueType type,
 	int lineno,
 	std::vector<std::string> arg_names
-): symbol(symbol), lineno(lineno), arg_names(arg_names) {}
+): symbol(symbol), type(type), lineno(lineno), arg_names(arg_names) {}
 
 std::string Symtab::SymIntellisense::toString() const {
 	map<string, string> kvs = {
 		{"symbol", '"'+symbol+'"'},
+		{"type", '"'+string(Expr::type_names.at(type))+'"'},
 		{"lineno", '"'+std::to_string(lineno)+'"'},
 	};
 	if (arg_names.has_value()) {
@@ -71,7 +74,7 @@ string Symtab::getAnonSymbol(){
 const std::string& Symtab::defineAnonFunc(const std::string& sym, const std::vector<std::string>& new_params){
 	if(table.count(sym) > 0)
 		throw InternalError("cannot define anon function with symbol: '"+sym+"'");
-	table[sym] = new SymInfo("a_{"+sym+"}");
+	table[sym] = new SymInfo("a_{"+sym+"}", Expr::Any);
 	openScope(new_params);
 	return table[sym]->getDsmExp();
 }
@@ -133,9 +136,12 @@ std::string Symtab::getLocalsInFormat(const std::map<std::string, std::string>& 
 const std::string& Symtab::SymInfo::getDsmExp() const{
 	return dsm_exp;
 }
+Expr::ValueType Symtab::SymInfo::getType() const {
+	return type;
+}
 
-Symtab::SymInfo::SymInfo(const std::string& dsm_exp)
-	:dsm_exp(dsm_exp){}
+Symtab::SymInfo::SymInfo(const std::string& dsm_exp, Expr::ValueType type)
+	:dsm_exp(dsm_exp), type(type){}
 
 const Symtab::SymInfo& Symtab::getSymInfo(const string& sym) const{
 	if(table.count(sym) == 0){
@@ -164,13 +170,13 @@ void Symtab::defineBuiltInSymbols(){
 		"mod"
 	};
 	for(auto func_name: built_in_funcs)
-		table[func_name] = new SymInfo("\\operatorname{"+func_name+"}");
+		table[func_name] = new SymInfo("\\operatorname{"+func_name+"}", Expr::Any);
 	
-	std::set<std::string> built_in_values = {
-		"pi"
+	std::set<std::pair<std::string, Expr::ValueType>> built_in_values = {
+		{"pi", Expr::Number}
 	};
-	for(auto value_name: built_in_values)
-		table[value_name] = new SymInfo("\\"+value_name);
+	for(auto& [value_name, type]: built_in_values)
+		table[value_name] = new SymInfo("\\"+value_name, type);
 }
 
 void Symtab::checkDefinable(const std::string& sym){
@@ -190,7 +196,7 @@ Symtab::SymInfo* Symtab::allocateSubscriptSymInfo(const std::string& sym){
 	string dsm_exp = sym.substr(0,1);
 	if(sym.length() > 1)
 		dsm_exp += "_{" + sym + "}";
-	return new SymInfo(dsm_exp);
+	return new SymInfo(dsm_exp, Expr::Any);
 }
 
 void Symtab::openScope(const std::vector<std::string>& local_symbols){

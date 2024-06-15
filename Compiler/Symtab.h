@@ -2,6 +2,7 @@
 
 #include "Compiler/Exceptions.h"
 #include "Compiler/Json.h"
+#include "Compiler/Expr.h"
 #include <string>
 #include <map>
 #include <set>
@@ -16,11 +17,13 @@ struct Symtab{
 	struct SymIntellisense {
 		SymIntellisense(
 			std::string symbol,
+			Expr::ValueType type,
 			int lineno
 		);
 
 		SymIntellisense(
 			std::string symbol,
+			Expr::ValueType type,
 			int lineno,
 			std::vector<std::string> arg_names
 		);
@@ -29,6 +32,7 @@ struct Symtab{
 
 		std::string symbol;
 		int lineno;
+		Expr::ValueType type;
 		std::optional<std::vector<std::string>> arg_names;
 	};
 
@@ -99,12 +103,14 @@ struct Symtab{
 	) const;
 
 	struct SymInfo{
-		SymInfo(const std::string& dsm_exp);
+		SymInfo(const std::string& dsm_exp, Expr::ValueType type);
 		virtual const std::string& getDsmExp() const;
+		virtual Expr::ValueType getType() const;
 		
 		std::optional<SymIntellisense> isense;
 	private:
 		std::string dsm_exp;
+		Expr::ValueType type;
 	};
 
 	/**

@@ -5,6 +5,7 @@ const map<Expr::ValueType, const char*> Expr::type_names = {
     {Number, "Number"},
     {List, "List"},
     {Vector, "Vector"},
+    {Func, "Func"},
     {Any, "Any"}
 };
 
@@ -13,6 +14,7 @@ const map<Expr::ValueType, bool> Expr::could_be_Int = {
     {Number, true},
     {List, false},
     {Vector, false},
+    {Func, false},
     {Any, true}
 };
 const map<Expr::ValueType, bool> Expr::could_be_Real = {
@@ -20,6 +22,7 @@ const map<Expr::ValueType, bool> Expr::could_be_Real = {
     {Number, true},
     {List, false},
     {Vector, false},
+    {Func, false},
     {Any, true}
 };
 const map<Expr::ValueType, bool> Expr::could_be_List = {
@@ -27,6 +30,7 @@ const map<Expr::ValueType, bool> Expr::could_be_List = {
     {Number, false},
     {List, true},
     {Vector, false},
+    {Func, false},
     {Any, true}
 };
 const map<Expr::ValueType, bool> Expr::could_be_Vector = {
@@ -34,6 +38,15 @@ const map<Expr::ValueType, bool> Expr::could_be_Vector = {
     {Number, false},
     {List, false},
     {Vector, true},
+    {Func, false},
+    {Any, true}
+};
+const map<Expr::ValueType, bool> Expr::could_be_Func = {
+    {Int, false},
+    {Number, false},
+    {List, false},
+    {Vector, false},
+    {Func, true},
     {Any, true}
 };
 const map<Expr::ValueType, bool> Expr::could_be_Any = {
@@ -41,6 +54,7 @@ const map<Expr::ValueType, bool> Expr::could_be_Any = {
     {Number, true},
     {List, true},
     {Vector, true},
+    {Func, false},
     {Any, true}
 };
 
@@ -49,5 +63,6 @@ const map<Expr::ValueType, const map<Expr::ValueType, bool>&> Expr::could_be_tbl
     {Number, could_be_Real},
     {List, could_be_List},
     {Vector, could_be_Vector},
+    {Func, could_be_Func},
     {Any, could_be_Any}
 };

@@ -11,6 +11,7 @@ struct Expr {
         Number,
         List,
         Vector,
+        Func,
         Any
     };
 
@@ -25,6 +26,7 @@ struct Expr {
     static const map<ValueType, bool> could_be_Real;
     static const map<ValueType, bool> could_be_List;
     static const map<ValueType, bool> could_be_Vector;
+    static const map<ValueType, bool> could_be_Func;
     static const map<ValueType, bool> could_be_Any;
     
     static const map<ValueType, const map<ValueType, bool>&> could_be_tbl;

@@ -75,6 +75,6 @@
 		}
 	],
 	"cmake.debugConfig": {
-		"args": ["ex.ds"]
+		"args": ["ex.ds", "result.json"]
 	}
 }
