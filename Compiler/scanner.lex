@@ -5,6 +5,10 @@
 	#include <vector>
 	#include "build/parser.tab.hpp"
 	void yyerror(const char* err);
+
+	#define RET_TOK_GENERIC(token, action) {printf("token '"#token"'\n"); action return token;}
+	#define RET_TOK(token) RET_TOK_GENERIC(token, )
+	#define RET_TXT_TOK(token) RET_TOK_GENERIC(token, yylval.text = new std::string(yytext);)
 %}
 
 %option noyywrap
@@ -17,35 +21,34 @@ comment 	(#[^\n\r]*)
 filename	(\"[a-zA-Z0-9_\-\. ]+\")
 %%
 
-curve	return CURVE;
-let	return LET;
-func	return FUNC;
-show	return SHOW;
-wait	return WAIT;
-import	return IMPORT;
-for		return FOR;
-in		return IN;
-speed	return SPEED;
-:	return COLON;
-,	return COMMA;
-=	return EQ;
-\.x return GETX;
-\.y return GETY;
-\-	return MINUS;
+curve	RET_TOK(CURVE)
+let		RET_TOK(LET)
+func	RET_TOK(FUNC)
+show	RET_TOK(SHOW)
+wait	RET_TOK(WAIT)
+import	RET_TOK(IMPORT)
+for		RET_TOK(FOR)
+in		RET_TOK(IN)
+speed	RET_TOK(SPEED)
+:		RET_TOK(COLON)
+,		RET_TOK(COMMA)
+=		RET_TOK(EQ)
+\-		RET_TOK(MINUS)
 
-{filename} {yylval.text = new std::string(yytext); return FILENAME;}
-{comment} {;}
-{id}	{yylval.text = new std::string(yytext); return ID;}
-{number}	{yylval.text =new std::string(yytext); return NUMBER;}	
+{filename} 	RET_TXT_TOK(FILENAME)
+{comment} 	{printf("commnet\n");}
+{id}		RET_TXT_TOK(ID)
+{number}	RET_TXT_TOK(NUMBER)
 ~ return AND_ALSO;
-\(	return LPAREN;
-\)	return RPAREN;
-\[	return LBRACE;
-\]	return RBRACE;
-\+	{yylval.text = new std::string(yytext); return BINOP;}
-\*	{yylval.text = new std::string("\\cdot"); return BINOP;}
-\/	{yylval.text = new std::string(yytext); return BINOP;}
-\^	{yylval.text = new std::string(yytext); return BINOP;}
+\(	RET_TOK(LPAREN)
+\)	RET_TOK(RPAREN)
+\[	RET_TOK(LBRACE)
+\]	RET_TOK(RBRACE)
+\.	RET_TOK(DOT)
+\+	RET_TXT_TOK(BINOP)
+\*	RET_TOK_GENERIC(BINOP, yylval.text = new std::string("\\cdot");)
+\/	RET_TXT_TOK(BINOP)
+\^	RET_TXT_TOK(BINOP)
 
 
 {whitespace}	;
