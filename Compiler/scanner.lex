@@ -9,7 +9,7 @@
 %option yylineno
 
 id			([a-zA-Z][a-zA-Z0-9]*)
-number		(-?(([1-9][0-9]*)|0)(\.[0-9]+)?)
+number		((([1-9][0-9]*)|0)(\.[0-9]+)?)
 whitespace  ([\t\n\r ])
 comment 	(#[^\n\r]*)
 filename	(\"[a-zA-Z0-9_\-\. ]+\")
@@ -27,7 +27,7 @@ speed	return SPEED;
 :	return COLON;
 ,	return COMMA;
 =	return EQ;
--	return MINUS;
+\-	return MINUS;
 
 {filename} {yylval.text = new std::string(yytext); return FILENAME;}
 {comment} {;}

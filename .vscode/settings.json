@@ -73,5 +73,8 @@
 			"binaryPath": "c:\\Users\\pc\\Desktop\\Projects\\DesAsm\\dasm",
 			"binaryArgs": []
 		}
-	]
+	],
+	"cmake.debugConfig": {
+		"args": ["ex.ds"]
+	}
 }
