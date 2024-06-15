@@ -34,7 +34,7 @@
 %left <text> BINOP
 %left MINUS
 %right UMINUS
-%left LPAREN RPAREN LBRACE RBRACE
+%left LPAREN RPAREN LBRACE RBRACE GETX GETY
 %token <text> NUMBER ID FILENAME
 %token <symbol_list> COLON
 %type <range_spec> RangeSpec
@@ -244,6 +244,8 @@ Exp:
 	| Exp LBRACE NUMBER RBRACE {$$ = $1; *$$ = symtab.getSymInfo(*$$).getDsmExp()+"\\left["+*$3+"\\right]"; delete $3;}
 	| Exp MINUS Exp {$$ = $1; *$$ += "-"+*$3; delete $3;}
 	| MINUS Exp {$$ = $2; *$$ = "-"+*$$;}
+	| Exp GETX {$$ = $1; *$$ += ".x";}
+	| Exp GETY {$$ = $1; *$$ += ".y";}
 		%prec UMINUS
 	;
 

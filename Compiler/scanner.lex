@@ -1,8 +1,10 @@
 %{
+	#include <stdio.h>
 	#include <stdlib.h>
 	#include <string>
 	#include <vector>
 	#include "build/parser.tab.hpp"
+	void yyerror(const char* err);
 %}
 
 %option noyywrap
@@ -27,6 +29,8 @@ speed	return SPEED;
 :	return COLON;
 ,	return COMMA;
 =	return EQ;
+\.x return GETX;
+\.y return GETY;
 \-	return MINUS;
 
 {filename} {yylval.text = new std::string(yytext); return FILENAME;}
@@ -45,6 +49,10 @@ speed	return SPEED;
 
 
 {whitespace}	;
-.	{printf("at line %d: unexpected character: \'%s\'\n", yylineno, yytext); exit(1);};
+.	{
+		char msg_buf[0x1000];
+		snprintf(msg_buf, 0x1000, "at line %d: unexpected character: '%s'\n", yylineno, yytext);
+		yyerror(msg_buf);
+	};
 
 %%
